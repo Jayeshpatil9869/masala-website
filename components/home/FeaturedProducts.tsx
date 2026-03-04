@@ -11,7 +11,7 @@ export default function FeaturedProducts() {
   useEffect(() => {
     async function fetchFeatured() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'}/api/v1/products`);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://gravitatee.com'}/api/v1/products`);
         if (!res.ok) throw new Error('Failed to fetch');
         const data = await res.json();
         // optionally filter by best-sellers, or just take first 4 for now
