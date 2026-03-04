@@ -38,7 +38,7 @@ export default function Footer() {
             <div className="lg:col-span-5 flex flex-col gap-5">
               <Link href="/" className="inline-block">
                 <span className="font-display text-3xl font-bold text-white">
-                  Masala<span className="text-brand-gold">Brand</span>
+                  Gravit<span className="text-brand-gold">atee</span>
                 </span>
               </Link>
               <p className="text-brand-cream/60 text-sm leading-relaxed max-w-sm font-body">

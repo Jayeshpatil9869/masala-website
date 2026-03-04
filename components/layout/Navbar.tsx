@@ -46,20 +46,22 @@ export default function Navbar() {
         },
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex h-16 items-center justify-between gap-4">
-
-          {/* Logo */}
-          <Link href="/" className="flex items-center flex-shrink-0 z-50">
-            <Image
-              src="/gurukrupa-logo.jpg"
-              alt="Gurukrupa Masala"
-              width={120}
-              height={48}
-              className="h-12 w-auto object-contain"
-              priority
-            />
-          </Link>
+      <nav
+        className={cn(
+          'flex h-16 w-full items-center justify-between px-4 lg:px-6',
+          'md:h-14 md:transition-all md:ease-out',
+          { 'md:px-4': effectiveScrolled },
+        )}
+      >
+        {/* Logo */}
+        <Link href="/" className="flex items-center gap-2 flex-shrink-0 z-50">
+          <span className={cn(
+            'font-display text-2xl font-bold transition-colors',
+            effectiveScrolled || open ? 'text-brand-red' : 'text-white',
+          )}>
+            Masala<span className={cn(effectiveScrolled || open ? 'text-brand-gold' : 'text-brand-gold')}>Brand</span>
+          </span>
+        </Link>
 
           {/* Desktop Nav Links — center */}
           <div className="hidden md:flex items-center gap-0.5 flex-1 justify-center">
