@@ -73,13 +73,12 @@ export default function ProductGrid() {
       )}
 
       {/* Combo Packs Section Placeholder */}
-      <div className="mt-24 bg-[#FAFAF7] rounded-3xl p-8 lg:p-12 border border-brand-orange/20">
+      {/* <div className="mt-24 bg-[#FAFAF7] rounded-3xl p-8 lg:p-12 border border-brand-orange/20">``
         <div className="text-center mb-10">
           <h2 className="font-display text-3xl font-bold text-brand-dark mb-2">Value Combo Deals</h2>
           <p className="text-gray-600">Perfect for gifting or stocking up your kitchen.</p>
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          {/* Mock combo cards */}
           {[1,2,3].map((i) => (
              <div key={i} className="bg-white p-6 rounded-2xl shadow-sm border border-brand-orange/10 text-center">
               <div className="w-full h-40 bg-brand-cream rounded-xl mb-4 flex items-center justify-center">
@@ -93,7 +92,7 @@ export default function ProductGrid() {
              </div>
           ))}
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }

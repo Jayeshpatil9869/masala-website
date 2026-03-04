@@ -50,7 +50,7 @@ export default function Footer() {
         </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-cream/60">
-          <p>© {new Date().getFullYear()} MasalaBrand. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} gravitatee. All rights reserved.</p>
           <div className="flex items-center gap-4">
              <span>FSSAI Lic. No. 10012012000213</span>
              <span>|</span>
