@@ -55,7 +55,23 @@ app.get('/health', (req, res) => {
   res.status(200).json({ status: 'ok', service: 'masala-backend' });
 });
 
-// 2. Get all products (with categories and variant summary)
+// 2. Get all categories
+app.get('/api/v1/categories', async (req, res) => {
+  try {
+    const { data: categories, error } = await supabase
+      .from('categories')
+      .select('id, name, slug, image_url')
+      .order('name');
+
+    if (error) throw error;
+    res.json(categories);
+  } catch (err: any) {
+    console.error('Error fetching categories:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+// 3. Get all products (with categories and variant summary)
 app.get('/api/v1/products', async (req, res) => {
   try {
     const { data: products, error } = await supabase

@@ -5,27 +5,20 @@ import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { createClient } from '@supabase/supabase-js';
 
 export default function CategoryGrid() {
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
-      // Initialize Supabase Client inside the effect so it runs only on the client side
-      // where NEXT_PUBLIC_ variables are guaranteed to be available
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-      
-      if (!supabaseUrl || !supabaseKey) {
-        console.warn('Supabase credentials missing.');
-        return;
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/categories`);
+        if (!res.ok) throw new Error('Failed to fetch categories');
+        const data = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error(err);
       }
-
-      const supabase = createClient(supabaseUrl, supabaseKey);
-      
-      const { data } = await supabase.from('categories').select('id, name, slug, image_url').order('name');
-      if (data) setCategories(data);
     }
     fetchCategories();
   }, []);

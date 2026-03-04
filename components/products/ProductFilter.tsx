@@ -3,7 +3,6 @@
 import { useState, useEffect } from 'react';
 import { Search } from 'lucide-react';
 import { Input } from '@/components/ui/input';
-import { createClient } from '@supabase/supabase-js';
 
 // Delay Supabase initialization until runtime
 // so NextJS static generation doesn't crash if env vars are missing
@@ -28,18 +27,14 @@ export default function ProductFilter({
 
   useEffect(() => {
     async function fetchCategories() {
-      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-      
-      if (!supabaseUrl || !supabaseKey) {
-        console.warn('Supabase credentials missing.');
-        return;
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/categories`);
+        if (!res.ok) throw new Error('Failed to fetch categories');
+        const data = await res.json();
+        setCategories(data);
+      } catch (err) {
+        console.error(err);
       }
-
-      const supabase = createClient(supabaseUrl, supabaseKey);
-      
-      const { data } = await supabase.from('categories').select('id, name, slug').order('name');
-      if (data) setCategories(data);
     }
     fetchCategories();
   }, []);
