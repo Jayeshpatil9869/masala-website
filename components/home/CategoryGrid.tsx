@@ -7,16 +7,23 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { createClient } from '@supabase/supabase-js';
 
-// Initialize Supabase Client for public reads
-const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
-const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
-const supabase = createClient(supabaseUrl, supabaseKey);
-
 export default function CategoryGrid() {
   const [categories, setCategories] = useState<any[]>([]);
 
   useEffect(() => {
     async function fetchCategories() {
+      // Initialize Supabase Client inside the effect so it runs only on the client side
+      // where NEXT_PUBLIC_ variables are guaranteed to be available
+      const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+      const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+      
+      if (!supabaseUrl || !supabaseKey) {
+        console.warn('Supabase credentials missing.');
+        return;
+      }
+
+      const supabase = createClient(supabaseUrl, supabaseKey);
+      
       const { data } = await supabase.from('categories').select('id, name, slug, image_url').order('name');
       if (data) setCategories(data);
     }
