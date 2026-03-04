@@ -17,9 +17,9 @@ export default function ProductGallery({ images }: { images: string[] }) {
           fill
           className="object-contain p-8 transition-transform duration-500 group-hover:scale-105"
         />
-        <div className="absolute top-4 left-4 bg-brand-gold text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider rounded-full">
+        {/* <div className="absolute top-4 left-4 bg-brand-gold text-white text-xs font-bold px-3 py-1.5 uppercase tracking-wider rounded-full">
           Harvest 2023
-        </div>
+        </div> */}
       </div>
 
       {/* Thumbnails */}
@@ -35,10 +35,6 @@ export default function ProductGallery({ images }: { images: string[] }) {
             <Image src={img} alt={`Thumbnail ${idx + 1}`} fill className="object-cover rounded-lg" />
           </button>
         ))}
-        {/* Mock Video button */}
-        <button className="relative w-24 h-24 flex-shrink-0 border border-gray-200 bg-brand-cream rounded-xl flex items-center justify-center text-gray-400 hover:text-brand-orange hover:border-brand-orange transition-colors">
-           <Play className="w-8 h-8 fill-current" />
-        </button>
       </div>
     </div>
   );

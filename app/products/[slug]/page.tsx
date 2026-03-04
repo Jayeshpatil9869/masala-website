@@ -1,4 +1,3 @@
-import { products } from '@/lib/data';
 import { notFound } from 'next/navigation';
 import Link from 'next/link';
 
@@ -7,24 +6,28 @@ import ProductGallery from '@/components/product-detail/ProductGallery';
 import ProductInfo from '@/components/product-detail/ProductInfo';
 import ProductSpecs from '@/components/product-detail/ProductSpecs';
 import RelatedProducts from '@/components/product-detail/RelatedProducts';
-import ProductReviews from '@/components/product-detail/ProductReviews';
-
-export async function generateStaticParams() {
-  return products.map((product) => ({
-    slug: product.slug,
-  }));
-}
+import OtherCategoryProducts from '@/components/product-detail/OtherCategoryProducts';
+import CategoryGrid from '@/components/home/CategoryGrid';
 
 export default async function ProductDetailPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
-  const product = products.find(p => p.slug === slug);
-
-  if (!product) {
-    notFound();
+  
+  // Fetch product from new backend
+  let product = null;
+  try {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'}/api/v1/products/${slug}`, { next: { revalidate: 60 } });
+    if (!res.ok) {
+      if (res.status === 404) return notFound();
+      throw new Error('Failed to fetch product');
+    }
+    product = await res.json();
+  } catch (error) {
+    console.error(error);
+    return notFound();
   }
 
   // Fallback images if not defined in data
-  const images = product.images || [product.image_url];
+  const images = product.images?.length > 0 ? product.images : [product.image_url];
 
   return (
     <div className="min-h-screen bg-brand-white pt-6">
@@ -35,8 +38,8 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
         <nav className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-8 pt-4">
           <Link href="/products" className="hover:text-brand-orange transition-colors">Shop</Link>
           <span className="mx-2">/</span>
-          <span className="text-brand-dark">Pantry</span>
-          <span className="mx-2">/</span>
+          {/* <span className="text-brand-dark">Pantry</span>
+          <span className="mx-2">/</span> */}
           <span className="text-brand-dark font-bold">{product.name}</span>
         </nav>
 
@@ -56,11 +59,11 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       {/* Middle Split Section - Detailed Info */}
       <ProductSpecs product={product} />
       
-      {/* Bottom Section - Cross Selling */}
+      {/* Bottom Section - Same Category Selling */}
       <RelatedProducts currentProduct={product} />
 
-      {/* Bottom Section - Community */}
-      <ProductReviews />
+      {/* Bottom Section - Other Categories Selling */}
+      <OtherCategoryProducts currentCategory={product.category} />
       
     </div>
   );

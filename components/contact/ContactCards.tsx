@@ -5,8 +5,8 @@ import { MessageCircle, Phone, Mail, MapPin, Clock, ChevronRight } from 'lucide-
 import { buildWhatsAppLink } from '@/lib/whatsapp';
 
 export default function ContactCards() {
-  const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890';
-  const waLink = buildWhatsAppLink(phone, "Hi MasalaBrand! I have a query.");
+  const phone1 = '9271580900';
+  const waLink = buildWhatsAppLink(phone1, "Hi! I have a query about Gravitate Spices.");
 
   const cards = [
     {
@@ -21,9 +21,9 @@ export default function ContactCards() {
     {
       icon: Phone,
       title: 'Call Us',
-      desc: "Mon–Sat, 9:00 AM – 7:00 PM IST",
+      desc: "9271580900 / 9657586213",
       action: 'Call Now',
-      href: `tel:+${phone}`,
+      href: `tel:+91${phone1}`,
       bg: 'bg-brand-dark',
       badge: null,
     },
@@ -32,21 +32,21 @@ export default function ContactCards() {
       title: 'Email Us',
       desc: "For bulk orders and wholesale inquiries.",
       action: 'Send Email',
-      href: 'mailto:hello@masalabrand.com',
+      href: 'mailto:gravitatespices01@gmail.com',
       bg: 'bg-brand-orange',
       badge: null,
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-5 mb-14 relative -mt-14 z-20">
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 mb-16 relative -mt-10 sm:-mt-20 z-20">
       {cards.map((card, idx) => (
         <motion.a 
           key={idx}
           href={card.href}
           target={card.icon === MessageCircle ? "_blank" : "_self"}
           rel="noreferrer"
-          className="bg-white rounded-2xl p-7 shadow-xl shadow-black/8 hover:shadow-2xl hover:-translate-y-1.5 transition-all duration-300 border border-gray-100 flex flex-col group"
+          className="bg-white rounded-3xl p-8 pt-10 shadow-xl shadow-black/5 hover:shadow-2xl hover:-translate-y-2 transition-all duration-300 border border-gray-100 flex flex-col group"
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: idx * 0.1 }}

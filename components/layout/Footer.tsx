@@ -28,32 +28,6 @@ export default function Footer() {
 
   return (
     <footer>
-      {/* Newsletter Banner */}
-      <div
-        className="relative overflow-hidden py-14 px-4"
-        style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=2000')", backgroundSize: 'cover', backgroundPosition: 'center' }}
-      >
-        <div className="absolute inset-0 bg-brand-dark/85" />
-        <div className="relative z-10 container mx-auto flex flex-col md:flex-row items-center justify-between gap-8 max-w-5xl">
-          <div>
-            <p className="text-brand-gold text-xs font-semibold uppercase tracking-widest mb-2">Stay Updated</p>
-            <h3 className="font-display text-2xl md:text-3xl font-bold text-white mb-1">
-              Get Recipes & Seasonal Offers
-            </h3>
-            <p className="text-brand-cream/60 text-sm font-body">Join 8,000+ spice lovers who get early access to new arrivals.</p>
-          </div>
-          <div className="flex w-full md:w-auto gap-2 flex-shrink-0">
-            <input
-              type="email"
-              placeholder="your@email.com"
-              className="flex-1 md:w-64 px-4 py-3 rounded-full bg-white/10 border border-white/20 text-white text-sm placeholder:text-white/40 focus:outline-none focus:border-brand-orange"
-            />
-            <button className="px-5 py-3 bg-brand-orange hover:bg-orange-600 text-white text-sm font-bold rounded-full transition-colors flex-shrink-0">
-              Subscribe
-            </button>
-          </div>
-        </div>
-      </div>
 
       {/* Main Footer */}
       <div className="bg-brand-dark text-brand-white px-4 pt-14 pb-10">
@@ -61,34 +35,34 @@ export default function Footer() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 pb-12 border-b border-white/10">
 
             {/* Brand */}
-            <div className="lg:col-span-4 flex flex-col gap-5">
+            <div className="lg:col-span-5 flex flex-col gap-5">
               <Link href="/" className="inline-block">
                 <span className="font-display text-3xl font-bold text-white">
                   Masala<span className="text-brand-gold">Brand</span>
                 </span>
               </Link>
-              <p className="text-brand-cream/60 text-sm leading-relaxed max-w-xs font-body">
-                Pure, fresh, single-origin masalas sourced directly from farms across India since 1978.
+              <p className="text-brand-cream/60 text-sm leading-relaxed max-w-sm font-body">
+                Manufacture Repeated & Marketed By: GURUKRUPA GRUH UDYOG
               </p>
               <div className="flex flex-col gap-2.5 text-sm text-brand-cream/50">
                 <div className="flex items-start gap-2.5">
-                  <MapPin className="w-4 h-4 text-brand-orange flex-shrink-0 mt-0.5" />
-                  <span>Spices Market, Old City, Maharashtra 411002</span>
+                  <MapPin className="w-5 h-5 text-brand-orange flex-shrink-0 mt-0.5" />
+                  <span className="leading-relaxed text-xs">S.No. 182/2, Plot No. 111, Nr. Jajuvadi, B/h., Sant Nirankari Kendra, Bhaygaon Shiwar, Malegaon Dist. Nashik - 423203 (M.S)</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Phone className="w-4 h-4 text-brand-orange flex-shrink-0" />
-                  <span>+91 123 456 7890</span>
+                  <span>9271580900 / 9657586213</span>
                 </div>
                 <div className="flex items-center gap-2.5">
                   <Mail className="w-4 h-4 text-brand-orange flex-shrink-0" />
-                  <span>hello@masalabrand.com</span>
+                  <span>gravitatespices01@gmail.com</span>
                 </div>
               </div>
               <div className="flex gap-2 pt-1">
                 {social.map((item) => (
                   <a
                     key={item.label}
-                    href={item.href}
+                    href={item.label === 'Instagram' ? 'https://instagram.com/gravitate_Masala' : item.label === 'Facebook' ? 'https://facebook.com/Gravitate_Masala' : item.href}
                     aria-label={item.label}
                     className="w-9 h-9 rounded-lg border border-white/10 flex items-center justify-center text-brand-cream/50 hover:text-brand-orange hover:border-brand-orange/50 hover:bg-brand-orange/10 transition-all duration-200"
                   >
@@ -99,7 +73,7 @@ export default function Footer() {
             </div>
 
             {/* Quick Links */}
-            <div className="lg:col-span-2 lg:col-start-6">
+            <div className="lg:col-span-3 lg:col-start-7">
               <h4 className="text-brand-orange text-xs font-bold uppercase tracking-widest mb-5">Quick Links</h4>
               <ul className="flex flex-col gap-1">
                 {navLinks.map(({ href, title }) => (
@@ -117,7 +91,7 @@ export default function Footer() {
             </div>
 
             {/* Policies */}
-            <div className="lg:col-span-2">
+            <div className="lg:col-span-3">
               <h4 className="text-brand-orange text-xs font-bold uppercase tracking-widest mb-5">Legal</h4>
               <ul className="flex flex-col gap-1">
                 {policies.map(({ href, title }) => (
@@ -134,34 +108,21 @@ export default function Footer() {
               </ul>
             </div>
 
-            {/* Trust badges */}
-            <div className="lg:col-span-3 lg:col-start-10">
-              <h4 className="text-brand-orange text-xs font-bold uppercase tracking-widest mb-5">Certifications</h4>
-              <div className="grid grid-cols-2 gap-3">
-                {[
-                  { label: '100%\nPure', emoji: '🌿' },
-                  { label: 'FSSAI\nCertified', emoji: '✅' },
-                  { label: 'No\nAdditives', emoji: '🚫' },
-                  { label: 'Farm\nDirect', emoji: '🌾' },
-                ].map(({ label, emoji }) => (
-                  <div key={label} className="bg-white/5 border border-white/10 rounded-xl p-3 flex flex-col items-center gap-1 text-center">
-                    <span className="text-2xl">{emoji}</span>
-                    <span className="text-white/60 text-[10px] leading-tight font-medium whitespace-pre-line">{label}</span>
-                  </div>
-                ))}
-              </div>
-            </div>
-
           </div>
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-cream/60">
-          <p>© {new Date().getFullYear()} MasalaBrand. All rights reserved.</p>
+          <div className="flex flex-col md:flex-row items-center gap-2">
+             <p>© {new Date().getFullYear()} MasalaBrand. All rights reserved.</p>
+             <span className="hidden md:inline text-white/20">|</span>
+             <p>Created by <a href="https://mahendranagpure.com" target="_blank" rel="noopener noreferrer" className="text-brand-orange hover:text-brand-gold transition-colors font-medium">Westford. Pvt. Ltd</a></p>
+          </div>
           <div className="flex items-center gap-4">
-             <span>FSSAI Lic. No. 10012012000213</span>
-             <span>|</span>
+             <span>FSSAI Lic. No. 11521023000342</span>
+             <span className="text-white/20">|</span>
              <span>Made with ❤️ in India</span>
           </div>
         </div>
+      </div>
       </div>
     </footer>
   );

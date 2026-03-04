@@ -23,10 +23,14 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Masala Brand — Premium Masala & Spices | Order on WhatsApp",
+  title: "Gurukrupa Masala — Premium Masala & Spices | Order on WhatsApp",
   description: "Buy pure, fresh masala and spices online. Crafted from handpicked ingredients. Order directly on WhatsApp — fast delivery across India.",
+  icons: {
+    icon: '/gurukrupa-logo.jpg',
+    apple: '/gurukrupa-logo.jpg',
+  },
   openGraph: {
-    images: ['/images/brand/og-image.jpg']
+    images: ['/gurukrupa-logo.jpg']
   }
 };
 

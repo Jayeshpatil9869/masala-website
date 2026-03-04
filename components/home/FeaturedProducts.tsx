@@ -1,11 +1,29 @@
 "use client"
 
-import { products } from '@/lib/data';
+import { useState, useEffect } from 'react';
 import ProductCard from '@/components/products/ProductCard';
 import { motion } from 'framer-motion';
 
 export default function FeaturedProducts() {
-  const featured = products; // Could filter by 'is_bestseller' if list gets larger
+  const [featured, setFeatured] = useState<any[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchFeatured() {
+      try {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'}/api/v1/products`);
+        if (!res.ok) throw new Error('Failed to fetch');
+        const data = await res.json();
+        // optionally filter by best-sellers, or just take first 4 for now
+        setFeatured(data.slice(0, 4));
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setIsLoading(false);
+      }
+    }
+    fetchFeatured();
+  }, []);
 
   return (
     <section className="py-24 bg-white">

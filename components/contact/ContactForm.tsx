@@ -43,15 +43,24 @@ export default function ContactForm() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     
-    // Simulate API call for MVP
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    console.log(values);
-    
-    setIsSuccess(true);
-    setIsSubmitting(false);
-    form.reset();
-    
-    setTimeout(() => setIsSuccess(false), 5000);
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'http://localhost:3002'}/api/v1/contact`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(values),
+      });
+      
+      if (!res.ok) throw new Error('Failed to send message');
+      
+      setIsSuccess(true);
+      form.reset();
+      setTimeout(() => setIsSuccess(false), 5000);
+    } catch (error) {
+      console.error(error);
+      alert('There was an error sending your message. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
   }
 
   return (

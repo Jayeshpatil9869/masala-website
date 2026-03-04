@@ -19,7 +19,7 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-red/80 to-brand-dark/70" />
         </div>
 
-        <div className="container relative z-10 px-4 text-center text-brand-white">
+        <div className="container relative z-10 px-4 text-center text-brand-white pb-12 md:pb-16">
           <h1 className="font-display text-4xl md:text-6xl font-bold mb-4">
             Get in Touch
           </h1>
@@ -54,8 +54,8 @@ export default function ContactPage() {
                   <div className="flex gap-3 text-sm">
                     <MapPin className="w-4 h-4 text-brand-orange mt-0.5 flex-shrink-0" />
                     <div>
-                      <p className="font-semibold text-brand-dark">MasalaBrand H.Q.</p>
-                      <p className="text-gray-500 leading-relaxed">123 Spices Market, Old City Route,<br/>Maharashtra, India 411002</p>
+                      <p className="font-semibold text-brand-dark">GURUKRUPA GRUH UDYOG</p>
+                      <p className="text-gray-500 leading-relaxed">S.No. 182/2, Plot No. 111,<br/>Nr. Jajuvadi, B/h., Sant Nirankari Kendra,<br/>Bhaygaon Shiwar, Malegaon<br/>Dist. Nashik - 423203 (M.S)</p>
                     </div>
                   </div>
                   <div className="flex gap-3 text-sm">
@@ -89,26 +89,12 @@ export default function ContactPage() {
                     Interested in distributing our products? Competitive margins, priority shipping, and full marketing support.
                   </p>
                   <a
-                    href="mailto:wholesale@masalabrand.com"
+                    href="mailto:gravitatespices01@gmail.com"
                     className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors"
                   >
                     Apply to be a Dealer <ChevronRight className="w-4 h-4" />
                   </a>
                 </div>
-              </div>
-
-              {/* Quick Stats */}
-              <div className="grid grid-cols-3 gap-3">
-                {[
-                  { value: '8,000+', label: 'Happy Customers' },
-                  { value: '< 15m', label: 'WhatsApp Reply' },
-                  { value: '45+ yr', label: 'Experience' },
-                ].map(({ value, label }) => (
-                  <div key={label} className="bg-brand-cream rounded-xl p-4 text-center border border-brand-orange/15">
-                    <p className="font-display font-bold text-brand-orange text-lg">{value}</p>
-                    <p className="text-[11px] text-gray-500 mt-0.5 leading-tight">{label}</p>
-                  </div>
-                ))}
               </div>
 
             </div>

@@ -1,12 +1,28 @@
 "use client"
 
-import { categories } from '@/lib/data';
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase Client for public reads
+const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL || '';
+const supabaseKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY || '';
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 export default function CategoryGrid() {
+  const [categories, setCategories] = useState<any[]>([]);
+
+  useEffect(() => {
+    async function fetchCategories() {
+      const { data } = await supabase.from('categories').select('id, name, slug, image_url').order('name');
+      if (data) setCategories(data);
+    }
+    fetchCategories();
+  }, []);
+
   return (
     <section className="py-20 bg-brand-cream relative">
       <div className="container mx-auto px-4 lg:px-8">
@@ -40,7 +56,7 @@ export default function CategoryGrid() {
                 {/* Background Image */}
                 <div className="absolute inset-0 z-0">
                   <Image 
-                    src={cat.image} 
+                    src={cat.image_url || 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d'} 
                     alt={cat.name} 
                     fill 
                     className="object-cover transition-transform duration-700 group-hover:scale-110"

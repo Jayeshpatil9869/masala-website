@@ -1,10 +1,9 @@
 "use client"
 
-import { Product } from '@/lib/data';
+import { Leaf, Award, ThermometerSnowflake, Scale, FileText } from 'lucide-react';
 import Image from 'next/image';
-import { FileText, Leaf } from 'lucide-react';
 
-export default function ProductSpecs({ product }: { product: Product }) {
+export default function ProductSpecs({ product }: { product: any }) {
   if (!product.specs) return null;
 
   return (
@@ -53,7 +52,7 @@ export default function ProductSpecs({ product }: { product: Product }) {
                    </span>
                    {product.origin_story.text[0].substring(1)}
                  </p>
-                 {product.origin_story.text.slice(1).map((para, i) => (
+                 {product.origin_story.text.slice(1).map((para: string, i: number) => (
                     <p key={i} className="font-body text-gray-700 leading-relaxed mb-6 text-justify">
                       {para}
                     </p>

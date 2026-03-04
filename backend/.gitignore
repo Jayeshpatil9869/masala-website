@@ -1,0 +1,8 @@
+# Admin Panel Dependencies
+node_modules/
+.next/
+.env.local
+.env.production
+*.log
+.DS_Store
+dist/
