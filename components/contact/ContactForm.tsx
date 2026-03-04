@@ -44,7 +44,7 @@ export default function ContactForm() {
     setIsSubmitting(true);
     
     try {
-      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://gravitatee.com'}/api/v1/contact`, {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/contact`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(values),

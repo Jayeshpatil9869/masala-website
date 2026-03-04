@@ -15,7 +15,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   // Fetch product from new backend
   let product = null;
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://gravitatee.com'}/api/v1/products/${slug}`, { next: { revalidate: 60 } });
+    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/products/${slug}`, { next: { revalidate: 60 } });
     if (!res.ok) {
       if (res.status === 404) return notFound();
       throw new Error('Failed to fetch product');
