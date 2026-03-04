@@ -9,19 +9,28 @@ const app = express();
 const PORT = process.env.PORT || 3002;
 
 // Middleware
+const allowedOrigins = [
+  // Production domains
+  'https://gravitatee.com',
+  'https://www.gravitatee.com',
+  'https://admin.gravitatee.com',
+  // Environment-supplied overrides (useful for staging / preview URLs)
+  process.env.FRONTEND_URL,
+  process.env.ADMIN_URL,
+  // Local development
+  'http://localhost:3000',
+  'http://localhost:3001',
+  'http://localhost:3002',
+].filter(Boolean) as string[];
+
 app.use(cors({
   origin: (origin, callback) => {
-    // Allow requests with no origin (mobile apps, curl, etc.) or from allowed origins
-    const allowedOrigins = [
-      process.env.FRONTEND_URL || 'http://localhost:3000',
-      'http://localhost:3000',
-      'http://localhost:3001',
-      'http://localhost:3002',
-    ];
+    // Allow requests with no origin (server-to-server, mobile apps, curl)
     if (!origin || allowedOrigins.includes(origin)) {
       callback(null, true);
     } else {
-      callback(null, true); // Permissive in dev — restrict in production
+      console.warn(`CORS blocked origin: ${origin}`);
+      callback(new Error(`Origin ${origin} not allowed by CORS policy`));
     }
   },
   credentials: true,
