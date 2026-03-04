@@ -70,7 +70,7 @@ export default function Navbar() {
             'font-display text-2xl font-bold transition-colors',
             effectiveScrolled || open ? 'text-brand-red' : 'text-white',
           )}>
-            Masala<span className={cn(effectiveScrolled || open ? 'text-brand-gold' : 'text-brand-gold')}>Brand</span>
+            Gravit<span className={cn(effectiveScrolled || open ? 'text-brand-gold' : 'text-brand-gold')}>atee</span>
           </span>
         </Link>
 
