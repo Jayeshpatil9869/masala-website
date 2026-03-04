@@ -11,7 +11,7 @@ export default function AboutPage() {
   return (
     <>
       {/* Brand Heritage Hero */}
-      <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden">
+      <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=2000')" }}

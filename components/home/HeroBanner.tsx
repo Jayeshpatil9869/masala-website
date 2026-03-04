@@ -13,7 +13,7 @@ export default function HeroBanner() {
   );
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden">
+    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden -mt-16">
       {/* Background Image & Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center"
@@ -23,7 +23,7 @@ export default function HeroBanner() {
       </div>
 
       {/* Content */}
-      <div className="container relative z-10 px-4 mt-20 text-center text-brand-white flex flex-col items-center">
+      <div className="container relative z-10 px-4 pt-16 text-center text-brand-white flex flex-col items-center">
         <motion.h1 
           className="font-display text-5xl md:text-7xl font-bold mb-6 max-w-4xl leading-tight"
           initial={{ opacity: 0, y: 30 }}

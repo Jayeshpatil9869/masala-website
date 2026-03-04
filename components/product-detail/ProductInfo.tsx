@@ -27,7 +27,7 @@ export default function ProductInfo({ product }: { product: Product }) {
     <div className="flex flex-col h-full pt-4 md:pt-0">
       {/* Reviews */}
       <div className="flex items-center gap-2 mb-4">
-        <div className="flex text-[#c8982a]">
+        <div className="flex text-brand-gold">
           {[1,2,3,4,5].map(i => (
              <Star key={i} className="w-4 h-4 fill-current" />
           ))}
@@ -45,18 +45,18 @@ export default function ProductInfo({ product }: { product: Product }) {
 
       {/* Select Weight */}
       <div className="mb-8">
-        <div className="text-xs uppercase tracking-widest text-gray-500 mb-3 font-medium">
+        <div className="text-xs uppercase tracking-widest text-gray-400 mb-3 font-medium">
           Select Weight
         </div>
-        <div className="flex gap-3">
+        <div className="flex flex-wrap gap-3">
           {product.weights.map(weight => (
             <button
               key={weight}
               onClick={() => setSelectedWeight(weight)}
-              className={`h-10 px-5 rounded-full border border-[#2a1a0f] text-sm font-medium transition-colors ${
+              className={`h-10 px-5 rounded-full border text-sm font-medium transition-all ${
                 selectedWeight === weight 
-                  ? 'bg-[#2a1a0f] text-white' 
-                  : 'bg-transparent text-[#2a1a0f] hover:bg-gray-100'
+                  ? 'bg-brand-dark border-brand-dark text-white shadow-md' 
+                  : 'bg-transparent border-gray-300 text-brand-dark hover:border-brand-orange hover:text-brand-orange'
               }`}
             >
               {weight}
@@ -65,7 +65,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         </div>
       </div>
 
-      <hr className="border-[#e6e2d3] mb-8" />
+      <hr className="border-gray-100 mb-8" />
 
       {/* Price & Add to Cart */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-6 mb-8">
@@ -75,7 +75,7 @@ export default function ProductInfo({ product }: { product: Product }) {
         
         <Button 
           onClick={handleAddToCart}
-          className="flex-1 bg-brand-orange hover:bg-orange-700 text-white rounded-none h-14 text-sm font-bold tracking-widest uppercase flex items-center justify-between px-6"
+          className="flex-1 bg-brand-orange hover:bg-orange-700 text-white rounded-full h-14 text-sm font-bold tracking-wider uppercase flex items-center justify-between px-6 shadow-lg shadow-orange-500/25 transition-all"
         >
           <span>Add to Pantry</span>
           <ArrowRight className="w-5 h-5" />
@@ -83,13 +83,17 @@ export default function ProductInfo({ product }: { product: Product }) {
       </div>
 
       {/* Guarantees */}
-      <div className="flex flex-col sm:flex-row gap-6 text-xs text-gray-500 tracking-wide mt-auto">
+      <div className="flex flex-col sm:flex-row gap-6 text-xs text-gray-500 tracking-wide">
         <div className="flex items-center gap-2">
-          <Truck className="w-4 h-4 text-brand-dark" />
+          <div className="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center">
+            <Truck className="w-4 h-4 text-brand-orange" />
+          </div>
           <span>Free shipping over ₹999</span>
         </div>
         <div className="flex items-center gap-2">
-          <Award className="w-4 h-4 text-brand-dark" />
+          <div className="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center">
+            <Award className="w-4 h-4 text-brand-red" />
+          </div>
           <span>Single-origin guarantee</span>
         </div>
       </div>
