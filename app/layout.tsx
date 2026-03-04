@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import { Inter, Poppins, Playfair_Display } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/layout/Navbar";
-import Footer from "@/components/layout/Footer";
-import WhatsAppFloat from "@/components/shared/WhatsAppFloat";
+import Navbar from "../components/layout/Navbar";
+import Footer from "../components/layout/Footer";
+import WhatsAppFloat from "../components/shared/WhatsAppFloat";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -36,8 +36,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
       <body
+        suppressHydrationWarning
         className={`${inter.variable} ${poppins.variable} ${playfair.variable} antialiased min-h-screen flex flex-col`}
       >
         <Navbar />

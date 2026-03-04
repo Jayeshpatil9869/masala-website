@@ -6,7 +6,7 @@ import { cn } from '@/lib/utils';
 import { Button, buttonVariants } from '@/components/ui/button';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
-import { buildWhatsAppLink } from '@/lib/whatsapp';
+
 import CartDrawer from '@/components/cart/CartDrawer';
 import { Phone, Search } from 'lucide-react';
 
@@ -22,10 +22,14 @@ export default function Navbar() {
   const scrolled = useScroll(10);
   const pathname = usePathname();
 
-  const waLink = buildWhatsAppLink(
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890',
-    'Hi! I visited your website and would like to know more about your masala products.',
-  );
+  // Pages without a dark hero image need the navbar to always look "scrolled"
+  // (dark text/icons) so they remain visible over the light background
+  const isLightBgPage = !!(pathname && pathname !== '/products' && pathname.startsWith('/products/'));
+  const effectiveScrolled = scrolled || isLightBgPage;
+
+  const waPhone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890';
+  const waMessage = encodeURIComponent('Hi! I visited your website and would like to know more about your masala products.');
+  const waLink = `https://wa.me/${waPhone}?text=${waMessage}`;
 
   // Lock body scroll when mobile menu is open
   React.useEffect(() => {
@@ -45,9 +49,9 @@ export default function Navbar() {
         {
           // When scrolled: becomes a glass floating pill with max-width shrink + shadow
           'bg-white/95 supports-[backdrop-filter]:bg-white/60 border-gray-200/80 backdrop-blur-xl md:top-4 md:max-w-5xl md:shadow-lg md:shadow-black/5':
-            scrolled && !open,
+            effectiveScrolled && !open,
           // When not scrolled: full-width transparent
-          'bg-transparent md:max-w-full': !scrolled && !open,
+          'bg-transparent md:max-w-full': !effectiveScrolled && !open,
           // When mobile open: white header
           'bg-white': open,
         },
@@ -57,13 +61,16 @@ export default function Navbar() {
         className={cn(
           'flex h-16 w-full items-center justify-between px-4 lg:px-6',
           'md:h-14 md:transition-all md:ease-out',
-          { 'md:px-4': scrolled },
+          { 'md:px-4': effectiveScrolled },
         )}
       >
         {/* Logo */}
         <Link href="/" className="flex items-center gap-2 flex-shrink-0 z-50">
-          <span className="font-display text-2xl font-bold text-brand-red">
-            Masala<span className="text-brand-gold">Brand</span>
+          <span className={cn(
+            'font-display text-2xl font-bold transition-colors',
+            effectiveScrolled || open ? 'text-brand-red' : 'text-white',
+          )}>
+            Masala<span className={cn(effectiveScrolled || open ? 'text-brand-gold' : 'text-brand-gold')}>Brand</span>
           </span>
         </Link>
 
@@ -78,7 +85,9 @@ export default function Navbar() {
                 'text-sm font-medium rounded-full transition-colors px-4',
                 pathname === link.href
                   ? 'text-brand-red bg-red-50'
-                  : 'text-gray-700 hover:text-brand-orange hover:bg-orange-50',
+                  : effectiveScrolled
+                    ? 'text-gray-700 hover:text-brand-orange hover:bg-orange-50'
+                    : 'text-white hover:text-brand-orange hover:bg-white/10',
               )}
             >
               {link.label}
@@ -91,12 +100,17 @@ export default function Navbar() {
           <Button
             variant="ghost"
             size="icon"
-            className="text-gray-600 hover:text-brand-orange hover:bg-orange-50 rounded-full h-9 w-9"
+            className={cn(
+              'rounded-full h-9 w-9 transition-colors',
+              effectiveScrolled
+                ? 'text-gray-600 hover:text-brand-orange hover:bg-orange-50'
+                : 'text-white hover:text-white/80 hover:bg-white/10',
+            )}
           >
             <Search className="h-4 w-4" />
           </Button>
 
-          <CartDrawer />
+          <CartDrawer transparent={!effectiveScrolled} />
 
           <Button
             asChild
@@ -111,12 +125,15 @@ export default function Navbar() {
 
         {/* Mobile: Cart + Animated Hamburger */}
         <div className="flex md:hidden items-center gap-2 z-50">
-          <CartDrawer />
+          <CartDrawer transparent={!effectiveScrolled && !open} />
           <Button
             size="icon"
-            variant="outline"
+            variant="ghost"
             onClick={() => setOpen(!open)}
-            className="border-gray-200 bg-white/80 text-gray-700 rounded-full h-9 w-9"
+            className={cn(
+              'rounded-full h-9 w-9 transition-colors',
+              effectiveScrolled || open ? 'text-gray-700 hover:bg-gray-100' : 'text-white hover:bg-white/10',
+            )}
           >
             <MenuToggleIcon open={open} className="size-5" duration={300} />
           </Button>

@@ -27,7 +27,7 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   const images = product.images || [product.image_url];
 
   return (
-    <div className="min-h-screen bg-[#f8f6ec] pt-24">
+    <div className="min-h-screen bg-brand-white pt-6">
       {/* Top Split Section - Hero */}
       <section className="container mx-auto px-4 lg:px-8 max-w-7xl pb-16">
         
