@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import Link from 'next/link';
 import { Facebook, Instagram, Twitter, Youtube, Phone, Mail, MapPin, ChevronRight } from 'lucide-react';
 
@@ -36,10 +37,14 @@ export default function Footer() {
 
             {/* Brand */}
             <div className="lg:col-span-5 flex flex-col gap-5">
-              <Link href="/" className="inline-block">
-                <span className="font-display text-3xl font-bold text-white">
-                  Gravit<span className="text-brand-gold">atee</span>
-                </span>
+              <Link href="/" className="">
+                <Image
+                  src="/gurukrupa-logo.jpg"
+                  alt="Gurukrupa Masala"
+                  width={160}
+                  height={64}
+                  className="h-14 sm:h-16 w-auto object-contain"
+                />
               </Link>
               <p className="text-brand-cream/60 text-sm leading-relaxed max-w-sm font-body">
                 Manufacture Repeated & Marketed By: GURUKRUPA GRUH UDYOG
