@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
 import { Plus, Trash2, Loader2, ArrowLeft, Upload, X } from "lucide-react";
-import { slugify } from "@/lib/utils";
+import { slugify, getFriendlyErrorMessage } from "@/lib/utils";
 import { useRouter, useParams } from "next/navigation";
 
 type Variant = { id?: string; weight_label: string; price: string };
@@ -105,7 +105,7 @@ export default function EditProductPage() {
       toast.success("Product updated successfully!");
       router.push("/products");
     } catch (err: any) {
-      toast.error(err.message || "Failed to update product");
+      toast.error(getFriendlyErrorMessage(err));
     }
     setSaving(false);
   };
@@ -140,9 +140,14 @@ export default function EditProductPage() {
               />
             </div>
             <div>
-              <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">Slug *</label>
-              <input required value={form.slug} onChange={(e) => setForm({ ...form, slug: e.target.value })}
-                className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 font-mono"
+              <label className="block text-xs font-semibold text-gray-600 mb-1.5 uppercase tracking-wider">
+                URL ID <span className="normal-case font-normal text-gray-400">(auto-generated)</span>
+              </label>
+              <input
+                readOnly
+                tabIndex={-1}
+                value={form.slug}
+                className="w-full px-3 py-2.5 border border-gray-200 rounded-lg text-sm bg-gray-100 text-gray-400 font-mono cursor-not-allowed select-none"
               />
             </div>
             <div>
