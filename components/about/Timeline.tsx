@@ -3,10 +3,10 @@
 import { motion } from 'framer-motion';
 
 const milestones = [
-  { year: '1978', title: 'The Beginning', desc: 'Started in a small kitchen hand-pounding spices for the local neighborhood.' },
-  { year: '1995', title: 'First Retail Store', desc: 'Opened our first dedicated masala boutique in the historic spices market.' },
-  { year: '2010', title: 'State-of-the-Art Mill', desc: 'Upgraded to a hygienic stone-grinding facility while preserving our traditional methods.' },
-  { year: '2024', title: 'Going Direct-to-Consumer', desc: 'Launched our WhatsApp delivery service, reaching kitchens nationwide.' },
+  { year: '1978', title: 'The Bicycle Journey', desc: 'Started selling pure masalas door-to-door on a bicycle in the local neighborhood.' },
+  { year: '1995', title: 'Wholesale & Retail Expansion', desc: 'Expanded operations, shifting from a bicycle to a dedicated manufacturing setup for wholesale.' },
+  { year: '2010', title: 'Building the Empire', desc: 'Scaled our manufacturing facility to supply retailers and bulk buyers directly across the market.' },
+  { year: '2024', title: 'The Signature Categories', desc: 'Cemented our legacy with dedicated Pooja, Powder, Box, Pouch, Upwas, and Winter Specials.' },
 ];
 
 export default function Timeline() {

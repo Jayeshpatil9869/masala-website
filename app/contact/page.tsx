@@ -3,7 +3,7 @@ import ContactForm from "@/components/contact/ContactForm";
 import { MapPin, Clock, ChevronRight } from "lucide-react";
 
 export const metadata = {
-  title: 'Contact Us | MasalaBrand',
+  title: 'Contact Us | Gurukrupa Gruh Udyog',
   description: 'Get in touch with us for orders, wholesale inquiries, or just to say hello.',
 };
 
@@ -11,7 +11,7 @@ export default function ContactPage() {
   return (
     <>
       {/* Contact Hero */}
-      <section className="relative h-[40vh] min-h-[300px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
+      <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=2000')" }}
@@ -19,8 +19,11 @@ export default function ContactPage() {
           <div className="absolute inset-0 bg-gradient-to-r from-brand-red/80 to-brand-dark/70" />
         </div>
 
-        <div className="container relative z-10 px-4 text-center text-brand-white pb-12 md:pb-16">
-          <h1 className="font-display text-4xl md:text-6xl font-bold mb-4">
+        <div className="container relative z-10 px-4 text-center text-brand-white">
+          <div className="text-brand-orange text-sm font-medium tracking-widest uppercase mb-4">
+            Gurukrupa Gruh Udyog
+          </div>
+          <h1 className="font-display text-4xl md:text-6xl font-bold mb-4 max-w-4xl mx-auto leading-tight">
             Get in Touch
           </h1>
           <p className="font-body text-lg text-brand-cream/90 max-w-xl mx-auto">

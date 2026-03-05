@@ -24,7 +24,7 @@ export default function CategoryGrid() {
   }, []);
 
   return (
-    <section className="py-14 md:py-20 bg-brand-cream relative">
+    <section className="py-24 bg-brand-cream relative">
       <div className="container mx-auto px-4 lg:px-8">
         
         {/* Section Header */}

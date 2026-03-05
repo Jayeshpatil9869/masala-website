@@ -1,5 +1,5 @@
 import HeroBanner from "@/components/home/HeroBanner";
-import TrustBadges from "@/components/home/TrustBadges";
+// import TrustBadges from "@/components/home/TrustBadges";
 import CategoryGrid from "@/components/home/CategoryGrid";
 import FeaturedProducts from "@/components/home/FeaturedProducts";
 import BrandStory from "@/components/home/BrandStory";
@@ -10,7 +10,7 @@ export default function Home() {
   return (
     <>
       <HeroBanner />
-      <TrustBadges />
+      {/* <TrustBadges /> */}
       <CategoryGrid />
       <FeaturedProducts />
       <BrandStory />

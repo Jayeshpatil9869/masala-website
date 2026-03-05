@@ -3,8 +3,8 @@ import USPCards from "@/components/about/USPCards";
 import QualityProcess from "@/components/about/QualityProcess";
 
 export const metadata = {
-  title: 'Our Story | MasalaBrand',
-  description: 'Learn about our 45-year legacy of crafting pure, authentic Indian masala.',
+  title: 'Our Story | Gurukrupa Gruh Udyog',
+  description: 'Learn about our 45-year legacy from a humble bicycle to a sprawling masala empire.',
 };
 
 export default function AboutPage() {
@@ -41,13 +41,13 @@ export default function AboutPage() {
               <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
               <div className="prose prose-lg text-gray-600 font-body">
                 <p>
-                  It started in a small kitchen. Our founder believed that the secret to a perfect meal wasn't just the recipe, but the absolute purity of the spices used to make it.
+                  It started with a humble bicycle. Our founder pedaled through local neighborhoods, believing that the secret to a perfect meal wasn't just the recipe, but the absolute purity of the spices.
                 </p>
                 <p>
-                  For over four decades, we have held onto that single belief. We don't believe in shortcuts, artificial colors, or fillers. Every pinch of MasalaBrand spice is a testament to traditional Indian culinary heritage.
+                  For over four decades, <strong className="text-brand-dark">Gurukrupa Gruh Udyog</strong> has held onto that single belief. We don't believe in shortcuts, artificial colors, or fillers. Every pinch of our masala is a testament to traditional Indian culinary heritage.
                 </p>
                 <p>
-                  Today, while our facilities have modernized to ensure the highest standards of hygiene and safety, our core process remains unchanged: source the best, clean thoroughly, roast perfectly, and grind slowly.
+                  Today, that single bicycle has transformed into a vast masala manufacturing empire. We proudly supply wholesalers and retailers with our expansive ranges, including <span className="font-medium text-brand-red">Pooja Special, Powder Special, Box Products, Pouches, Upwas Special,</span> and <span className="font-medium">Winter Special</span>, ensuring our process and devotion remains unchanged.
                 </p>
               </div>
             </div>

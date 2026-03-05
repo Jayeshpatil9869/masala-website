@@ -37,17 +37,20 @@ export default function Navbar() {
   return (
     <header
       className={cn(
-        'sticky top-0 z-50 w-full transition-all ease-out duration-300',
+        'fixed z-50 transition-all ease-out duration-500 left-1/2 -translate-x-1/2 w-full',
         {
-          'bg-white/95 supports-[backdrop-filter]:bg-white/60 backdrop-blur-xl border-b border-gray-200/80 shadow-sm':
+          // When scrolled on desktop: floating pill shape centered
+          'top-0 md:top-4 md:w-[calc(100%-2rem)] md:max-w-5xl md:rounded-full bg-white shadow-[0_8px_30px_rgb(0,0,0,0.08)]':
             effectiveScrolled && !open,
-          'bg-transparent border-b border-transparent': !effectiveScrolled && !open,
-          'bg-white': open,
+          // When at the top (not scrolled): transparent full width
+          'top-0 max-w-full bg-transparent border-b border-transparent': !effectiveScrolled && !open,
+          // When mobile menu is open
+          'top-0 max-w-full bg-white': open,
         },
       )}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <nav className="flex h-16 items-center justify-between gap-4">
+      <div className={cn("mx-auto transition-all duration-500", effectiveScrolled ? "max-w-5xl px-4 sm:px-6" : "max-w-7xl px-4 sm:px-6 lg:px-8")}>
+        <nav className={cn("flex items-center justify-between gap-4 transition-all duration-500", effectiveScrolled ? "h-14" : "h-16")}>
 
           {/* Logo */}
           <Link href="/" className="flex items-center flex-shrink-0 z-50">
@@ -71,9 +74,11 @@ export default function Navbar() {
                   buttonVariants({ variant: 'ghost' }),
                   'text-sm font-medium rounded-full transition-colors px-4',
                   pathname === link.href
-                    ? 'text-brand-red bg-red-50'
+                    ? effectiveScrolled
+                      ? 'bg-white text-brand-orange shadow-sm'
+                      : 'text-brand-red bg-red-50'
                     : effectiveScrolled
-                      ? 'text-gray-700 hover:text-brand-orange hover:bg-orange-50'
+                      ? 'text-black hover:text-brand-orange hover:bg-white/60'
                       : 'text-white hover:text-brand-orange hover:bg-white/10',
                 )}
               >

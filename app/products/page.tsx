@@ -2,7 +2,7 @@ import ProductGrid from "@/components/products/ProductGrid";
 import { Suspense } from 'react';
 
 export const metadata = {
-  title: 'Our Products | MasalaBrand',
+  title: 'Our Products | Gurukrupa Gruh Udyog',
   description: 'Explore our complete range of premium blended masalas and pure spices.',
 };
 

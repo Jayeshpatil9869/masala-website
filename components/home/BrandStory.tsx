@@ -15,9 +15,9 @@ export default function BrandStory() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           
-          {/* Image Side */}
+          {/* Image Side — explicit aspect ratio so Next.js Image fill renders */}
           <motion.div 
-            className="w-full lg:w-1/2 relative min-h-[260px] sm:min-h-[400px] lg:min-h-[500px] rounded-3xl overflow-hidden shadow-2xl"
+            className="w-full lg:w-1/2 relative h-[300px] sm:h-[420px] lg:h-[520px] rounded-3xl overflow-hidden shadow-2xl flex-shrink-0"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -28,11 +28,12 @@ export default function BrandStory() {
               alt="Masala Grinding Process" 
               fill 
               className="object-cover"
+              sizes="(max-width: 1024px) 100vw, 50vw"
             />
             <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"></div>
-            <div className="absolute bottom-8 left-8 bg-brand-cream p-6 rounded-2xl max-w-xs shadow-xl hidden sm:block">
+            <div className="absolute bottom-8 left-8 bg-brand-cream p-5 rounded-2xl max-w-xs shadow-xl hidden sm:block">
               <span className="font-display text-4xl font-bold text-brand-red block mb-2">1978</span>
-              <p className="text-brand-dark font-medium text-sm">The year our grandfather started hand-pounding spices in a small alleyway.</p>
+              <p className="text-brand-dark font-medium text-sm">The year our founder started selling pure masalas door-to-door on a bicycle.</p>
             </div>
           </motion.div>
 
@@ -50,20 +51,20 @@ export default function BrandStory() {
             <div className="w-16 h-1 bg-brand-gold rounded-full mb-6 md:mb-8"></div>
             
             <p className="text-base md:text-lg text-gray-700 leading-relaxed font-body mb-5 md:mb-6">
-              For over four decades, MasalaBrand has believed in one simple truth: pure ingredients create unforgettable meals. We source the finest spices directly from farmers across India, sun-dry them traditionally, and stone-grind them to preserve their essential oils.
+              What started on a humble bicycle has now grown into a vast manufacturing empire. For over four decades, <strong className="text-brand-dark">Gurukrupa Gruh Udyog</strong> has supplied premium masalas to wholesalers and retailers nationwide, believing in one simple truth: pure ingredients create unforgettable meals.
             </p>
             <p className="text-base md:text-lg text-gray-700 leading-relaxed font-body mb-8 md:mb-10">
-              No artificial colors. No fillers. Just 100% authentic masala that brings the true flavor of Indian heritage straight to your kitchen.
+              From our signature <span className="font-medium text-brand-red">Pooja Special</span> and <span className="font-medium text-brand-orange">Powder Special</span> to <span className="font-medium">Box Products, Pouches, Upwas Special,</span> and <span className="font-medium">Winter Special</span>, we deliver 100% authentic flavors crafted from handpicked spices.
             </p>
 
-            {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-3 sm:gap-6">
+            {/* Stats Grid — flex-wrap so numbers never overlap on narrow screens */}
+            <div className="flex flex-wrap gap-x-8 gap-y-6">
               {stats.map((stat, idx) => (
-                <div key={idx} className="flex flex-col border-l-2 border-brand-orange pl-3 sm:pl-4 py-1.5 sm:py-2">
-                  <span className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-brand-red leading-tight">
+                <div key={idx} className="flex flex-col border-l-4 border-brand-orange pl-4 py-1 min-w-[90px]">
+                  <span className="font-display text-3xl md:text-4xl font-bold text-brand-red leading-none mb-1">
                     {stat.value}
                   </span>
-                  <span className="text-xs sm:text-sm font-medium text-brand-dark mt-0.5 sm:mt-1 leading-snug">
+                  <span className="text-sm font-medium text-brand-dark leading-snug">
                     {stat.label}
                   </span>
                 </div>

@@ -171,10 +171,10 @@ export default function CategoriesPage() {
             <p className="text-sm text-gray-400">No categories yet. Add your first category!</p>
           </div>
         ) : (
-          <div className="overflow-x-auto">
-          <table className="w-full text-sm">
+          <div className="overflow-auto max-h-[calc(100vh-250px)]">
+          <table className="w-full text-sm relative">
             <thead>
-              <tr className="border-b border-gray-50 bg-gray-50/50">
+              <tr className="border-b border-gray-100 bg-gray-50/95 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
                 <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Image</th>
                 <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
                 <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Slug</th>

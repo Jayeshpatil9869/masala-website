@@ -148,7 +148,7 @@ export default function Testimonials() {
             What our customers say
           </h2>
           <p className="text-gray-500 font-body">
-            Real spice lovers sharing their genuine experience with MasalaBrand.
+            Real spice lovers sharing their genuine experience with Gurukrupa Gruh Udyog.
           </p>
         </motion.div>
 
