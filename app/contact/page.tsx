@@ -1,6 +1,6 @@
 import ContactCards from "@/components/contact/ContactCards";
 import ContactForm from "@/components/contact/ContactForm";
-import { MapPin, Clock, ChevronRight } from "lucide-react";
+import { MapPin, Clock, ChevronRight, PhoneCall } from "lucide-react";
 
 export const metadata = {
   title: 'Contact Us | Gurukrupa Gruh Udyog',
@@ -9,35 +9,41 @@ export const metadata = {
 
 export default function ContactPage() {
   return (
-    <>
+    <div className="bg-[#f8f9fa] min-h-screen pb-24">
       {/* Contact Hero */}
-      <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
+      <section className="relative h-[65vh] min-h-[450px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
         <div 
           className="absolute inset-0 z-0 bg-cover bg-center"
           style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=2000')" }}
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-brand-red/80 to-brand-dark/70" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#1a1210]/90 via-[#3d1911]/80 to-[#1a1210]/90" />
         </div>
 
-        <div className="container relative z-10 px-4 text-center text-brand-white">
-          <div className="text-brand-orange text-sm font-medium tracking-widest uppercase mb-4">
+        {/* Decorative noise/texture overlay optional */}
+        <div className="absolute inset-0 z-[1] opacity-5 bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
+
+        <div className="container relative z-10 px-4 text-center text-brand-white flex flex-col items-center">
+          <div className="inline-block border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full text-brand-orange text-xs font-bold tracking-[0.2em] uppercase mb-6">
             Gurukrupa Gruh Udyog
           </div>
-          <h1 className="font-display text-4xl md:text-6xl font-bold mb-4 max-w-4xl mx-auto leading-tight">
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 max-w-4xl mx-auto leading-tight drop-shadow-2xl">
             Get in Touch
           </h1>
-          <p className="font-body text-lg text-brand-cream/90 max-w-xl mx-auto">
-            We're just a message away. Reach out to us for orders, bulk inquiries, or any feedback.
+          <p className="font-sans text-lg md:text-xl text-brand-cream/80 max-w-2xl mx-auto font-light leading-relaxed">
+            We're just a message away. Reach out to us for orders, wholesale inquiries, or just to say hello.
           </p>
         </div>
+        
+        {/* Soft bottom fade to match background */}
+        <div className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-[#f8f9fa] to-transparent z-10" />
       </section>
 
-      <section className="bg-brand-white pb-24 relative">
-        <div className="container mx-auto px-4 lg:px-8 max-w-7xl">
+      <section className="relative z-20">
+        <div className="container mx-auto px-4 pt-16 lg:px-8 max-w-7xl">
 
           <ContactCards />
 
-          <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto">
+          <div className="flex flex-col lg:flex-row gap-8 max-w-6xl mx-auto mt-8">
 
             {/* Left — Form */}
             <div className="w-full lg:w-[58%]">
@@ -45,57 +51,83 @@ export default function ContactPage() {
             </div>
 
             {/* Right — Info Panels */}
-            <div className="w-full lg:w-[42%] flex flex-col gap-5">
+            <div className="w-full lg:w-[42%] flex flex-col gap-6">
 
               {/* Visit Us */}
-              <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-7">
-                <h4 className="font-display font-bold text-xl text-brand-dark mb-5 flex items-center gap-2">
-                  <span className="w-8 h-8 bg-brand-cream rounded-lg flex items-center justify-center text-brand-orange">📍</span>
+              <div className="bg-white rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 p-8 sm:p-10 relative overflow-hidden group">
+                {/* Decorative blob corner */}
+                <div className="absolute top-0 right-0 w-32 h-32 bg-gray-50 rounded-full blur-2xl -translate-y-1/2 translate-x-1/2 pointer-events-none" />
+
+                <h4 className="font-display font-bold text-2xl text-gray-900 mb-8 flex items-center gap-3 relative z-10">
+                  <span className="w-10 h-10 bg-brand-orange/10 rounded-xl flex items-center justify-center shadow-inner group-hover:scale-110 transition-transform duration-500 text-brand-orange">
+                    <MapPin className="w-5 h-5" />
+                  </span>
                   Visit Us
                 </h4>
-                <div className="space-y-4">
-                  <div className="flex gap-3 text-sm">
-                    <MapPin className="w-4 h-4 text-brand-orange mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold text-brand-dark">GURUKRUPA GRUH UDYOG</p>
-                      <p className="text-gray-500 leading-relaxed">S.No. 182/2, Plot No. 111,<br/>Nr. Jajuvadi, B/h., Sant Nirankari Kendra,<br/>Bhaygaon Shiwar, Malegaon<br/>Dist. Nashik - 423203 (M.S)</p>
+                
+                <div className="space-y-6 relative z-10">
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0 border border-gray-100">
+                      <MapPin className="w-4 h-4 text-gray-400" />
+                    </div>
+                    <div className="pt-1">
+                      <p className="font-bold text-gray-900 text-sm mb-1 tracking-wide">GURUKRUPA GRUH UDYOG</p>
+                      <p className="text-gray-500 leading-relaxed text-sm">S.No. 182/2, Plot No. 111,<br/>Nr. Jajuvadi, B/h., Sant Nirankari Kendra,<br/>Bhaygaon Shiwar, Malegaon<br/>Dist. Nashik - 423203 (M.S)</p>
                     </div>
                   </div>
-                  <div className="flex gap-3 text-sm">
-                    <Clock className="w-4 h-4 text-brand-orange mt-0.5 flex-shrink-0" />
-                    <div>
-                      <p className="font-semibold text-brand-dark">Hours of Operation</p>
-                      <p className="text-gray-500">Mon – Sat: 9:00 AM – 7:00 PM</p>
-                      <p className="text-gray-400 text-xs mt-0.5">Sunday: Closed</p>
+                  
+                  <div className="w-full h-px bg-gradient-to-r from-gray-100 via-gray-200 to-transparent" />
+                  
+                  <div className="flex gap-4">
+                    <div className="w-10 h-10 rounded-full bg-gray-50 flex items-center justify-center flex-shrink-0 border border-gray-100">
+                      <Clock className="w-4 h-4 text-gray-400" />
+                    </div>
+                    <div className="pt-1">
+                      <p className="font-bold text-gray-900 text-sm mb-1 tracking-wide">HOURS OF OPERATION</p>
+                      <p className="text-gray-500 text-sm">Mon – Sat: 9:00 AM – 7:00 PM</p>
+                      <p className="text-red-400/80 font-medium text-xs mt-1 bg-red-50 inline-block px-2 py-0.5 rounded-md">Sunday: Closed</p>
                     </div>
                   </div>
                 </div>
 
                 {/* Static map placeholder */}
                 <div
-                  className="mt-5 rounded-xl overflow-hidden h-32 bg-cover bg-center border border-gray-100"
+                  className="mt-8 rounded-2xl overflow-hidden h-36 bg-cover bg-center border border-gray-100 shadow-inner group-hover:shadow-lg transition-shadow duration-500 relative"
                   style={{ backgroundImage: "url('https://images.unsplash.com/photo-1604357209793-fca5dca89f97?auto=format&fit=crop&q=80&w=600')" }}
                 >
-                  <div className="w-full h-full bg-brand-dark/30 flex items-center justify-center">
-                    <span className="text-white text-xs font-medium bg-black/40 px-3 py-1.5 rounded-full">📍 Maharashtra, India</span>
+                  <div className="absolute inset-0 bg-brand-dark/20 group-hover:bg-brand-dark/10 transition-colors duration-500" />
+                  <div className="w-full h-full flex items-center justify-center relative z-10">
+                    <span className="text-white text-xs font-bold bg-black/50 backdrop-blur-md px-4 py-2 rounded-full border border-white/20 shadow-xl flex items-center gap-2 group-hover:scale-105 transition-transform duration-300">
+                      <MapPin className="w-3 h-3 text-brand-orange" />
+                      Maharashtra, India
+                    </span>
                   </div>
                 </div>
               </div>
 
               {/* Wholesale Card */}
-              <div className="bg-brand-dark rounded-2xl p-7 text-white relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-brand-orange/10 rounded-full -translate-x-4 -translate-y-8" />
-                <div className="relative z-10">
-                  <div className="w-10 h-10 bg-brand-orange/20 rounded-xl flex items-center justify-center mb-4 text-xl">🤝</div>
-                  <h4 className="font-display font-bold text-xl text-white mb-2">Wholesale Enquiries</h4>
-                  <p className="text-brand-cream/60 text-sm mb-5 leading-relaxed">
-                    Interested in distributing our products? Competitive margins, priority shipping, and full marketing support.
+              <div className="bg-[#1a1210] rounded-[2rem] p-8 sm:p-10 text-white relative overflow-hidden group shadow-[0_20px_40px_rgb(0,0,0,0.2)]">
+                {/* Decorative background elements */}
+                <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-brand-orange/30 transition-colors duration-700 pointer-events-none" />
+                <div className="absolute bottom-0 left-0 w-40 h-40 bg-brand-red/10 rounded-full blur-2xl translate-y-1/3 -translate-x-1/3 pointer-events-none" />
+                
+                <div className="relative z-10 flex flex-col h-full">
+                  <div className="w-12 h-12 bg-white/10 backdrop-blur-md rounded-xl flex items-center justify-center mb-6 text-xl border border-white/10 group-hover:-translate-y-1 transition-transform duration-500 shadow-xl">
+                    <PhoneCall className="w-5 h-5 text-brand-orange" />
+                  </div>
+                  
+                  <h4 className="font-display font-bold text-2xl text-white mb-3">Wholesale Inquiries</h4>
+                  
+                  <p className="text-gray-400 text-sm mb-8 leading-relaxed font-light">
+                    Interested in distributing our premium products? We offer competitive margins, priority shipping, and bespoke marketing support for verified dealers.
                   </p>
+                  
                   <a
                     href="mailto:gravitatespices01@gmail.com"
-                    className="inline-flex items-center gap-2 bg-brand-orange hover:bg-orange-600 text-white font-semibold text-sm px-5 py-2.5 rounded-full transition-colors"
+                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-brand-cream text-brand-dark font-bold text-sm px-6 h-12 rounded-full transition-all duration-300 mt-auto group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
                   >
-                    Apply to be a Dealer <ChevronRight className="w-4 h-4" />
+                    Apply to be a Dealer 
+                    <ChevronRight className="w-4 h-4 text-brand-orange" />
                   </a>
                 </div>
               </div>
@@ -105,6 +137,6 @@ export default function ContactPage() {
         </div>
       </section>
 
-    </>
+    </div>
   );
 }

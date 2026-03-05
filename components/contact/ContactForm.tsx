@@ -7,7 +7,6 @@ import * as z from 'zod';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Label } from '@/components/ui/label';
 import { 
   Form, 
   FormControl, 
@@ -16,6 +15,7 @@ import {
   FormLabel, 
   FormMessage 
 } from '@/components/ui/form';
+import { Send, CheckCircle2 } from 'lucide-react';
 
 const formSchema = z.object({
   name: z.string().min(2, "Name is required"),
@@ -64,32 +64,35 @@ export default function ContactForm() {
   }
 
   return (
-    <div className="bg-white p-8 md:p-10 rounded-3xl shadow-sm border border-gray-100 h-full">
-      <div className="mb-8">
-        <h3 className="font-display font-bold text-3xl text-brand-dark mb-2">Send us a Message</h3>
-        <p className="text-gray-600 font-body">We usually reply within a few hours.</p>
+    <div className="bg-white p-8 sm:p-12 rounded-[2.5rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-gray-100/50 h-full relative overflow-hidden">
+      {/* Decorative background element */}
+      <div className="absolute top-0 right-0 w-64 h-64 bg-brand-orange/[0.03] rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+
+      <div className="mb-10 relative z-10">
+        <h3 className="font-display font-bold text-3xl sm:text-4xl text-gray-900 mb-3 tracking-tight">Send us a Message</h3>
+        <p className="text-gray-500 font-sans text-base">We usually reply within a few hours. Let's talk about your needs.</p>
       </div>
 
       {isSuccess ? (
-        <div className="bg-green-50 text-green-800 p-6 rounded-2xl border border-green-200 text-center animate-in fade-in">
-          <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
-             <span className="text-2xl">✓</span>
+        <div className="bg-green-50/80 text-green-900 p-8 rounded-3xl border border-green-100 text-center animate-in fade-in slide-in-from-bottom-4 duration-500">
+          <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-5">
+             <CheckCircle2 className="w-8 h-8 text-green-600" />
           </div>
-          <h4 className="font-bold text-lg mb-2">Message Sent Successfully!</h4>
-          <p className="text-sm">Thank you for reaching out. We will get back to you shortly.</p>
+          <h4 className="font-display font-bold text-2xl mb-2">Message Sent Successfully!</h4>
+          <p className="text-green-700/80 text-sm">Thank you for reaching out. Our team will get back to you shortly.</p>
         </div>
       ) : (
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6 relative z-10">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               <FormField
                 control={form.control}
                 name="name"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Full Name *</FormLabel>
+                    <FormLabel className="text-gray-700 font-semibold text-sm">Full Name <span className="text-brand-red">*</span></FormLabel>
                     <FormControl>
-                      <Input placeholder="John Doe" {...field} className="bg-gray-50 border-gray-200" />
+                      <Input placeholder="John Doe" {...field} className="bg-gray-50/50 border-gray-200 h-12 rounded-xl focus-visible:ring-brand-orange/20 focus-visible:border-brand-orange transition-all px-4" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -100,9 +103,9 @@ export default function ContactForm() {
                 name="phone"
                 render={({ field }) => (
                   <FormItem>
-                    <FormLabel>Phone Number *</FormLabel>
+                    <FormLabel className="text-gray-700 font-semibold text-sm">Phone Number <span className="text-brand-red">*</span></FormLabel>
                     <FormControl>
-                      <Input placeholder="+91 9876543210" {...field} className="bg-gray-50 border-gray-200" />
+                      <Input placeholder="+91 9876543210" {...field} className="bg-gray-50/50 border-gray-200 h-12 rounded-xl focus-visible:ring-brand-orange/20 focus-visible:border-brand-orange transition-all px-4" />
                     </FormControl>
                     <FormMessage />
                   </FormItem>
@@ -115,9 +118,9 @@ export default function ContactForm() {
               name="email"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Email Address (Optional)</FormLabel>
+                  <FormLabel className="text-gray-700 font-semibold text-sm">Email Address <span className="text-gray-400 font-normal">(Optional)</span></FormLabel>
                   <FormControl>
-                    <Input placeholder="john@example.com" {...field} className="bg-gray-50 border-gray-200" />
+                    <Input placeholder="john@example.com" {...field} className="bg-gray-50/50 border-gray-200 h-12 rounded-xl focus-visible:ring-brand-orange/20 focus-visible:border-brand-orange transition-all px-4" />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -129,17 +132,22 @@ export default function ContactForm() {
               name="subject"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Subject *</FormLabel>
+                  <FormLabel className="text-gray-700 font-semibold text-sm">Subject <span className="text-brand-red">*</span></FormLabel>
                   <FormControl>
-                    <select 
-                      {...field} 
-                      className="flex h-10 w-full rounded-md border border-gray-200 bg-gray-50 px-3 py-2 text-sm ring-offset-background focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    >
-                      <option value="Order Enquiry">Order Enquiry</option>
-                      <option value="Wholesale">Wholesale / Distributorship</option>
-                      <option value="Feedback">Feedback</option>
-                      <option value="Other">Other</option>
-                    </select>
+                    <div className="relative">
+                      <select 
+                        {...field} 
+                        className="flex h-12 w-full items-center justify-between rounded-xl border border-gray-200 bg-gray-50/50 px-4 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-brand-orange/20 focus:border-brand-orange disabled:cursor-not-allowed disabled:opacity-50 appearance-none transition-all cursor-pointer"
+                      >
+                        <option value="Order Enquiry">Order Enquiry</option>
+                        <option value="Wholesale">Wholesale / Distributorship</option>
+                        <option value="Feedback">Feedback / Suggestions</option>
+                        <option value="Other">Other Query</option>
+                      </select>
+                      <div className="absolute right-4 top-1/2 -translate-y-1/2 pointer-events-none">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-gray-500"><path d="m6 9 6 6 6-6"/></svg>
+                      </div>
+                    </div>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -151,11 +159,11 @@ export default function ContactForm() {
               name="message"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Message *</FormLabel>
+                  <FormLabel className="text-gray-700 font-semibold text-sm">Message <span className="text-brand-red">*</span></FormLabel>
                   <FormControl>
                     <Textarea 
-                      placeholder="How can we help you?" 
-                      className="resize-none bg-gray-50 border-gray-200 min-h-[120px]" 
+                      placeholder="How can we help you today?" 
+                      className="resize-none bg-gray-50/50 border-gray-200 min-h-[140px] rounded-xl focus-visible:ring-brand-orange/20 focus-visible:border-brand-orange transition-all p-4" 
                       {...field} 
                     />
                   </FormControl>
@@ -164,8 +172,15 @@ export default function ContactForm() {
               )}
             />
 
-            <Button type="submit" disabled={isSubmitting} className="w-full bg-brand-red hover:bg-red-800 text-white rounded-xl h-12 text-lg">
-              {isSubmitting ? 'Sending...' : 'Send Message'}
+            <Button type="submit" disabled={isSubmitting} className="w-full bg-brand-orange hover:bg-orange-600 text-white rounded-xl h-14 text-base font-bold transition-all duration-300 shadow-[0_8px_20px_rgb(238,114,20,0.25)] hover:shadow-[0_12px_25px_rgb(238,114,20,0.35)] hover:-translate-y-0.5 group flex gap-2 items-center justify-center mt-4">
+              {isSubmitting ? (
+                <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin" />
+              ) : (
+                <>
+                  Send Message
+                  <Send className="w-4 h-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" />
+                </>
+              )}
             </Button>
           </form>
         </Form>

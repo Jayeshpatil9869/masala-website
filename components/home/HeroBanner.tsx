@@ -13,7 +13,7 @@ export default function HeroBanner() {
   );
 
   return (
-    <section className="relative h-screen w-full flex items-center justify-center overflow-hidden -mt-16">
+    <section className="relative min-h-[100dvh] w-full flex items-center justify-center overflow-hidden">
       {/* Background Image & Overlay */}
       <div 
         className="absolute inset-0 z-0 bg-cover bg-center"

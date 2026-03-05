@@ -15,7 +15,7 @@ export function MenuToggleIcon({
 	strokeWidth = 2.5,
 	strokeLinecap = 'round',
 	strokeLinejoin = 'round',
-	duration = 300,
+	duration = 500,
 	...props
 }: MenuToggleProps) {
 	return (
