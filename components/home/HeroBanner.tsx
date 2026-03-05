@@ -25,7 +25,7 @@ export default function HeroBanner() {
       {/* Content */}
       <div className="container relative z-10 px-4 pt-16 text-center text-brand-white flex flex-col items-center">
         <motion.h1 
-          className="font-display text-5xl md:text-7xl font-bold mb-6 max-w-4xl leading-tight"
+          className="font-display text-4xl sm:text-5xl md:text-7xl font-bold mb-4 sm:mb-6 max-w-4xl leading-tight"
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, ease: "easeOut" }}

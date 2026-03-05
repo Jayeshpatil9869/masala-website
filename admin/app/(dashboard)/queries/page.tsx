@@ -104,21 +104,26 @@ export default function QueriesPage() {
             <p className="text-sm text-gray-400">No contact queries yet</p>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-50 bg-gray-50/50">
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Subject</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Message</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">Date</th>
-                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Customer</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">Subject</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">Message</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Status</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">Date</th>
+                <th className="text-right px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {queries.map((q) => (
-                <tr key={q.id} className={`hover:bg-gray-50/50 transition-colors ${!q.is_read ? "bg-orange-50/20" : ""}`}>
-                  <td className="px-6 py-4">
+                <tr
+                  key={q.id}
+                  className={`hover:bg-orange-50/30 transition-colors cursor-pointer ${!q.is_read ? "bg-orange-50/20" : ""}`}
+                  onClick={() => { setViewQuery(q); if (!q.is_read) markAsRead(q.id, q.is_read); }}
+                >
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="flex items-center gap-2">
                       {!q.is_read && <span className="w-2 h-2 bg-orange-400 rounded-full flex-shrink-0" />}
                       <div>
@@ -128,13 +133,13 @@ export default function QueriesPage() {
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 hidden md:table-cell">
+                  <td className="px-4 sm:px-6 py-4 hidden md:table-cell">
                     <span className="text-gray-600">{q.subject || "—"}</span>
                   </td>
-                  <td className="px-6 py-4 hidden lg:table-cell">
+                  <td className="px-4 sm:px-6 py-4 hidden lg:table-cell">
                     <p className="text-gray-500 text-xs line-clamp-2 max-w-xs">{q.message}</p>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4">
                     {q.is_read ? (
                       <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 text-green-600 text-xs font-medium rounded-full">
                         <CheckCircle className="w-3 h-3" /> Read
@@ -145,18 +150,18 @@ export default function QueriesPage() {
                       </span>
                     )}
                   </td>
-                  <td className="px-6 py-4 text-gray-400 text-xs hidden sm:table-cell">{formatDate(q.created_at)}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4 text-gray-400 text-xs hidden sm:table-cell">{formatDate(q.created_at)}</td>
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
-                        onClick={() => { setViewQuery(q); if (!q.is_read) markAsRead(q.id, q.is_read); }}
+                        onClick={(e) => { e.stopPropagation(); setViewQuery(q); if (!q.is_read) markAsRead(q.id, q.is_read); }}
                         className="p-2 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition"
                       >
                         <Eye className="w-4 h-4" />
                       </button>
                       {!q.is_read && (
                         <button
-                          onClick={() => markAsRead(q.id, q.is_read)}
+                          onClick={(e) => { e.stopPropagation(); markAsRead(q.id, q.is_read); }}
                           disabled={processingId === q.id}
                           className="p-2 rounded-lg text-gray-400 hover:text-green-500 hover:bg-green-50 transition disabled:opacity-50"
                         >
@@ -164,7 +169,7 @@ export default function QueriesPage() {
                         </button>
                       )}
                       <button
-                        onClick={() => handleDelete(q.id)}
+                        onClick={(e) => { e.stopPropagation(); handleDelete(q.id); }}
                         disabled={processingId === q.id}
                         className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-50"
                       >
@@ -176,6 +181,7 @@ export default function QueriesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

@@ -24,7 +24,7 @@ export default function CategoryGrid() {
   }, []);
 
   return (
-    <section className="py-20 bg-brand-cream relative">
+    <section className="py-14 md:py-20 bg-brand-cream relative">
       <div className="container mx-auto px-4 lg:px-8">
         
         {/* Section Header */}
@@ -34,7 +34,7 @@ export default function CategoryGrid() {
             whileInView={{ opacity: 1, scale: 1 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-red mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-red mb-4">
               Explore Our Masala Range
             </h2>
             <div className="w-24 h-1 bg-brand-orange mx-auto rounded-full"></div>

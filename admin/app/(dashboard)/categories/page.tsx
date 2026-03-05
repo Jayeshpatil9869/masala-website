@@ -147,20 +147,19 @@ export default function CategoriesPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Categories</h1>
           <p className="text-sm text-gray-500 mt-1">Manage product categories</p>
         </div>
         <button
           onClick={() => openDialog()}
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" /> Add Category
         </button>
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
@@ -172,21 +171,26 @@ export default function CategoriesPage() {
             <p className="text-sm text-gray-400">No categories yet. Add your first category!</p>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-50 bg-gray-50/50">
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Image</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Slug</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Products</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
-                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Image</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Name</th>
+                <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Slug</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Products</th>
+                <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
+                <th className="text-right px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {categories.map((cat) => (
-                <tr key={cat.id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4">
+                <tr
+                  key={cat.id}
+                  className="hover:bg-orange-50/30 transition-colors cursor-pointer"
+                  onClick={() => openDialog(cat)}
+                >
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden">
                       {cat.image_url ? (
                         <img src={cat.image_url} alt={cat.name} className="w-full h-full object-cover" />
@@ -197,27 +201,27 @@ export default function CategoriesPage() {
                       )}
                     </div>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4">
                     <p className="font-medium text-gray-900">{cat.name}</p>
                     {cat.description && <p className="text-xs text-gray-400 mt-0.5 line-clamp-1">{cat.description}</p>}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="hidden sm:table-cell px-4 sm:px-6 py-4">
                     <span className="font-mono text-xs bg-gray-100 text-gray-600 px-2 py-1 rounded">{cat.slug}</span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="px-4 sm:px-6 py-4">
                     <span className="text-gray-600 font-medium">{cat.product_count}</span>
                   </td>
-                  <td className="px-6 py-4 text-gray-400">{formatDate(cat.created_at)}</td>
-                  <td className="px-6 py-4">
+                  <td className="hidden sm:table-cell px-4 sm:px-6 py-4 text-gray-400">{formatDate(cat.created_at)}</td>
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <button
-                        onClick={() => openDialog(cat)}
+                        onClick={(e) => { e.stopPropagation(); openDialog(cat); }}
                         className="p-2 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition"
                       >
                         <Pencil className="w-4 h-4" />
                       </button>
                       <button
-                        onClick={() => handleDelete(cat.id)}
+                        onClick={(e) => { e.stopPropagation(); handleDelete(cat.id); }}
                         disabled={deleteId === cat.id}
                         className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-50"
                       >
@@ -229,6 +233,7 @@ export default function CategoriesPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
 

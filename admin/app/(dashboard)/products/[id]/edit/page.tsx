@@ -208,17 +208,17 @@ export default function EditProductPage() {
           </div>
           <div className="space-y-3">
             {variants.map((v, i) => (
-              <div key={i} className="flex items-center gap-3">
+              <div key={i} className="flex flex-wrap items-center gap-2">
                 <input value={v.weight_label} onChange={(e) => updateVariant(i, "weight_label", e.target.value)}
                   placeholder="100g"
-                  className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 font-mono"
+                  className="flex-1 min-w-[100px] px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50 font-mono"
                 />
                 <input type="number" value={v.price} onChange={(e) => updateVariant(i, "price", e.target.value)}
                   placeholder="Price (₹)"
-                  className="flex-1 px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
+                  className="flex-1 min-w-[100px] px-3 py-2.5 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-gray-50"
                 />
                 <button type="button" onClick={() => removeVariant(i)}
-                  className="p-2.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition">
+                  className="p-2.5 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition flex-shrink-0">
                   <Trash2 className="w-4 h-4" />
                 </button>
               </div>

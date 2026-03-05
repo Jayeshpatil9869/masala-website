@@ -129,7 +129,7 @@ const thirdColumn = testimonials.slice(6, 9);
 
 export default function Testimonials() {
   return (
-    <section className="bg-brand-white py-24 relative overflow-hidden">
+    <section className="bg-brand-white py-16 md:py-24 relative overflow-hidden">
       {/* Subtle background texture */}
       <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_rgba(230,126,34,0.05),transparent_60%)]" />
 
@@ -144,7 +144,7 @@ export default function Testimonials() {
           <div className="inline-flex items-center gap-2 border border-brand-orange/30 bg-brand-cream text-brand-orange text-xs font-semibold tracking-widest uppercase px-4 py-1.5 rounded-full mb-5">
             Testimonials
           </div>
-          <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark tracking-tight mb-4">
+          <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-dark tracking-tight mb-4">
             What our customers say
           </h2>
           <p className="text-gray-500 font-body">

@@ -11,13 +11,13 @@ const stats = [
 
 export default function BrandStory() {
   return (
-    <section className="py-24 bg-brand-cream relative overflow-hidden">
+    <section className="py-16 md:py-24 bg-brand-cream relative overflow-hidden">
       <div className="container mx-auto px-4 lg:px-8">
-        <div className="flex flex-col lg:flex-row gap-16 items-center">
+        <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           
           {/* Image Side */}
           <motion.div 
-            className="w-full lg:w-1/2 relative min-h-[500px] rounded-3xl overflow-hidden shadow-2xl"
+            className="w-full lg:w-1/2 relative min-h-[260px] sm:min-h-[400px] lg:min-h-[500px] rounded-3xl overflow-hidden shadow-2xl"
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true }}
@@ -44,26 +44,26 @@ export default function BrandStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.8, delay: 0.2 }}
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-6">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-dark mb-4 md:mb-6">
               Our Legacy of <span className="text-brand-orange">Purity</span>
             </h2>
-            <div className="w-16 h-1 bg-brand-gold rounded-full mb-8"></div>
+            <div className="w-16 h-1 bg-brand-gold rounded-full mb-6 md:mb-8"></div>
             
-            <p className="text-lg text-gray-700 leading-relaxed font-body mb-6">
+            <p className="text-base md:text-lg text-gray-700 leading-relaxed font-body mb-5 md:mb-6">
               For over four decades, MasalaBrand has believed in one simple truth: pure ingredients create unforgettable meals. We source the finest spices directly from farmers across India, sun-dry them traditionally, and stone-grind them to preserve their essential oils.
             </p>
-            <p className="text-lg text-gray-700 leading-relaxed font-body mb-10">
+            <p className="text-base md:text-lg text-gray-700 leading-relaxed font-body mb-8 md:mb-10">
               No artificial colors. No fillers. Just 100% authentic masala that brings the true flavor of Indian heritage straight to your kitchen.
             </p>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-3 gap-3 sm:gap-6">
               {stats.map((stat, idx) => (
-                <div key={idx} className="flex flex-col border-l-2 border-brand-orange pl-4 py-2">
-                  <span className="font-display text-3xl sm:text-4xl font-bold text-brand-red">
+                <div key={idx} className="flex flex-col border-l-2 border-brand-orange pl-3 sm:pl-4 py-1.5 sm:py-2">
+                  <span className="font-display text-xl sm:text-2xl md:text-3xl font-bold text-brand-red leading-tight">
                     {stat.value}
                   </span>
-                  <span className="text-sm font-medium text-brand-dark mt-1">
+                  <span className="text-xs sm:text-sm font-medium text-brand-dark mt-0.5 sm:mt-1 leading-snug">
                     {stat.label}
                   </span>
                 </div>

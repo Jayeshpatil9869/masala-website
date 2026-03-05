@@ -5,6 +5,7 @@ import ProductCard from './ProductCard';
 import ProductFilter from './ProductFilter';
 import { motion, AnimatePresence } from 'framer-motion';
 import { useSearchParams, useRouter } from 'next/navigation';
+import { SlidersHorizontal, X } from 'lucide-react';
 
 export default function ProductGrid() {
   const router = useRouter();
@@ -62,12 +63,25 @@ export default function ProductGrid() {
     return filtered;
   }, [products, activeCategory, searchTerm, maxPrice, sortOrder]);
 
+  const [filterOpen, setFilterOpen] = useState(false);
+
   return (
-    <div className="container mx-auto px-4 lg:px-8 py-12">
+    <div className="container mx-auto px-4 lg:px-8 py-8 sm:py-12">
+      {/* Mobile filter toggle button */}
+      <div className="lg:hidden mb-4">
+        <button
+          onClick={() => setFilterOpen(!filterOpen)}
+          className="flex items-center gap-2 px-4 py-2.5 bg-brand-cream border border-brand-orange/30 text-brand-dark text-sm font-semibold rounded-xl hover:bg-brand-orange/10 transition-colors"
+        >
+          {filterOpen ? <X className="w-4 h-4" /> : <SlidersHorizontal className="w-4 h-4" />}
+          {filterOpen ? 'Close Filters' : 'Filters'}
+        </button>
+      </div>
+
       <div className="flex flex-col lg:flex-row gap-8">
         
-        {/* Left Sidebar Filters */}
-        <aside className="w-full lg:w-1/4 lg:flex-shrink-0 bg-[#FAFAF7] p-6 rounded-2xl border border-gray-100 h-fit sticky top-24">
+        {/* Left Sidebar Filters (always visible on lg+, toggled on mobile) */}
+        <aside className={`w-full lg:w-1/4 lg:flex-shrink-0 bg-[#FAFAF7] p-6 rounded-2xl border border-gray-100 h-fit lg:sticky lg:top-24 ${filterOpen ? 'block' : 'hidden'} lg:block`}>
           <ProductFilter 
             activeCategory={activeCategory} 
             onCategoryChange={handleCategoryChange} 

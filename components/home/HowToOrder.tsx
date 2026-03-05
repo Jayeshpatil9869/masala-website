@@ -30,7 +30,7 @@ export default function HowToOrder() {
   );
 
   return (
-    <section className="py-24 bg-brand-white relative">
+    <section className="py-16 md:py-24 bg-brand-white relative">
       <div className="container mx-auto px-4 lg:px-8">
         
         <div className="text-center mb-16">
@@ -39,7 +39,7 @@ export default function HowToOrder() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
           >
-            <h2 className="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-4">
+            <h2 className="font-display text-3xl sm:text-4xl md:text-5xl font-bold text-brand-dark mb-4">
               How to Order
             </h2>
             <div className="w-24 h-1 bg-brand-gold mx-auto rounded-full mb-6"></div>
@@ -82,7 +82,7 @@ export default function HowToOrder() {
             viewport={{ once: true }}
             transition={{ delay: 0.6 }}
           >
-            <Button asChild size="lg" className="bg-brand-green hover:bg-green-700 text-white rounded-full text-lg h-16 px-10 shadow-lg shadow-green-600/30">
+            <Button asChild size="lg" className="bg-brand-green hover:bg-green-700 text-white rounded-full text-base md:text-lg h-14 md:h-16 px-7 md:px-10 shadow-lg shadow-green-600/30">
               <a href={waLink} target="_blank" rel="noreferrer">
                 <MessageCircle className="w-6 h-6 mr-3" />
                 Start Ordering on WhatsApp

@@ -1,6 +1,7 @@
 import { createClient } from "@/lib/supabase/server";
 import { Package, Tags, ListOrdered, MessageSquare } from "lucide-react";
 import { formatDate } from "@/lib/utils";
+import Link from "next/link";
 
 export default async function DashboardPage() {
   const supabase = await createClient();
@@ -64,8 +65,12 @@ export default async function DashboardPage() {
           </div>
           <div className="divide-y divide-gray-50">
             {recentProducts && recentProducts.length > 0 ? recentProducts.map((p: any) => (
-              <div key={p.id} className="flex items-center gap-4 px-6 py-3">
-                <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0">
+              <Link 
+                href={`/products/${p.id}/edit`} 
+                key={p.id} 
+                className="flex items-center gap-4 px-6 py-3 hover:bg-orange-50/30 transition-colors cursor-pointer group"
+              >
+                <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 group-hover:ring-2 ring-orange-100 transition-all">
                   {p.images?.[0] ? (
                     <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
                   ) : (
@@ -75,11 +80,11 @@ export default async function DashboardPage() {
                   )}
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-sm font-medium text-gray-900 truncate">{p.name}</p>
+                  <p className="text-sm font-medium text-gray-900 truncate group-hover:text-orange-600 transition-colors">{p.name}</p>
                   <p className="text-xs text-gray-400">{(p as any).categories?.name ?? "Uncategorized"}</p>
                 </div>
                 <span className="text-xs text-gray-400">{formatDate(p.created_at)}</span>
-              </div>
+              </Link>
             )) : (
               <div className="px-6 py-8 text-center text-sm text-gray-400">No products yet</div>
             )}
@@ -94,11 +99,15 @@ export default async function DashboardPage() {
           </div>
           <div className="divide-y divide-gray-50">
             {recentQueries && recentQueries.length > 0 ? recentQueries.map((q: any) => (
-              <div key={q.id} className="px-6 py-3">
+              <Link 
+                href="/queries" 
+                key={q.id} 
+                className={`block px-6 py-3 hover:bg-orange-50/30 transition-colors cursor-pointer group ${!q.is_read ? 'bg-orange-50/10' : ''}`}
+              >
                 <div className="flex items-start justify-between gap-2">
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <p className="text-sm font-medium text-gray-900 truncate">{q.name}</p>
+                      <p className="text-sm font-medium text-gray-900 truncate group-hover:text-orange-600 transition-colors">{q.name}</p>
                       {!q.is_read && (
                         <span className="flex-shrink-0 w-2 h-2 bg-orange-400 rounded-full" />
                       )}
@@ -108,7 +117,7 @@ export default async function DashboardPage() {
                   </div>
                   <span className="text-xs text-gray-400 flex-shrink-0">{formatDate(q.created_at)}</span>
                 </div>
-              </div>
+              </Link>
             )) : (
               <div className="px-6 py-8 text-center text-sm text-gray-400">No queries yet</div>
             )}

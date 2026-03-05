@@ -3,9 +3,10 @@
 import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Package, Loader2, Search, ExternalLink } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, Loader2, Search } from "lucide-react";
 import { formatDate, slugify } from "@/lib/utils";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 type Product = {
   id: string;
@@ -21,6 +22,7 @@ type Category = { id: string; name: string };
 
 export default function ProductsPage() {
   const supabase = createClient();
+  const router = useRouter();
   const [products, setProducts] = useState<Product[]>([]);
   const [categories, setCategories] = useState<Category[]>([]);
   const [loading, setLoading] = useState(true);
@@ -84,14 +86,14 @@ export default function ProductsPage() {
 
   return (
     <div>
-      <div className="flex items-center justify-between mb-8">
+      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Products</h1>
           <p className="text-sm text-gray-500 mt-1">Manage your spice product catalog</p>
         </div>
         <Link
           href="/products/new"
-          className="flex items-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition"
+          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" /> Add Product
         </Link>
@@ -120,7 +122,6 @@ export default function ProductsPage() {
         </select>
       </div>
 
-      {/* Table */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
         {loading ? (
           <div className="flex items-center justify-center py-20">
@@ -132,22 +133,27 @@ export default function ProductsPage() {
             <p className="text-sm text-gray-400">{search ? "No products match your search." : "No products yet. Add your first product!"}</p>
           </div>
         ) : (
+          <div className="overflow-x-auto">
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-gray-50 bg-gray-50/50">
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Product</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Variants</th>
-                <th className="text-left px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
-                <th className="text-right px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Product</th>
+                <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Category</th>
+                <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Variants</th>
+                <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Created</th>
+                <th className="text-right px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {products.map((p) => (
-                <tr key={p.id} className="hover:bg-gray-50/50 transition-colors">
-                  <td className="px-6 py-4">
+                <tr
+                  key={p.id}
+                  className="hover:bg-orange-50/30 transition-colors cursor-pointer"
+                  onClick={() => router.push(`/products/${p.id}/edit`)}
+                >
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="flex items-center gap-3">
-                      <div className="w-12 h-12 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
+                      <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gray-100 overflow-hidden flex-shrink-0">
                         {p.images?.[0] ? (
                           <img src={p.images[0]} alt={p.name} className="w-full h-full object-cover" />
                         ) : (
@@ -156,31 +162,32 @@ export default function ProductsPage() {
                           </div>
                         )}
                       </div>
-                      <div>
-                        <p className="font-medium text-gray-900">{p.name}</p>
-                        <p className="text-xs text-gray-400 font-mono">{p.slug}</p>
+                      <div className="min-w-0">
+                        <p className="font-medium text-gray-900 truncate max-w-[120px] sm:max-w-none">{p.name}</p>
+                        <p className="text-xs text-gray-400 font-mono truncate max-w-[120px] sm:max-w-none">{p.slug}</p>
                       </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4">
-                    <span className="inline-flex px-2.5 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full">
+                  <td className="px-4 sm:px-6 py-4">
+                    <span className="inline-flex px-2.5 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full whitespace-nowrap">
                       {p.categories?.name ?? "Uncategorized"}
                     </span>
                   </td>
-                  <td className="px-6 py-4">
+                  <td className="hidden sm:table-cell px-4 sm:px-6 py-4">
                     <span className="text-gray-600 font-medium">{p.product_variants?.[0]?.count ?? 0} sizes</span>
                   </td>
-                  <td className="px-6 py-4 text-gray-400">{formatDate(p.created_at)}</td>
-                  <td className="px-6 py-4">
+                  <td className="hidden sm:table-cell px-4 sm:px-6 py-4 text-gray-400">{formatDate(p.created_at)}</td>
+                  <td className="px-4 sm:px-6 py-4">
                     <div className="flex items-center justify-end gap-2">
                       <Link
                         href={`/products/${p.id}/edit`}
                         className="p-2 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition"
+                        onClick={(e) => e.stopPropagation()}
                       >
                         <Pencil className="w-4 h-4" />
                       </Link>
                       <button
-                        onClick={() => handleDelete(p.id)}
+                        onClick={(e) => { e.stopPropagation(); handleDelete(p.id); }}
                         disabled={deleteId === p.id}
                         className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-50"
                       >
@@ -192,6 +199,7 @@ export default function ProductsPage() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>
