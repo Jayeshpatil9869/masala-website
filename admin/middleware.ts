@@ -2,6 +2,13 @@ import { NextResponse, type NextRequest } from 'next/server';
 import { createServerClient } from '@supabase/ssr';
 
 export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Short-circuit for API routes immediately — no auth check needed for internal API routes
+  if (pathname.startsWith('/api')) {
+    return NextResponse.next({ request });
+  }
+
   let supabaseResponse = NextResponse.next({ request });
 
   const supabase = createServerClient(
@@ -25,11 +32,9 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  const { pathname } = request.nextUrl;
-
-  // Allow public paths
-  if (pathname === '/login' || pathname.startsWith('/api')) {
-    if (user && pathname === '/login') {
+  // Allow login page (redirect if already logged in)
+  if (pathname === '/login') {
+    if (user) {
       return NextResponse.redirect(new URL('/dashboard', request.url));
     }
     return supabaseResponse;

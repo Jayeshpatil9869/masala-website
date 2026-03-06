@@ -1,9 +1,8 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { adminClient } from '@/lib/supabase/admin';
 
 export async function GET() {
-  const supabase = await createClient();
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from('categories')
     .select('*, products(count)')
     .order('created_at', { ascending: false });
@@ -15,10 +14,9 @@ export async function GET() {
 }
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
   const body = await request.json();
 
-  const { data, error } = await supabase
+  const { data, error } = await adminClient
     .from('categories')
     .insert([body])
     .select()

@@ -1,16 +1,17 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { adminClient } from '@/lib/supabase/admin';
 
 export async function GET(request: Request) {
-  const supabase = await createClient();
   const { searchParams } = new URL(request.url);
-  
-  // Optional filters
   const categoryId = searchParams.get('category');
-  const query = supabase.from('products').select('*, categories(name), product_variants(count)').order('created_at', { ascending: false });
-  
+
+  let query = adminClient
+    .from('products')
+    .select('*, categories(name), product_variants(count)')
+    .order('created_at', { ascending: false });
+
   if (categoryId && categoryId !== 'all') {
-    query.eq('category_id', categoryId);
+    query = query.eq('category_id', categoryId);
   }
 
   const { data, error } = await query;
@@ -22,13 +23,11 @@ export async function GET(request: Request) {
 }
 
 export async function POST(request: Request) {
-  const supabase = await createClient();
   const body = await request.json();
-
-  // Create Product
   const { variants, ...productData } = body;
-  
-  const { data: product, error: productError } = await supabase
+
+  // Step 1: Insert product
+  const { data: product, error: productError } = await adminClient
     .from('products')
     .insert([productData])
     .select()
@@ -38,21 +37,21 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: productError.message }, { status: 500 });
   }
 
-  // Create Variants if they exist
+  // Step 2: Insert variants (if any) — runs right after product insert, no extra round-trip wait
   if (variants && variants.length > 0) {
     const variantsData = variants.map((v: any) => ({
       product_id: product.id,
       weight_label: v.weight_label,
       price: v.price,
-      stock_quantity: v.stock_quantity
+      stock_quantity: v.stock_quantity,
     }));
 
-    const { error: variantError } = await supabase
+    const { error: variantError } = await adminClient
       .from('product_variants')
       .insert(variantsData);
 
     if (variantError) {
-       return NextResponse.json({ error: variantError.message, product }, { status: 201 }); // Product created, variants failed
+      return NextResponse.json({ error: variantError.message, product }, { status: 201 });
     }
   }
 

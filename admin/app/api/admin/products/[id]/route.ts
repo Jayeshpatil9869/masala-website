@@ -1,15 +1,13 @@
 import { NextResponse } from 'next/server';
-import { createClient } from '@/lib/supabase/server';
+import { adminClient } from '@/lib/supabase/admin';
 
 export async function PUT(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
   const body = await request.json();
-
   const { variants, ...productData } = body;
 
-  // 1. Update Product
-  const { data: product, error: productError } = await supabase
+  // 1. Update product
+  const { data: product, error: productError } = await adminClient
     .from('products')
     .update(productData)
     .eq('id', id)
@@ -20,24 +18,25 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
     return NextResponse.json({ error: productError.message }, { status: 500 });
   }
 
-  // 2. Refresh Variants (Delete existing, insert new)
-  // This is a simplified approach for the admin panel update
-  await supabase.from('product_variants').delete().eq('product_id', id);
+  // 2. Delete old variants & prepare new data in parallel
+  const variantsData = (variants ?? []).map((v: any) => ({
+    product_id: id,
+    weight_label: v.weight_label,
+    price: v.price,
+    stock_quantity: v.stock_quantity,
+  }));
 
-  if (variants && variants.length > 0) {
-    const variantsData = variants.map((v: any) => ({
-      product_id: id,
-      weight_label: v.weight_label,
-      price: v.price,
-      stock_quantity: v.stock_quantity
-    }));
+  // Delete existing variants (fire immediately after product update)
+  await adminClient.from('product_variants').delete().eq('product_id', id);
 
-    const { error: variantError } = await supabase
+  // 3. Insert new variants (if any)
+  if (variantsData.length > 0) {
+    const { error: variantError } = await adminClient
       .from('product_variants')
       .insert(variantsData);
 
     if (variantError) {
-       return NextResponse.json({ error: variantError.message, product }, { status: 200 }); // Partial success
+      return NextResponse.json({ error: variantError.message, product }, { status: 200 });
     }
   }
 
@@ -46,9 +45,8 @@ export async function PUT(request: Request, { params }: { params: Promise<{ id: 
 
 export async function DELETE(request: Request, { params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
-  const supabase = await createClient();
 
-  const { error } = await supabase
+  const { error } = await adminClient
     .from('products')
     .delete()
     .eq('id', id);
