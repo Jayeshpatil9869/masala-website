@@ -122,13 +122,23 @@ export default function ContactPage() {
                     Interested in distributing our premium products? We offer competitive margins, priority shipping, and bespoke marketing support for verified dealers.
                   </p>
                   
-                  <a
-                    href="mailto:gravitatespices01@gmail.com"
-                    className="inline-flex items-center justify-center gap-2 bg-white hover:bg-brand-cream text-brand-dark font-bold text-sm px-6 h-12 rounded-full transition-all duration-300 mt-auto group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)]"
-                  >
-                    Apply to be a Dealer 
-                    <ChevronRight className="w-4 h-4 text-brand-orange" />
-                  </a>
+                  <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                    <a
+                      href="mailto:gravitatespices01@gmail.com"
+                      className="inline-flex items-center justify-center gap-2 bg-white hover:bg-brand-cream text-brand-dark font-bold text-sm px-6 h-12 rounded-full transition-all duration-300 group-hover:shadow-[0_0_20px_rgba(255,255,255,0.2)] flex-1"
+                    >
+                      Apply to be a Dealer 
+                      <ChevronRight className="w-4 h-4 text-brand-orange" />
+                    </a>
+                    
+                    <a
+                      href="tel:+919271580900"
+                      className="inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/10 text-white font-bold text-sm px-6 h-12 rounded-full border border-white/20 transition-all duration-300 flex-1"
+                    >
+                      Call Inquiries
+                      <PhoneCall className="w-4 h-4" />
+                    </a>
+                  </div>
                 </div>
               </div>
 

@@ -42,6 +42,7 @@ export default function ProductCard({ product }: ProductProps) {
     e.stopPropagation();
     addItem({
       productId: product.id,
+      slug: product.slug,
       name: product.name,
       weight: currentSize,
       price: currentPrice,
@@ -53,7 +54,7 @@ export default function ProductCard({ product }: ProductProps) {
 
   return (
     <motion.div 
-      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group"
+      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group h-full"
       whileHover={{ y: -3 }}
     >
       {/* Image */}

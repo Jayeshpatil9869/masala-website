@@ -10,11 +10,11 @@ const navLinks = [
 ];
 
 const policies = [
-  { title: 'Privacy Policy', href: '#' },
-  { title: 'Terms of Service', href: '#' },
-  { title: 'Return Policy', href: '#' },
-  { title: 'Shipping Info', href: '#' },
-  { title: 'FSSAI Compliance', href: '#' },
+  { title: 'Privacy Policy', href: '/privacy-policy' },
+  { title: 'Terms of Service', href: '/terms-of-service' },
+  { title: 'Return Policy', href: '/return-policy' },
+  { title: 'Shipping Info', href: '/shipping-info' },
+  { title: 'FSSAI Compliance', href: '/fssai-compliance' },
 ];
 
 const social = [

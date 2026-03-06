@@ -4,6 +4,7 @@ import { persist } from 'zustand/middleware';
 export interface CartItem {
   id: string; // Will usually be productId-weight (e.g., '1-200g')
   productId: string;
+  slug?: string;
   name: string;
   weight: string;
   price: number;
