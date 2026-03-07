@@ -39,8 +39,8 @@ export default function Footer() {
             <div className="lg:col-span-5 flex flex-col items-center text-center lg:items-start lg:text-left gap-5">
               <Link href="/" className="">
                 <Image
-                  src="/gurukrupa-logo.jpg"
-                  alt="Gurukrupa Masala"
+                  src="/Gravitate_logo.jpeg"
+                  alt="Gravitate Masala"
                   width={160}
                   height={64}
                   className="h-14 sm:h-16 w-auto object-contain"
