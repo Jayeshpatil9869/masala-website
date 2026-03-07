@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Shipping Info | Gurukrupa Gruh Udyog',
-  description: 'Shipping Information for Gurukrupa Gruh Udyog.',
+  title: 'Shipping Info | Gravitate',
+  description: 'Shipping Information for Gravitate.',
 };
 
 export default function ShippingInfoPage() {
@@ -12,7 +12,7 @@ export default function ShippingInfoPage() {
           <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
           <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
             <p>
-              At <strong>Gurukrupa Gruh Udyog</strong>, we currently operate primarily as a prominent manufacturer and supplier for retail outlets and wholesale distributors across Maharashtra and surrounding regions.
+              At <strong>Gravitate</strong>, we currently operate primarily as a prominent manufacturer and supplier for retail outlets and wholesale distributors across Maharashtra and surrounding regions.
             </p>
             
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Direct-to-Consumer Shipping</h2>

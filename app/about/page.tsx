@@ -3,8 +3,8 @@ import USPCards from "@/components/about/USPCards";
 import QualityProcess from "@/components/about/QualityProcess";
 
 export const metadata = {
-  title: 'Our Story | Gurukrupa Gruh Udyog',
-  description: 'Learn about our 45-year legacy from a humble bicycle to a sprawling masala empire.',
+  title: 'Our Story | Gravitate - 22 Year Old Masala Company Nashik',
+  description: 'Learn about Gravitate, an FSSAI certified masala manufacturer in Malegaon. We supply pure, chemical-free masala powder directly from our Nashik facility.',
 };
 
 export default function AboutPage() {
@@ -44,7 +44,7 @@ export default function AboutPage() {
                   It started with a humble bicycle. Our founder pedaled through local neighborhoods, believing that the secret to a perfect meal wasn't just the recipe, but the absolute purity of the spices.
                 </p>
                 <p>
-                  For over four decades, <strong className="text-brand-dark">Gurukrupa Gruh Udyog</strong> has held onto that single belief. We don't believe in shortcuts, artificial colors, or fillers. Every pinch of our masala is a testament to traditional Indian culinary heritage.
+                  For over four decades, <strong className="text-brand-dark">Gravitate</strong> has held onto that single belief. We don't believe in shortcuts, artificial colors, or fillers. Every pinch of our masala is a testament to traditional Indian culinary heritage.
                 </p>
                 <p>
                   Today, that single bicycle has transformed into a vast masala manufacturing empire. We proudly supply wholesalers and retailers with our expansive ranges, including <span className="font-medium text-brand-red">Pooja Special, Powder Special, Box Products, Pouches, Upwas Special,</span> and <span className="font-medium">Winter Special</span>, ensuring our process and devotion remains unchanged.

@@ -117,7 +117,7 @@ export default function Footer() {
 
         <div className="border-t border-white/10 pt-8 flex flex-col md:flex-row items-center justify-between gap-4 text-xs text-brand-cream/60 text-center md:text-left">
           <div className="flex flex-col md:flex-row items-center gap-2">
-             <p>© {new Date().getFullYear()} Gurukrupa Gruh Udyog. All rights reserved.</p>
+             <p>© {new Date().getFullYear()} Gravitate. All rights reserved.</p>
              <span className="hidden md:inline text-white/20">|</span>
              <p>Created by <a href="https://mahendranagpure.com" target="_blank" rel="noopener noreferrer" className="text-brand-orange hover:text-brand-gold transition-colors font-medium">Westford. Pvt. Ltd</a></p>
           </div>

@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Return Policy | Gurukrupa Gruh Udyog',
-  description: 'Return Policy for Gurukrupa Gruh Udyog.',
+  title: 'Return Policy | Gravitate',
+  description: 'Return Policy for Gravitate.',
 };
 
 export default function ReturnPolicyPage() {
@@ -12,7 +12,7 @@ export default function ReturnPolicyPage() {
           <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
           <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
             <p>
-              At <strong>Gurukrupa Gruh Udyog</strong>, we take immense pride in the quality and purity of our spices. Because our products are consumable food items, our return policy is strictly defined to ensure health and safety standards.
+              At <strong>Gravitate</strong>, we take immense pride in the quality and purity of our spices. Because our products are consumable food items, our return policy is strictly defined to ensure health and safety standards.
             </p>
             
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Eligibility for Returns</h2>

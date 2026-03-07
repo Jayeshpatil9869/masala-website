@@ -2,8 +2,8 @@ import ProductGrid from "@/components/products/ProductGrid";
 import { Suspense } from 'react';
 
 export const metadata = {
-  title: 'Our Products | Gurukrupa Gruh Udyog',
-  description: 'Explore our complete range of premium blended masalas and pure spices.',
+  title: 'Our Products | Gravitate Spice Powder Supplier Malegaon',
+  description: 'Buy pure masala without preservatives online. Explore our authentic handpicked spice powder, garam masala, chilli powder, and box masala products safely delivered across Maharashtra.',
 };
 
 export default function ProductsPage() {
