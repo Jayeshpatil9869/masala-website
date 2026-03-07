@@ -32,7 +32,7 @@ export default function BrandStory() {
             />
             <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"></div>
             <div className="absolute bottom-8 left-8 bg-brand-cream p-5 rounded-2xl max-w-xs shadow-xl hidden sm:block">
-              <span className="font-display text-4xl font-bold text-brand-red block mb-2">1978</span>
+              <span className="font-display text-4xl font-bold text-brand-red block mb-2">2004</span>
               <p className="text-brand-dark font-medium text-sm">The year our founder started selling pure masalas door-to-door on a bicycle.</p>
             </div>
           </motion.div>

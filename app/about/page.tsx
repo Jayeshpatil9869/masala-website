@@ -22,7 +22,7 @@ export default function AboutPage() {
 
         <div className="container relative z-10 px-4 text-center text-brand-white">
           <div className="text-brand-orange text-sm font-medium tracking-widest uppercase mb-4">
-            Since 1978
+            Since 2004
           </div>
           <h1 className="font-display text-4xl md:text-6xl font-bold mb-4 max-w-4xl mx-auto leading-tight">
             Crafting Pure Masala for India's Kitchens
