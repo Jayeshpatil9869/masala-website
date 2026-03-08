@@ -9,8 +9,24 @@ export const metadata = {
 };
 
 export default function ContactPage() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "ContactPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "@id": "https://gravitatee.com/#organization"
+    },
+    "name": "Contact Gravitate Masala",
+    "description": "Contact Gravitate Masala for pure spice powder orders, wholesale inquiries, and home delivery in Nashik and Malegaon.",
+    "url": "https://gravitatee.com/contact"
+  };
+
   return (
     <div className="bg-[#f8f9fa] min-h-screen pb-24">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       {/* Contact Hero */}
       <section className="relative h-[65vh] min-h-[450px] w-full flex items-center justify-center overflow-hidden -mt-16 pt-16">
         <div

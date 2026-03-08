@@ -9,8 +9,24 @@ export const metadata = {
 };
 
 export default function AboutPage() {
+  const schema = {
+    "@context": "https://schema.org",
+    "@type": "AboutPage",
+    "mainEntity": {
+      "@type": "Organization",
+      "@id": "https://gravitatee.com/#organization"
+    },
+    "name": "About Gravitate Masala",
+    "description": "Learn about Gravitate, a 22-year old masala manufacturer in Malegaon. Discover our heritage, pure spice powders, and quality manufacturing process.",
+    "url": "https://gravitatee.com/about"
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+      />
       {/* Brand Heritage Hero */}
       <section className="relative h-[60vh] min-h-[400px] w-full flex items-center justify-center overflow-hidden -mt-20 pt-20">
         <div 

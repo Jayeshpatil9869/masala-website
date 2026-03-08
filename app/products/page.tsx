@@ -7,8 +7,23 @@ export const metadata = {
 };
 
 export default function ProductsPage() {
+  const collectionSchema = {
+    "@context": "https://schema.org",
+    "@type": "CollectionPage",
+    "name": "Gravitate Spice Powder Collection",
+    "description": "Buy wholesale masala and pure spice powders online from Malegaon's leading masala manufacturer.",
+    "url": "https://gravitatee.com/products",
+    "publisher": {
+      "@id": "https://gravitatee.com/#organization"
+    }
+  };
+
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+      />
       {/* Minimal Hero */}
       <section className="relative h-[300px] w-full flex items-center justify-center overflow-hidden pt-16">
         <div 
