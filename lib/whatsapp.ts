@@ -10,14 +10,14 @@ export function buildWhatsAppLink(
 export function buildProductOrderMessage(
   productName: string,
   weight: string,
-  brandName: string = "Gurukrupa Gruh Udyog"
+  brandName: string = "Gravitate"
 ): string {
   return `Hi! I'd like to order *${productName} ${weight}* from ${brandName}. Please confirm availability and price.`;
 }
 
 export function buildComboOrderMessage(
   comboName: string,
-  brandName: string = "Gurukrupa Gruh Udyog"
+  brandName: string = "Gravitate"
 ): string {
   return `Hi! I am interested in the *${comboName}* pack from ${brandName}. Please share details and confirm delivery.`;
 }
@@ -25,9 +25,9 @@ export function buildComboOrderMessage(
 export function buildCartOrderMessage(
   items: CartItem[],
   totalPrice: number,
-  brandName: string = "Gurukrupa Gruh Udyog"
+  brandName: string = "Gravitate"
 ): string {
-  if (items.length === 0) return buildWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890', "Hi! I want to order some spices.");
+  if (items.length === 0) return buildWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919271580900', "Hi! I want to order some spices.");
 
   const intro = `Hi ${brandName}! I would like to place an order for the following items:\n\n`;
   

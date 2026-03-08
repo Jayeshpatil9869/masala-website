@@ -1,8 +1,8 @@
 import Image from "next/image";
 
 export const metadata = {
-  title: 'FSSAI Compliance | Gurukrupa Gruh Udyog',
-  description: 'FSSAI Compliance and Certification Details for Gurukrupa Gruh Udyog.',
+  title: 'FSSAI Compliance | Gravitate',
+  description: 'FSSAI Compliance and Certification Details for Gravitate.',
 };
 
 export default function FSSAICompliancePage() {
@@ -28,7 +28,7 @@ export default function FSSAICompliancePage() {
               License Number: <strong className="text-brand-orange">11521023000342</strong>
             </p>
             <p>
-              <strong>Gurukrupa Gruh Udyog</strong> takes the safety and purity of our spices seriously. Our manufacturing unit in Malegaon, Nashik operates strictly under the rigorous guidelines and continuous scrutiny enforced by the <strong>Food Safety and Standards Authority of India (FSSAI)</strong>.
+              <strong>Gravitate</strong> takes the safety and purity of our spices seriously. Our manufacturing unit in Malegaon, Nashik operates strictly under the rigorous guidelines and continuous scrutiny enforced by the <strong>Food Safety and Standards Authority of India (FSSAI)</strong>.
             </p>
             
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">Our Commitment to Safety</h2>

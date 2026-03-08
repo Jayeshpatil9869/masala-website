@@ -23,14 +23,29 @@ const playfair = Playfair_Display({
 });
 
 export const metadata: Metadata = {
-  title: "Gurukrupa Masala — Premium Masala & Spices | Order on WhatsApp",
-  description: "Buy pure, fresh masala and spices online. Crafted from handpicked ingredients. Order directly on WhatsApp — fast delivery across India.",
+  title: "Gravitate — Premium Masala & Spices | Order on WhatsApp",
+  description: "Buy pure, fresh masala and spices online. Crafted from handpicked ingredients. Best masala brand in Nashik. Order directly on WhatsApp — fast delivery across India.",
+  keywords: [
+    "masala manufacturer in malegaon", "masala supplier in malegaon", "spice powder supplier malegaon",
+    "buy masala online malegaon", "gravitate masala malegaon", "masala home delivery malegaon",
+    "wholesale masala dealer malegaon", "pure spice powder malegaon", "masala manufacturer bhaygaon shiwar",
+    "fresh ground masala malegaon", "masala manufacturer in nashik", "spice supplier nashik district",
+    "masala powder manufacturer nashik", "wholesale masala supplier nashik", "best masala brand in nashik",
+    "turmeric powder supplier nashik", "garam masala manufacturer nashik", "chilli powder supplier nashik",
+    "masala manufacturer malegaon nashik maharashtra", "spice manufacturer nashik maharashtra",
+    "pure masala supplier maharashtra", "masala home delivery nashik", "masala distributor nashik maharashtra",
+    "handpicked spice powder india", "fresh ground garam masala india", "masala pouch manufacturer nashik",
+    "masala wholesale dealer nashik", "spice supplier for small restaurants nashik", "masala supplier for caterers malegaon",
+    "bulk masala powder nashik", "spice supplier for hotels nashik", "masala manufacturer for retailers maharashtra",
+    "wholesale spice powder supplier nashik district", "fssai certified masala manufacturer malegaon",
+    "pure masala without preservatives nashik", "chemical free masala powder"
+  ],
   icons: {
-    icon: '/gurukrupa-logo.jpg',
-    apple: '/gurukrupa-logo.jpg',
+    icon: '/Gravitate_logo.jpeg',
+    apple: '/Gravitate_logo.jpeg',
   },
   openGraph: {
-    images: ['/gurukrupa-logo.jpg']
+    images: ['/Gravitate_logo.jpeg']
   }
 };
 
@@ -41,6 +56,34 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" suppressHydrationWarning>
+      <head>
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+             __html: JSON.stringify({
+               "@context": "https://schema.org",
+               "@type": ["Organization", "LocalBusiness"],
+               "name": "Gravitate",
+               "url": "https://gravitatee.com",
+               "logo": "https://gravitatee.com/Gravitate_logo.jpeg",
+               "description": "Gravitate is a premium masala manufacturer and spice supplier based in Malegaon, Nashik, Maharashtra. Certified FSSAI masala manufacturer providing pure spice powder, pooja special masala, and wholesale masala delivery.",
+               "address": {
+                 "@type": "PostalAddress",
+                 "streetAddress": "S.No. 182/2, Plot No. 111, Nr. Jajuvadi, B/h., Sant Nirankari Kendra, Bhaygaon Shiwar",
+                 "addressLocality": "Malegaon",
+                 "addressRegion": "Maharashtra",
+                 "postalCode": "423203",
+                 "addressCountry": "IN"
+               },
+               "telephone": ["+91 9271580900", "+91 9657586213"],
+               "sameAs": [
+                 "https://instagram.com/gravitate_Masala",
+                 "https://facebook.com/Gravitate_Masala"
+               ]
+             })
+          }}
+        />
+      </head>
       <body
         suppressHydrationWarning
         className={`${inter.variable} ${poppins.variable} ${playfair.variable} antialiased min-h-screen flex flex-col`}

@@ -6,7 +6,7 @@ import { buildWhatsAppLink } from '@/lib/whatsapp';
 
 export default function ContactCards() {
   const phone1 = '9271580900';
-  const waLink = buildWhatsAppLink(phone1, "Hi! I have a query about Gurukrupa Gruh Udyog.");
+  const waLink = buildWhatsAppLink(phone1, "Hi! I have a query about Gravitate.");
 
   const cards = [
     {

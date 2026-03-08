@@ -3,9 +3,9 @@ import ContactForm from "@/components/contact/ContactForm";
 import { MapPin, Clock, ChevronRight, PhoneCall } from "lucide-react";
 
 export const metadata = {
-  title: "Contact Us | Gurukrupa Gruh Udyog",
-  description:
-    "Get in touch with us for orders, wholesale inquiries, or just to say hello.",
+
+  title: 'Contact Us | Gravitate',
+  description: 'Get in touch with us for orders, wholesale inquiries, or just to say hello.',
 };
 
 export default function ContactPage() {
@@ -28,7 +28,7 @@ export default function ContactPage() {
 
         <div className="container relative z-10 px-4 text-center text-brand-white flex flex-col items-center">
           <div className="inline-block border border-white/20 bg-white/5 backdrop-blur-md px-4 py-1.5 rounded-full text-brand-orange text-xs font-bold tracking-[0.2em] uppercase mb-6">
-            Gurukrupa Gruh Udyog
+            Gravitate
           </div>
           <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 max-w-4xl mx-auto leading-tight drop-shadow-2xl">
             Get in Touch

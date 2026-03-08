@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Terms of Service | Gurukrupa Gruh Udyog',
-  description: 'Terms of Service for Gurukrupa Gruh Udyog.',
+  title: 'Terms of Service | Gravitate',
+  description: 'Terms of Service for Gravitate.',
 };
 
 export default function TermsOfServicePage() {
@@ -12,7 +12,7 @@ export default function TermsOfServicePage() {
           <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
           <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
             <p>
-              Welcome to <strong>Gurukrupa Gruh Udyog</strong>. These terms and conditions outline the rules and regulations for the use of our website and services.
+              Welcome to <strong>Gravitate</strong>. These terms and conditions outline the rules and regulations for the use of our website and services.
             </p>
             
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Acceptance of Terms</h2>
@@ -32,7 +32,7 @@ export default function TermsOfServicePage() {
 
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">4. Intellectual Property</h2>
             <p>
-              Unless otherwise stated, Gurukrupa Gruh Udyog and/or its licensors own the intellectual property rights for all material on the website. All intellectual property rights are reserved. You may view and/or print pages for your own personal use subject to restrictions set in these terms and conditions.
+              Unless otherwise stated, Gravitate and/or its licensors own the intellectual property rights for all material on the website. All intellectual property rights are reserved. You may view and/or print pages for your own personal use subject to restrictions set in these terms and conditions.
             </p>
             
             <hr className="my-8 border-gray-100" />

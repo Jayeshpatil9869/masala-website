@@ -1,6 +1,6 @@
 export const metadata = {
-  title: 'Privacy Policy | Gurukrupa Gruh Udyog',
-  description: 'Privacy Policy for Gurukrupa Gruh Udyog.',
+  title: 'Privacy Policy | Gravitate',
+  description: 'Privacy Policy for Gravitate.',
 };
 
 export default function PrivacyPolicyPage() {
@@ -12,7 +12,7 @@ export default function PrivacyPolicyPage() {
           <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
           <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
             <p>
-              At <strong>Gurukrupa Gruh Udyog</strong>, we value the trust you place in us and recognize the importance of secure transactions and information privacy. This Privacy Policy describes how we collect, use, share, and protect personal information when you use our website.
+              At <strong>Gravitate</strong>, we value the trust you place in us and recognize the importance of secure transactions and information privacy. This Privacy Policy describes how we collect, use, share, and protect personal information when you use our website.
             </p>
             
             <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Information We Collect</h2>

@@ -8,7 +8,7 @@ import Link from 'next/link';
 
 export default function HeroBanner() {
   const waLink = buildWhatsAppLink(
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890',
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919271580900',
     "Hi! I'd like to order some Masala."
   );
 
