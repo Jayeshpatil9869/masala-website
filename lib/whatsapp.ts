@@ -27,7 +27,7 @@ export function buildCartOrderMessage(
   totalPrice: number,
   brandName: string = "Gravitate"
 ): string {
-  if (items.length === 0) return buildWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890', "Hi! I want to order some spices.");
+  if (items.length === 0) return buildWhatsAppLink(process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919271580900', "Hi! I want to order some spices.");
 
   const intro = `Hi ${brandName}! I would like to place an order for the following items:\n\n`;
   

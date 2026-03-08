@@ -11,22 +11,25 @@ const milestones = [
 
 export default function Timeline() {
   return (
-    <div className="relative border-l-2 border-brand-orange/30 pl-8 ml-4 mt-10 md:ml-0 md:pl-10">
+    <div className="relative mt-8">
+      {/* Central Thin Line */}
+      <div className="absolute left-[11.5px] top-3 bottom-0 w-[1px] bg-[#cebfae]"></div>
+      
       {milestones.map((m, idx) => (
         <motion.div 
           key={idx} 
-          className="mb-10 relative"
+          className="mb-10 relative group pl-10"
           initial={{ opacity: 0, x: -20 }}
           whileInView={{ opacity: 1, x: 0 }}
           viewport={{ once: true }}
           transition={{ delay: idx * 0.2 }}
         >
-          {/* Timeline Dot */}
-          <div className="absolute -left-[45px] top-1 md:-left-[53px] w-6 h-6 rounded-full bg-brand-cream border-4 border-brand-orange"></div>
+          {/* Timeline Thick Circle Dot */}
+          <div className="absolute left-0 top-[2px] w-[24px] h-[24px] rounded-full bg-[#FCF8F3] border-[3.5px] border-[#E06738] z-10 transition-colors duration-300"></div>
           
-          <h4 className="font-display font-bold text-2xl text-brand-red mb-1">{m.year}</h4>
-          <h5 className="font-sans font-bold text-lg text-brand-dark mb-2">{m.title}</h5>
-          <p className="text-gray-600 font-body leading-relaxed max-w-sm">{m.desc}</p>
+          <h4 className="font-display font-bold text-[17px] text-[#E06738] mb-1.5 leading-none">{m.year}</h4>
+          <h5 className="font-sans font-bold text-[16px] text-brand-dark mb-2 tracking-tight">{m.title}</h5>
+          <p className="text-[#5e6977] font-body text-[14.5px] leading-[1.65] max-w-[360px]">{m.desc}</p>
         </motion.div>
       ))}
     </div>

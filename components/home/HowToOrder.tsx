@@ -25,10 +25,10 @@ const steps = [
 
 export default function HowToOrder() {
   const waLink = buildWhatsAppLink(
-    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890',
+    process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919271580900',
     "Hi! I'd like to place an order."
   );
-
+  
   return (
     <section className="py-16 md:py-24 bg-brand-white relative">
       <div className="container mx-auto px-4 lg:px-8">

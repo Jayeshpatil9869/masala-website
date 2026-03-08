@@ -4,7 +4,7 @@ import { MessageCircle } from 'lucide-react';
 import { motion } from 'framer-motion';
 
 export default function WhatsAppFloat() {
-  const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '911234567890';
+  const phone = process.env.NEXT_PUBLIC_WHATSAPP_NUMBER || '919271580900';
   const message = encodeURIComponent(
     "Hi! I visited your website and would like to know more about your masala products."
   );
