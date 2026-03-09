@@ -119,9 +119,7 @@ export default function Navbar() {
                 onClick={() => setOpen(!open)}
                 className={cn(
                   'md:hidden flex items-center justify-center rounded-full w-9 h-9 transition-colors',
-                  solidBg
-                    ? 'text-gray-700 hover:bg-gray-100'
-                    : 'text-white hover:bg-white/10'
+                  'text-gray-700 hover:bg-gray-100'
                 )}
                 aria-label="Toggle menu"
               >

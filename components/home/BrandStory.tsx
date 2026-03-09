@@ -15,31 +15,30 @@ export default function BrandStory() {
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex flex-col lg:flex-row gap-8 lg:gap-16 items-center">
           
-          {/* Image Side — explicit aspect ratio so Next.js Image fill renders */}
+          {/* Image Side — aspect ratio to ensure responsive filling */}
           <motion.div
-  className="w-full lg:w-1/2 relative h-[300px] sm:h-[420px] lg:h-[520px] rounded-3xl overflow-hidden shadow-2xl flex-shrink-0"
-  initial={{ opacity: 0, x: -50 }}
-  whileInView={{ opacity: 1, x: 0 }}
-  viewport={{ once: true }}
-  transition={{ duration: 0.8 }}
->
-  <Image
-    src="/image.png"
-    alt="Masala Grinding Process"
-    fill
-    className="w-full h-full object-cover"
-    sizes="(max-width: 1024px) 100vw, 50vw"
-  />
+            className="w-full lg:w-1/2 relative aspect-[2/1] lg:aspect-auto lg:h-[476px] rounded-3xl overflow-hidden shadow-2xl flex-shrink-0 bg-brand-cream"
 
-  <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"></div>
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+          >
+            <img
+              src="/image.png"
+              alt="Masala Grinding Process"
+              className="absolute inset-0 w-full h-full object-cover object-center"
+            />
 
-  <div className="absolute bottom-8 left-8 bg-brand-cream p-5 rounded-2xl max-w-xs shadow-xl hidden sm:block">
-    <span className="font-display text-4xl font-bold text-brand-red block mb-2">2004</span>
-    <p className="text-brand-dark font-medium text-sm">
-      The year our founder started selling pure masalas door-to-door on a bicycle.
-    </p>
-  </div>
-</motion.div>
+            <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"></div>
+
+            <div className="absolute bottom-8 left-8 bg-brand-cream p-5 rounded-2xl max-w-xs shadow-xl hidden sm:block">
+              <span className="font-display text-4xl font-bold text-brand-red block mb-2">2004</span>
+              <p className="text-brand-dark font-medium text-sm">
+                The year our founder started selling pure masalas door-to-door on a bicycle.
+              </p>
+            </div>
+          </motion.div>
 
           {/* Text Side */}
           <motion.div 
