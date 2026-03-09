@@ -66,7 +66,7 @@ export default function Navbar() {
             {/* LEFT — Logo */}
             <Link href="/" className="flex flex-shrink-0 items-center z-10">
               <Image
-                src="/Gravitate_logo.jpeg"
+                src="/Gravitate_logo.png"
                 alt="Gravitate Masala"
                 width={130}
                 height={50}

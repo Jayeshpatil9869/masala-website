@@ -41,7 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     openGraph: {
       title: `${product.name} | Gravitate Masala`,
       description: product.description || `Buy pure and authentic ${product.name} online.`,
-      images: [product.images?.[0] || product.image_url || '/Gravitate_logo.jpeg'],
+      images: [product.images?.[0] || product.image_url || '/Gravitate_logo.png'],
     },
   };
 }

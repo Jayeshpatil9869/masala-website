@@ -45,11 +45,11 @@ export const metadata: Metadata = {
     "45 year old masala company nashik", "pure masala without preservatives nashik", "gravitate masala malegaon"
   ],
   icons: {
-    icon: '/Gravitate_logo.jpeg',
-    apple: '/Gravitate_logo.jpeg',
+    icon: '/Gravitate_logo.png',
+    apple: '/Gravitate_logo.png',
   },
   openGraph: {
-    images: ['/Gravitate_logo.jpeg']
+    images: ['/Gravitate_logo.png']
   }
 };
 
@@ -71,8 +71,8 @@ export default function RootLayout({
                  "name": "Gravitate",
                  "alternateName": ["Gurukrupa Gruh Udyog", "Gurukrupa Masala"],
                  "url": "https://gravitatee.com",
-                 "logo": "https://gravitatee.com/Gravitate_logo.jpeg",
-                 "image": "https://gravitatee.com/Gravitate_logo.jpeg",
+                 "logo": "https://gravitatee.com/Gravitate_logo.png",
+                 "image": "https://gravitatee.com/Gravitate_logo.png",
                  "description": "Gravitate (Gurukrupa Gruh Udyog) is a premium masala manufacturer and spice supplier based in Malegaon, Nashik, Maharashtra. A 45-year-old company providing pure spice powder, pooja special masala, winter special masala blend, and wholesale masala delivery without preservatives.",
                  "foundingDate": "1979",
                  "slogan": "Pure, Fresh, Handpicked Spices",

@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
 import { MessageCircle, ShoppingCart, Check } from 'lucide-react';
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -20,10 +19,11 @@ type ProductProps = {
     price?: number;
     image_url?: string;
     is_bestseller?: boolean;
-  }
+  };
+  priority?: boolean;
 };
 
-export default function ProductCard({ product }: ProductProps) {
+export default function ProductCard({ product, priority = false }: ProductProps) {
   const hasVariants = product.variants && product.variants.length > 0;
   const initialVariant = hasVariants ? product.variants![0] : null;
   
@@ -53,9 +53,8 @@ export default function ProductCard({ product }: ProductProps) {
   };
 
   return (
-    <motion.div 
-      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group h-full"
-      whileHover={{ y: -3 }}
+    <div 
+      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group h-full"
     >
       {/* Image */}
       <Link href={`/products/${product.slug}`} className="relative aspect-square sm:aspect-[4/3] overflow-hidden bg-brand-cream/50 flex items-center justify-center block">
@@ -69,6 +68,8 @@ export default function ProductCard({ product }: ProductProps) {
           alt={product.name} 
           width={240} 
           height={240} 
+          priority={priority}
+          sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
           className="object-contain w-full h-full p-2 sm:p-4 transition-transform duration-500 group-hover:scale-105"
         />
       </Link>
@@ -126,6 +127,6 @@ export default function ProductCard({ product }: ProductProps) {
           </a>
         </Button>
       </div>
-    </motion.div>
+    </div>
   );
 }
