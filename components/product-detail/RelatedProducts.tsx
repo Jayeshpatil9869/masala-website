@@ -48,15 +48,15 @@ export default function RelatedProducts({ currentProduct }: { currentProduct: an
         </div>
 
         {loading ? (
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
             {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="min-w-[75vw] sm:min-w-0 snap-start shrink-0 h-72 bg-gray-200 rounded-2xl animate-pulse" />
+              <div key={i} className="rounded-2xl bg-gray-200 animate-pulse aspect-[3/4]" />
             ))}
           </div>
         ) : (
-          <div className="flex overflow-x-auto snap-x snap-mandatory gap-4 pb-6 -mx-4 px-4 sm:mx-0 sm:px-0 sm:grid sm:grid-cols-2 lg:grid-cols-4 sm:gap-8 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
-            {relatedProductsList.map((product) => (
-              <div key={product.id} className="min-w-[75vw] sm:min-w-0 snap-start shrink-0">
+          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+            {relatedProductsList.slice(0, 4).map((product) => (
+              <div key={product.id}>
                 <ProductCard product={product} />
               </div>
             ))}
