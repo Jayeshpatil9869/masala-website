@@ -33,7 +33,7 @@ export default function HeroBanner() {
   }, [])
 
   return (
-    <section className="relative w-full bg-brand-cream overflow-hidden aspect-[1/1] sm:aspect-[4/3] md:aspect-auto md:h-[100vh] flex items-center justify-center mt-[72px] md:mt-0">
+    <section className="relative w-full bg-brand-cream overflow-hidden aspect-[1920/1081] md:aspect-[1920/1081] flex items-center justify-center mt-[72px] md:mt-0">
 
       {/* SLIDER TRACK */}
       <motion.div
