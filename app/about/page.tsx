@@ -38,7 +38,7 @@ export default function AboutPage() {
         </div>
 
         <div className="container relative z-10 px-4 text-center text-brand-white">
-          <div className="text-brand-orange text-[13px] font-bold tracking-[0.2em] uppercase mb-4">
+          <div className="text-brand-orange text-[13px] font-bold tracking-[0.2em] uppercase mb-4 mt-12">
             Since 2004
           </div>
           <h1 className="font-display text-4xl md:text-5xl lg:text-7xl font-bold mb-4 max-w-4xl mx-auto leading-[1.15]">
