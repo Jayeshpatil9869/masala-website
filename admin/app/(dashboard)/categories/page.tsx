@@ -13,6 +13,7 @@ import {
 } from "lucide-react";
 import { formatDate, slugify } from "@/lib/utils";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
+import Image from "next/image";
 
 type Category = {
   id: string;
@@ -273,12 +274,14 @@ export default function CategoriesPage() {
                     onClick={() => openDialog(cat)}
                   >
                     <td className="px-4 sm:px-6 py-4">
-                      <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden">
+                      <div className="relative w-10 h-10 rounded-lg bg-gray-100 overflow-hidden">
                         {cat.image_url ? (
-                          <img
+                          <Image
                             src={cat.image_url}
                             alt={cat.name}
-                            className="w-full h-full object-cover"
+                            fill
+                            sizes="40px"
+                            className="object-cover"
                           />
                         ) : (
                           <div className="w-full h-full flex items-center justify-center">

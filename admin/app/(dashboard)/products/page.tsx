@@ -8,6 +8,7 @@ import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
+import Image from "next/image";
 
 type Product = {
   id: string;
@@ -31,16 +32,6 @@ function LazyProductImage({
 }) {
   const [loaded, setLoaded] = useState(false);
   const [error, setError] = useState(false);
-  const imgRef = useRef<HTMLImageElement>(null);
-
-  useEffect(() => {
-    // If the image is already cached and complete, mark it loaded immediately
-    const img = imgRef.current;
-    if (img && img.complete && img.naturalWidth > 0) {
-      // Use a microtask to avoid calling setState synchronously inside the effect
-      Promise.resolve().then(() => setLoaded(true));
-    }
-  }, []);
 
   if (!src || error) {
     return (
@@ -55,15 +46,14 @@ function LazyProductImage({
       {!loaded && (
         <div className="absolute inset-0 bg-gray-100 animate-pulse rounded-xl" />
       )}
-      <img
-        ref={imgRef}
+      <Image
         src={src}
         alt={alt}
-        loading="lazy"
-        decoding="async"
+        fill
+        sizes="(max-width: 640px) 40px, 48px"
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
-        className={`w-full h-full object-cover transition-opacity duration-300 ${
+        className={`object-cover transition-opacity duration-300 ${
           loaded ? "opacity-100" : "opacity-0"
         }`}
       />

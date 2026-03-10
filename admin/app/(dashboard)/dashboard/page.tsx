@@ -4,6 +4,7 @@ import { adminClient } from "@/lib/supabase/admin";
 import { Package, Tags, MessageSquare } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
+import Image from "next/image";
 
 export default async function DashboardPage() {
   const [
@@ -108,12 +109,14 @@ export default async function DashboardPage() {
                     key={p.id}
                     className="flex items-center gap-4 px-6 py-3 hover:bg-orange-50/30 transition-colors cursor-pointer group"
                   >
-                    <div className="w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 group-hover:ring-2 ring-orange-100 transition-all">
+                    <div className="relative w-10 h-10 rounded-lg bg-gray-100 overflow-hidden flex-shrink-0 group-hover:ring-2 ring-orange-100 transition-all">
                       {p.images?.[0] ? (
-                        <img
+                        <Image
                           src={p.images[0]}
                           alt={p.name}
-                          className="w-full h-full object-cover"
+                          fill
+                          sizes="40px"
+                          className="object-cover"
                         />
                       ) : (
                         <div className="w-full h-full flex items-center justify-center text-gray-300">
