@@ -82,9 +82,9 @@ export default function HeroBanner() {
               src={src}
               alt={`Hero image ${idx + 1}`}
               fill
-              priority={true}
+              priority={idx === 0}
               sizes="100vw"
-              className="object-cover object-center"
+              className="object-cover object-center md:pb-18"
             />
           </motion.div>
         )

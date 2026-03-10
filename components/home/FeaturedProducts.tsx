@@ -6,25 +6,7 @@ import { motion } from 'framer-motion';
 import { Star, ArrowRight } from 'lucide-react';
 import Link from 'next/link';
 
-export default function FeaturedProducts() {
-  const [featured, setFeatured] = useState<any[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
-
-  useEffect(() => {
-    async function fetchFeatured() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/products`);
-        if (!res.ok) throw new Error('Failed to fetch');
-        const data = await res.json();
-        setFeatured(data.slice(0, 4));
-      } catch (error) {
-        console.error(error);
-      } finally {
-        setIsLoading(false);
-      }
-    }
-    fetchFeatured();
-  }, []);
+export default function FeaturedProducts({ featured }: { featured: any[] }) {
 
   return (
     <section className="py-20 bg-white">
@@ -52,27 +34,19 @@ export default function FeaturedProducts() {
         </motion.div>
 
         {/* Product Grid */}
-        {isLoading ? (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {Array.from({ length: 4 }).map((_, i) => (
-              <div key={i} className="rounded-2xl bg-gray-100 animate-pulse aspect-[3/4]" />
-            ))}
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
-            {featured.map((product, idx) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: idx * 0.1, duration: 0.5 }}
-              >
-                <ProductCard product={product} />
-              </motion.div>
-            ))}
-          </div>
-        )}
+        <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6">
+          {featured?.map((product, idx) => (
+            <motion.div
+              key={product.id}
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ delay: idx * 0.1, duration: 0.5 }}
+            >
+              <ProductCard product={product} />
+            </motion.div>
+          ))}
+        </div>
 
         {/* View All CTA */}
         <motion.div

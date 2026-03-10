@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { buildProductOrderMessage, buildWhatsAppLink } from '@/lib/whatsapp';
 import { useCartStore } from '@/lib/store/cartStore';
+import { InteractiveGradientCard } from '@/components/ui/interactive-gradient-card';
 
 type ProductProps = {
   product: {
@@ -53,8 +54,8 @@ export default function ProductCard({ product, priority = false }: ProductProps)
   };
 
   return (
-    <div 
-      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 overflow-hidden border border-gray-100 flex flex-col group h-full"
+    <InteractiveGradientCard 
+      className="bg-white rounded-xl sm:rounded-2xl shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 border border-gray-100 flex flex-col group h-full"
     >
       {/* Image */}
       <Link href={`/products/${product.slug}`} className="relative aspect-square sm:aspect-[4/3] overflow-hidden bg-brand-cream/50 flex items-center justify-center block">
@@ -127,6 +128,6 @@ export default function ProductCard({ product, priority = false }: ProductProps)
           </a>
         </Button>
       </div>
-    </div>
+    </InteractiveGradientCard>
   );
 }

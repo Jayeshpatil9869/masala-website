@@ -11,7 +11,22 @@ export const metadata = {
   description: "Buy pure, fresh ground masala online in Malegaon & Nashik. We are an FSSAI certified masala manufacturer offering pooja special masala, turmeric powder, and wholesale spice powders.",
 };
 
-export default function Home() {
+export default async function Home() {
+  let categories = [];
+  let products = [];
+  
+  try {
+    const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com';
+    const [catRes, prodRes] = await Promise.all([
+      fetch(`${backendUrl}/api/v1/categories`, { next: { revalidate: 3600 } }),
+      fetch(`${backendUrl}/api/v1/products`, { next: { revalidate: 3600 } })
+    ]);
+    
+    if (catRes.ok) categories = await catRes.json();
+    if (prodRes.ok) products = await prodRes.json();
+  } catch (err) {
+    console.error("Failed to fetch homepage data", err);
+  }
   const schema = {
     "@context": "https://schema.org",
     "@type": "WebPage",
@@ -29,8 +44,8 @@ export default function Home() {
       />
       <HeroBanner />
       {/* <TrustBadges /> */}
-      <CategoryGrid />
-      <FeaturedProducts />
+      <CategoryGrid categories={categories} />
+      <FeaturedProducts featured={products.slice(0, 4)} />
       <BrandStory />
       <HowToOrder />
       <Testimonials />

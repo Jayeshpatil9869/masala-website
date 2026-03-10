@@ -6,22 +6,7 @@ import { ArrowUpRight, Flame } from 'lucide-react';
 import Link from 'next/link';
 import Image from 'next/image';
 
-export default function CategoryGrid() {
-  const [categories, setCategories] = useState<any[]>([]);
-
-  useEffect(() => {
-    async function fetchCategories() {
-      try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/categories`);
-        if (!res.ok) throw new Error('Failed');
-        const data = await res.json();
-        setCategories(data);
-      } catch (err) {
-        console.error(err);
-      }
-    }
-    fetchCategories();
-  }, []);
+export default function CategoryGrid({ categories }: { categories: any[] }) {
 
   const featured = categories[0];
   const rest = categories.slice(1, 5);
