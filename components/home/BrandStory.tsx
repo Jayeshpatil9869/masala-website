@@ -24,10 +24,12 @@ export default function BrandStory() {
             viewport={{ once: true }}
             transition={{ duration: 0.8 }}
           >
-            <img
+            <Image
               src="/image.png"
               alt="Masala Grinding Process"
-              className="absolute inset-0 w-full h-full object-cover object-center"
+              fill
+              sizes="(max-width: 1024px) 100vw, 50vw"
+              className="object-cover object-center"
             />
 
             <div className="absolute inset-0 bg-brand-dark/20 mix-blend-multiply"></div>

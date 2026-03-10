@@ -2,6 +2,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { Star } from "lucide-react";
+import Image from "next/image";
 
 const testimonials = [
   {
@@ -102,7 +103,7 @@ export const TestimonialsColumn = ({
                 </div>
                 <p className="text-gray-700 font-body text-sm leading-relaxed">"{text}"</p>
                 <div className="flex items-center gap-3 mt-4">
-                  <img
+                  <Image
                     width={40}
                     height={40}
                     src={image}

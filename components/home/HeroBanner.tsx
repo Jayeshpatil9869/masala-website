@@ -1,8 +1,9 @@
 "use client"
 
 import { useState, useEffect } from "react"
-import { motion, AnimatePresence } from "framer-motion"
+import { motion } from "framer-motion"
 import { ChevronLeft, ChevronRight } from "lucide-react"
+import Image from "next/image"
 
 const BACKGROUND_IMAGES = [
   "/img (1).jpg",
@@ -11,34 +12,20 @@ const BACKGROUND_IMAGES = [
   "/img (4).jpg",
 ]
 
-const variants = {
-  enter: (direction: number) => {
-    return {
-      x: direction > 0 ? '100%' : '-100%',
-      opacity: 1
-    };
-  },
-  center: {
-    zIndex: 1,
-    x: 0,
-    opacity: 1
-  },
-  exit: (direction: number) => {
-    return {
-      zIndex: 0,
-      x: direction < 0 ? '100%' : '-100%',
-      opacity: 1
-    };
-  }
-};
-
 export default function HeroBanner() {
-  const [[page, direction], setPage] = useState([0, 0])
-
-  const currentImageIndex = Math.abs(page % BACKGROUND_IMAGES.length)
+  const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const [prevImageIndex, setPrevImageIndex] = useState(0)
+  const [direction, setDirection] = useState(1)
 
   const paginate = (newDirection: number) => {
-    setPage([page + newDirection, newDirection])
+    setDirection(newDirection)
+    setPrevImageIndex(currentImageIndex)
+    setCurrentImageIndex((prev) => {
+      let nextIndex = prev + newDirection;
+      if (nextIndex < 0) nextIndex = BACKGROUND_IMAGES.length - 1;
+      if (nextIndex >= BACKGROUND_IMAGES.length) nextIndex = 0;
+      return nextIndex;
+    })
   }
 
   useEffect(() => {
@@ -47,29 +34,61 @@ export default function HeroBanner() {
     }, 5000)
 
     return () => clearInterval(interval)
-  }, [page])
+  }, [currentImageIndex]) // Restart timer on manual click
 
   return (
     <section className="relative w-full bg-brand-cream overflow-hidden aspect-[4/3] md:aspect-[1920/1081] flex items-center justify-center mt-[72px] md:mt-0">
 
-      {/* SLIDER IMAGE */}
-      <AnimatePresence initial={false} custom={direction}>
-        <motion.img
-          key={page}
-          src={BACKGROUND_IMAGES[currentImageIndex]}
-          alt={`Hero ${currentImageIndex}`}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{
-            x: { type: "tween", duration: 0.8, ease: "easeInOut" },
-            opacity: { duration: 0.2 }
-          }}
-          className="absolute inset-0 w-full h-full object-cover object-center"
-        />
-      </AnimatePresence>
+      {/* SLIDER IMAGES (All Rendered Simultaneously) */}
+      {BACKGROUND_IMAGES.map((src, idx) => {
+        const isActive = idx === currentImageIndex;
+        const isPrev = idx === prevImageIndex;
+        const isInitialRender = currentImageIndex === prevImageIndex;
+
+        let x = "0%";
+        let zIndex = 0;
+        let opacity = 0;
+        let transitionDuration = 0.8;
+
+        if (isActive) {
+          x = "0%";
+          zIndex = 20;
+          opacity = 1;
+        } else if (isPrev && !isInitialRender) {
+          x = direction > 0 ? "-100%" : "100%";
+          zIndex = 10;
+          opacity = 1;
+        } else {
+          // Idle state - instantly position off-screen ready to slide in next
+          x = direction > 0 ? "100%" : "-100%";
+          zIndex = 0;
+          opacity = 0;
+          transitionDuration = 0; // Instant jump
+        }
+
+        return (
+          <motion.div
+            key={src}
+            initial={false}
+            animate={{
+              opacity,
+              zIndex,
+              x,
+            }}
+            transition={{ duration: transitionDuration, ease: "easeInOut" }}
+            className={`absolute inset-0 w-full h-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+          >
+            <Image
+              src={src}
+              alt={`Hero image ${idx + 1}`}
+              fill
+              priority={true}
+              sizes="100vw"
+              className="object-cover object-center"
+            />
+          </motion.div>
+        )
+      })}
 
       {/* LEFT ARROW */}
       <button
