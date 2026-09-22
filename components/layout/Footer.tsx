@@ -142,7 +142,7 @@ export default function Footer() {
         </div>
 
         {/* BOTTOM UTILITY & LEGAL ROW (Nike typography.utility-xs) */}
-        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4 text-[10px] text-[#707072] text-center sm:text-left">
+        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4 text-[10px] text-[#707072] text-center sm:text-left border-b border-[#cacacb]/40 pb-4">
           <div className="flex items-center justify-center sm:justify-start gap-4 flex-wrap">
             <span className="font-semibold text-[#111111]">India (English)</span>
             <span>© 2026 Gravitate / Gurukrupa Gruh Udyog. All Rights Reserved.</span>
@@ -163,6 +163,38 @@ export default function Footer() {
               FSSAI Compliance
             </Link>
           </div>
+        </div>
+
+        {/* ATTRIBUTION CREDITS */}
+        <div className="pt-4 pb-2 text-center text-[11px] text-[#707072] flex flex-wrap items-center justify-center gap-1 sm:gap-1.5">
+          <span>Crafted by</span>
+          <a
+            href="https://divinescode.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-[#111111] hover:underline underline-offset-2 transition-colors"
+          >
+            Divines Code
+          </a>
+          <span className="text-[#cacacb] px-0.5">•</span>
+          <span>Designed and Developed by</span>
+          <a
+            href="https://jayeshbpatil.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-[#111111] hover:underline underline-offset-2 transition-colors"
+          >
+            Jayesh Patil
+          </a>
+          <span>&</span>
+          <a
+            href="https://mahendranagpure.com/"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-[#111111] hover:underline underline-offset-2 transition-colors"
+          >
+            Mahendra Nagpure
+          </a>
         </div>
       </div>
     </footer>
