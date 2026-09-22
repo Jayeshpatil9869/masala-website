@@ -9,15 +9,12 @@ import ProductSpecs from '@/components/product-detail/ProductSpecs';
 import RelatedProducts from '@/components/product-detail/RelatedProducts';
 import OtherCategoryProducts from '@/components/product-detail/OtherCategoryProducts';
 
-// Helper function to fetch product
+import { fetchProductBySlug } from '@/lib/supabase';
+
+// Helper function to fetch product directly from Supabase
 async function getProduct(slug: string) {
   try {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/products/${slug}`, { next: { revalidate: 60 } });
-    if (!res.ok) {
-      if (res.status === 404) return null;
-      throw new Error('Failed to fetch product');
-    }
-    return await res.json();
+    return await fetchProductBySlug(slug);
   } catch (error) {
     console.error(error);
     return null;
@@ -69,9 +66,9 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
       "@type": "AggregateOffer",
       "url": `https://gravitatee.com/products/${product.slug}`,
       "priceCurrency": "INR",
-      "lowPrice": product.prices ? Math.min(...product.prices.map((p: any) => p.price)) : (product.price || 0),
-      "highPrice": product.prices ? Math.max(...product.prices.map((p: any) => p.price)) : (product.price || 0),
-      "offerCount": product.prices ? product.prices.length : 1,
+      "lowPrice": product.variants && product.variants.length > 0 ? Math.min(...product.variants.map((v) => v.price)) : (product.price || 0),
+      "highPrice": product.variants && product.variants.length > 0 ? Math.max(...product.variants.map((v) => v.price)) : (product.price || 0),
+      "offerCount": product.variants && product.variants.length > 0 ? product.variants.length : 1,
       "itemCondition": "https://schema.org/NewCondition",
       "availability": "https://schema.org/InStock",
       "seller": {

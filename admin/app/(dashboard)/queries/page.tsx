@@ -1,9 +1,19 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-
 import { toast } from "sonner";
-import { MessageSquare, Eye, Trash2, Loader2, CheckCircle } from "lucide-react";
+import {
+  MessageSquare,
+  Eye,
+  Trash2,
+  Loader2,
+  CheckCircle2,
+  Mail,
+  Phone,
+  Clock,
+  X,
+  Send,
+} from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import DeleteConfirmModal from "@/components/admin/DeleteConfirmModal";
 
@@ -57,12 +67,15 @@ export default function QueriesPage() {
       });
       if (!res.ok) throw new Error("Failed to update status");
 
-      setQueries(
-        queries.map((q) =>
+      setQueries((prev) =>
+        prev.map((q) =>
           q.id === id ? { ...q, is_read: !currentStatus } : q,
         ),
       );
-      toast.success(!currentStatus ? "Marked as read" : "Marked as unread");
+      if (viewQuery && viewQuery.id === id) {
+        setViewQuery({ ...viewQuery, is_read: !currentStatus });
+      }
+      toast.success(!currentStatus ? "Marked as resolved / read" : "Marked as unread");
     } catch (error: unknown) {
       toast.error("Failed to update status", {
         description: error instanceof Error ? error.message : "Unknown error",
@@ -110,140 +123,137 @@ export default function QueriesPage() {
   const unreadCount = queries.filter((q) => !q.is_read).length;
 
   return (
-    <div>
-      <div className="flex items-center justify-between mb-8">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900 flex items-center gap-3">
-            Contact Queries
-            {unreadCount > 0 && (
-              <span className="px-2.5 py-1 bg-orange-100 text-orange-600 text-xs font-bold rounded-full">
-                {unreadCount} new
+          <div className="flex items-center gap-2 mb-1">
+            {unreadCount > 0 ? (
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-[#D30005] text-white">
+                <span className="w-1.5 h-1.5 rounded-full bg-white animate-pulse" />
+                {unreadCount} Unread Inquiry{unreadCount > 1 ? "s" : ""}
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-[11px] font-semibold bg-emerald-50 text-[#007D48] border border-emerald-100">
+                <CheckCircle2 className="w-3 h-3" /> All Inquiries Caught Up
               </span>
             )}
+          </div>
+          <h1 className="font-display text-3xl sm:text-4xl text-[#111111] uppercase tracking-wide">
+            Customer Inquiries
           </h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Customer messages from the contact form
+          <p className="text-sm text-[#707072]">
+            Wholesale, catering, and retail messages submitted from your storefront contact form.
           </p>
         </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
+      {/* Main Queries Container */}
+      <div className="bg-white rounded-2xl border border-[#EAEAEA] shadow-sm overflow-hidden">
         {loading ? (
-          <div className="flex items-center justify-center py-20">
-            <Loader2 className="w-6 h-6 animate-spin text-orange-500" />
+          <div className="flex items-center justify-center py-24">
+            <Loader2 className="w-7 h-7 animate-spin text-[#111111]" />
           </div>
         ) : queries.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <MessageSquare className="w-10 h-10 text-gray-200 mb-3" />
-            <p className="text-sm text-gray-400">No contact queries yet</p>
+          <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#F5F5F5] flex items-center justify-center mb-3">
+              <MessageSquare className="w-6 h-6 text-[#9E9EA0]" />
+            </div>
+            <p className="text-sm font-semibold text-[#111111]">No customer inquiries yet</p>
+            <p className="text-xs text-[#707072] mt-1 max-w-sm">
+              Customer queries submitted through the contact page will automatically show up here.
+            </p>
           </div>
         ) : (
-          <div className="overflow-auto max-h-[calc(100vh-250px)]">
-            <table className="w-full text-sm relative">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/95 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Customer
-                  </th>
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden md:table-cell">
-                    Subject
-                  </th>
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden lg:table-cell">
-                    Message
-                  </th>
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Status
-                  </th>
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider hidden sm:table-cell">
-                    Date
-                  </th>
-                  <th className="text-right px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                <tr className="border-b border-[#EAEAEA] bg-[#FAFAFA] text-[11px] font-bold text-[#707072] uppercase tracking-wider">
+                  <th className="px-5 py-3.5">Customer</th>
+                  <th className="hidden md:table-cell px-5 py-3.5">Subject</th>
+                  <th className="hidden lg:table-cell px-5 py-3.5">Preview</th>
+                  <th className="px-5 py-3.5">Status</th>
+                  <th className="hidden sm:table-cell px-5 py-3.5">Received</th>
+                  <th className="text-right px-5 py-3.5">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
+              <tbody className="divide-y divide-[#F0F0F0]">
                 {queries.map((q) => (
                   <tr
                     key={q.id}
-                    className={`hover:bg-orange-50/30 transition-colors cursor-pointer ${!q.is_read ? "bg-orange-50/20" : ""}`}
+                    className={`hover:bg-[#FAFAFA] transition-colors cursor-pointer group ${
+                      !q.is_read ? "bg-orange-50/20" : ""
+                    }`}
                     onClick={() => {
                       setViewQuery(q);
                       if (!q.is_read) markAsRead(q.id, q.is_read);
                     }}
                   >
-                    <td className="px-4 sm:px-6 py-4">
-                      <div className="flex items-center gap-2">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3">
                         {!q.is_read && (
-                          <span className="w-2 h-2 bg-orange-400 rounded-full flex-shrink-0" />
+                          <span className="w-2 h-2 rounded-full bg-[#D30005] flex-shrink-0 animate-ping" />
                         )}
                         <div>
-                          <p className="font-medium text-gray-900">{q.name}</p>
-                          <p className="text-xs text-gray-400">{q.email}</p>
+                          <p className="font-semibold text-[#111111] group-hover:text-[#D30005] transition-colors">
+                            {q.name}
+                          </p>
+                          <p className="text-xs text-[#707072] mt-0.5">{q.email}</p>
                           {q.phone && (
-                            <p className="text-xs text-gray-400">{q.phone}</p>
+                            <p className="text-[11px] text-[#9E9EA0] font-mono">{q.phone}</p>
                           )}
                         </div>
                       </div>
                     </td>
-                    <td className="px-4 sm:px-6 py-4 hidden md:table-cell">
-                      <span className="text-gray-600">{q.subject || "—"}</span>
+                    <td className="hidden md:table-cell px-5 py-4">
+                      <span className="font-medium text-[#4B4B4D]">
+                        {q.subject || "General Inquiry"}
+                      </span>
                     </td>
-                    <td className="px-4 sm:px-6 py-4 hidden lg:table-cell">
-                      <p className="text-gray-500 text-xs line-clamp-2 max-w-xs">
+                    <td className="hidden lg:table-cell px-5 py-4">
+                      <p className="text-xs text-[#707072] line-clamp-1 max-w-xs">
                         {q.message}
                       </p>
                     </td>
-                    <td className="px-4 sm:px-6 py-4">
+                    <td className="px-5 py-4">
                       {q.is_read ? (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-green-50 text-green-600 text-xs font-medium rounded-full">
-                          <CheckCircle className="w-3 h-3" /> Read
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-emerald-50 text-[#007D48] text-xs font-semibold rounded-full border border-emerald-100">
+                          <CheckCircle2 className="w-3 h-3" /> Read
                         </span>
                       ) : (
-                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full">
-                          <span className="w-1.5 h-1.5 bg-orange-400 rounded-full" />{" "}
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-red-50 text-[#D30005] text-xs font-semibold rounded-full border border-red-100">
+                          <span className="w-1.5 h-1.5 bg-[#D30005] rounded-full" />
                           Unread
                         </span>
                       )}
                     </td>
-                    <td className="px-4 sm:px-6 py-4 text-gray-400 text-xs hidden sm:table-cell">
-                      {formatDate(q.created_at)}
+                    <td className="hidden sm:table-cell px-5 py-4 text-xs text-[#707072]">
+                      <span className="flex items-center gap-1">
+                        <Clock className="w-3 h-3 text-[#9E9EA0]" />
+                        {formatDate(q.created_at)}
+                      </span>
                     </td>
-                    <td className="px-4 sm:px-6 py-4">
-                      <div className="flex items-center justify-end gap-2">
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-end gap-1.5">
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             setViewQuery(q);
                             if (!q.is_read) markAsRead(q.id, q.is_read);
                           }}
-                          className="p-2 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition"
+                          className="p-2 rounded-lg text-[#707072] hover:text-[#111111] hover:bg-[#F5F5F5] transition"
+                          title="View Message"
                         >
                           <Eye className="w-4 h-4" />
                         </button>
-                        {!q.is_read && (
-                          <button
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              markAsRead(q.id, q.is_read);
-                            }}
-                            disabled={processingId === q.id}
-                            className="p-2 rounded-lg text-gray-400 hover:text-green-500 hover:bg-green-50 transition disabled:opacity-50"
-                          >
-                            {processingId === q.id ? (
-                              <Loader2 className="w-4 h-4 animate-spin" />
-                            ) : (
-                              <CheckCircle className="w-4 h-4" />
-                            )}
-                          </button>
-                        )}
                         <button
                           onClick={(e) => {
                             e.stopPropagation();
                             openDeleteModal(q.id);
                           }}
                           disabled={processingId === q.id}
-                          className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-50"
+                          className="p-2 rounded-lg text-[#707072] hover:text-[#D30005] hover:bg-red-50 transition disabled:opacity-50"
+                          title="Delete Message"
                         >
                           <Trash2 className="w-4 h-4" />
                         </button>
@@ -257,61 +267,95 @@ export default function QueriesPage() {
         )}
       </div>
 
-      {/* View Modal */}
+      {/* Query Detail Modal */}
       {viewQuery && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div
-            className="absolute inset-0 bg-black/30 backdrop-blur-sm"
+            className="absolute inset-0 bg-black/40 backdrop-blur-sm transition-opacity"
             onClick={() => setViewQuery(null)}
           />
-          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 z-10">
-            <div className="flex items-start justify-between mb-5">
+          <div className="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg p-6 sm:p-7 z-10 border border-[#EAEAEA]">
+            <div className="flex items-start justify-between mb-5 pb-3 border-b border-[#EAEAEA]">
               <div>
-                <h2 className="font-bold text-gray-900 text-lg">
+                <span className="text-[10px] font-bold uppercase tracking-widest text-[#9E9EA0]">
+                  Customer Message
+                </span>
+                <h2 className="font-bold text-lg text-[#111111] mt-0.5">
                   {viewQuery.name}
                 </h2>
-                <p className="text-sm text-gray-400">{viewQuery.email}</p>
-                {viewQuery.phone && (
-                  <p className="text-sm text-gray-400">{viewQuery.phone}</p>
-                )}
+                <div className="flex items-center gap-3 mt-1.5 flex-wrap">
+                  <a
+                    href={`mailto:${viewQuery.email}`}
+                    className="inline-flex items-center gap-1.5 text-xs text-[#111111] hover:text-[#D30005] font-semibold bg-[#F5F5F5] px-2.5 py-1 rounded-lg border border-[#EAEAEA] transition"
+                  >
+                    <Mail className="w-3.5 h-3.5 text-[#707072]" />
+                    {viewQuery.email}
+                  </a>
+                  {viewQuery.phone && (
+                    <a
+                      href={`tel:${viewQuery.phone}`}
+                      className="inline-flex items-center gap-1.5 text-xs text-[#111111] hover:text-[#D30005] font-semibold bg-[#F5F5F5] px-2.5 py-1 rounded-lg border border-[#EAEAEA] transition"
+                    >
+                      <Phone className="w-3.5 h-3.5 text-[#707072]" />
+                      {viewQuery.phone}
+                    </a>
+                  )}
+                </div>
               </div>
               <button
                 onClick={() => setViewQuery(null)}
-                className="p-2 rounded-lg hover:bg-gray-100 transition text-gray-400"
+                className="p-1.5 rounded-lg text-[#707072] hover:bg-[#F5F5F5] transition"
               >
-                ✕
+                <X className="w-5 h-5" />
               </button>
             </div>
+
             {viewQuery.subject && (
-              <div className="mb-3">
-                <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                  Subject
+              <div className="mb-4">
+                <span className="block text-[10px] font-bold uppercase tracking-wider text-[#707072] mb-1">
+                  Subject Line
                 </span>
-                <p className="text-sm text-gray-700 mt-1">
+                <p className="text-sm font-semibold text-[#111111]">
                   {viewQuery.subject}
                 </p>
               </div>
             )}
-            <div>
-              <span className="text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                Message
+
+            <div className="mb-4">
+              <span className="block text-[10px] font-bold uppercase tracking-wider text-[#707072] mb-1">
+                Full Inquiry Text
               </span>
-              <p className="text-sm text-gray-700 mt-1 leading-relaxed whitespace-pre-wrap bg-gray-50 rounded-xl p-4 border border-gray-100">
+              <div className="bg-[#F9F9F9] border border-[#EAEAEA] rounded-xl p-4 text-sm text-[#39393B] leading-relaxed whitespace-pre-wrap">
                 {viewQuery.message}
-              </p>
+              </div>
             </div>
-            <p className="text-xs text-gray-400 mt-4">
-              {formatDate(viewQuery.created_at)}
-            </p>
-            <button
-              onClick={() => {
-                setViewQuery(null);
-                openDeleteModal(viewQuery.id);
-              }}
-              className="mt-4 flex items-center gap-2 px-4 py-2 bg-red-50 text-red-600 text-sm font-medium rounded-lg hover:bg-red-100 transition"
-            >
-              <Trash2 className="w-4 h-4" /> Delete Query
-            </button>
+
+            <div className="flex items-center justify-between pt-2 border-t border-[#EAEAEA] flex-wrap gap-2">
+              <span className="text-[11px] text-[#9E9EA0]">
+                Received {formatDate(viewQuery.created_at)}
+              </span>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => markAsRead(viewQuery.id, viewQuery.is_read)}
+                  disabled={processingId === viewQuery.id}
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl border border-[#E5E5E5] text-[#111111] hover:bg-[#F5F5F5] transition"
+                >
+                  {viewQuery.is_read ? "Mark as Unread" : "Mark as Read"}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => {
+                    setViewQuery(null);
+                    openDeleteModal(viewQuery.id);
+                  }}
+                  className="px-3.5 py-2 text-xs font-semibold rounded-xl bg-red-50 hover:bg-red-100 text-[#D30005] transition"
+                >
+                  Delete
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       )}
@@ -321,8 +365,8 @@ export default function QueriesPage() {
         isOpen={deleteModalOpen}
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
-        title="Delete Query"
-        description="Are you sure you want to delete this inquiry? This message will be permanently removed and cannot be recovered."
+        title="Delete Customer Query"
+        description="Are you sure you want to delete this customer inquiry? This action cannot be undone."
         isDeleting={isDeleting}
       />
     </div>

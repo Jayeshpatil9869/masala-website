@@ -104,7 +104,7 @@ export default function ProductGrid() {
   useEffect(() => {
     async function fetchProducts() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/products`);
+        const res = await fetch('/api/v1/products');
         if (!res.ok) throw new Error('Failed to fetch products');
         const data = await res.json();
         if (data && data.length > 0) {

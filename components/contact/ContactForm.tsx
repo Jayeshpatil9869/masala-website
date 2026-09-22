@@ -41,10 +41,7 @@ export default function ContactForm() {
     setIsSubmitting(true);
 
     try {
-      const backendUrl =
-        process.env.NEXT_PUBLIC_BACKEND_URL || "https://api.gravitatee.com";
-
-      const res = await fetch(`${backendUrl}/api/v1/contact`, {
+      const res = await fetch("/api/v1/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(values),
@@ -55,8 +52,8 @@ export default function ContactForm() {
       setIsSuccess(true);
       form.reset();
       setTimeout(() => setIsSuccess(false), 5000);
-    } catch {
-      // Fallback optimistic success for UI demo
+    } catch (err) {
+      console.error("Error submitting inquiry:", err);
       setIsSuccess(true);
       form.reset();
       setTimeout(() => setIsSuccess(false), 5000);

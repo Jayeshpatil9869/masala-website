@@ -1,9 +1,9 @@
 "use client";
 
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { createClient } from "@/lib/supabase/client";
 import { toast } from "sonner";
-import { Plus, Pencil, Trash2, Package, Loader2, Search } from "lucide-react";
+import { Plus, Pencil, Trash2, Package, Loader2, Search, Filter, X } from "lucide-react";
 import { formatDate } from "@/lib/utils";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
@@ -22,7 +22,6 @@ type Product = {
 
 type Category = { id: string; name: string };
 
-// Lazy-loaded image with skeleton placeholder
 function LazyProductImage({
   src,
   alt,
@@ -35,8 +34,8 @@ function LazyProductImage({
 
   if (!src || error) {
     return (
-      <div className="w-full h-full flex items-center justify-center bg-gray-100">
-        <Package className="w-5 h-5 text-gray-300" />
+      <div className="w-full h-full flex items-center justify-center bg-[#F5F5F5]">
+        <Package className="w-5 h-5 text-[#9E9EA0]" />
       </div>
     );
   }
@@ -44,13 +43,13 @@ function LazyProductImage({
   return (
     <>
       {!loaded && (
-        <div className="absolute inset-0 bg-gray-100 animate-pulse rounded-xl" />
+        <div className="absolute inset-0 bg-[#F5F5F5] animate-pulse rounded-xl" />
       )}
       <Image
         src={src}
         alt={alt}
         fill
-        sizes="(max-width: 640px) 40px, 48px"
+        sizes="(max-width: 640px) 44px, 48px"
         onLoad={() => setLoaded(true)}
         onError={() => setError(true)}
         className={`object-cover transition-opacity duration-300 ${
@@ -75,12 +74,13 @@ export default function ProductsPage() {
   const [filterCat, setFilterCat] = useState("");
 
   const loadCategories = useCallback(async () => {
-    const { data: cats } = await supabase
+    const client = createClient();
+    const { data: cats } = await client
       .from("categories")
       .select("id, name")
       .order("name");
     if (cats) setCategories(cats);
-  }, [supabase]);
+  }, []);
 
   const loadProducts = useCallback(
     async (catId: string, searchTerm: string) => {
@@ -91,8 +91,8 @@ export default function ProductsPage() {
         if (catId && catId !== "all") {
           params.append("category", catId);
         }
-        if (searchTerm) {
-          params.append("search", searchTerm);
+        if (searchTerm.trim()) {
+          params.append("search", searchTerm.trim());
         }
         if (params.toString()) {
           url += `?${params.toString()}`;
@@ -118,7 +118,11 @@ export default function ProductsPage() {
   }, [loadCategories]);
 
   useEffect(() => {
-    loadProducts(filterCat, search);
+    const handler = setTimeout(() => {
+      loadProducts(filterCat, search);
+    }, 200);
+
+    return () => clearTimeout(handler);
   }, [filterCat, search, loadProducts]);
 
   const openDeleteModal = (id: string) => {
@@ -155,181 +159,179 @@ export default function ProductsPage() {
     }
   };
 
-  // Skeleton rows shown while loading
-  const SkeletonRow = () => (
-    <tr className="border-b border-gray-50">
-      <td className="px-4 sm:px-6 py-4">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-xl bg-gray-100 animate-pulse flex-shrink-0" />
-          <div className="space-y-2 flex-1">
-            <div className="h-3.5 bg-gray-100 animate-pulse rounded w-32" />
-            <div className="h-3 bg-gray-100 animate-pulse rounded w-20" />
-          </div>
-        </div>
-      </td>
-      <td className="px-4 sm:px-6 py-4">
-        <div className="h-6 bg-gray-100 animate-pulse rounded-full w-24" />
-      </td>
-      <td className="hidden sm:table-cell px-4 sm:px-6 py-4">
-        <div className="h-3.5 bg-gray-100 animate-pulse rounded w-16" />
-      </td>
-      <td className="hidden sm:table-cell px-4 sm:px-6 py-4">
-        <div className="h-3.5 bg-gray-100 animate-pulse rounded w-20" />
-      </td>
-      <td className="px-4 sm:px-6 py-4">
-        <div className="flex items-center justify-end gap-2">
-          <div className="w-8 h-8 rounded-lg bg-gray-100 animate-pulse" />
-          <div className="w-8 h-8 rounded-lg bg-gray-100 animate-pulse" />
-        </div>
-      </td>
-    </tr>
-  );
-
   return (
-    <div>
-      <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mb-8">
+    <div className="space-y-6">
+      {/* Header */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-2xl font-bold text-gray-900">Products</h1>
-          <p className="text-sm text-gray-500 mt-1">
-            Manage your spice product catalog
+          <h1 className="font-display text-3xl sm:text-4xl text-[#111111] uppercase tracking-wide">
+            Product Catalog
+          </h1>
+          <p className="text-sm text-[#707072] mt-0.5">
+            Manage your spice powders, boxes, and weight variant pricing.
           </p>
         </div>
         <Link
           href="/products/new"
-          className="flex items-center justify-center gap-2 px-4 py-2.5 bg-gradient-to-r from-orange-500 to-red-600 text-white text-sm font-semibold rounded-xl shadow-sm hover:shadow-md transition w-full sm:w-auto"
+          className="inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#111111] hover:bg-[#222222] text-white text-xs font-semibold rounded-xl transition shadow-sm btn-press-active w-full sm:w-auto"
         >
           <Plus className="w-4 h-4" /> Add Product
         </Link>
       </div>
 
-      {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3 mb-6">
+      {/* Filter Row */}
+      <div className="flex flex-col sm:flex-row gap-3">
         <div className="relative flex-1">
-          <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400" />
+          <Search className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-[#9E9EA0]" />
           <input
             value={search}
             onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search products..."
-            className="w-full pl-9 pr-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white"
+            placeholder="Search products by title..."
+            className="w-full pl-10 pr-4 py-2.5 bg-white border border-[#E5E5E5] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] text-[#111111] placeholder:text-[#9E9EA0] shadow-sm"
           />
+          {search && (
+            <button
+              onClick={() => setSearch("")}
+              className="absolute right-3 top-1/2 -translate-y-1/2 p-1 text-[#9E9EA0] hover:text-[#111111]"
+            >
+              <X className="w-3.5 h-3.5" />
+            </button>
+          )}
         </div>
-        <select
-          value={filterCat}
-          onChange={(e) => setFilterCat(e.target.value)}
-          className="px-4 py-2.5 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-orange-500 bg-white"
-        >
-          <option value="">All Categories</option>
-          {categories.map((c) => (
-            <option key={c.id} value={c.id}>
-              {c.name}
-            </option>
-          ))}
-        </select>
+
+        <div className="flex items-center gap-2">
+          <div className="relative w-full sm:w-56">
+            <select
+              value={filterCat}
+              onChange={(e) => setFilterCat(e.target.value)}
+              className="w-full px-3.5 py-2.5 bg-white border border-[#E5E5E5] rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-[#111111] text-[#111111] shadow-sm appearance-none cursor-pointer pr-8"
+            >
+              <option value="">All Categories</option>
+              {categories.map((c) => (
+                <option key={c.id} value={c.id}>
+                  {c.name}
+                </option>
+              ))}
+            </select>
+            <Filter className="absolute right-3 top-1/2 -translate-y-1/2 w-3.5 h-3.5 text-[#9E9EA0] pointer-events-none" />
+          </div>
+        </div>
       </div>
 
-      <div className="bg-white rounded-2xl border border-gray-100 shadow-sm overflow-hidden">
-        {/* Always render the table shell — show skeletons while loading */}
-        {!loading && products.length === 0 ? (
-          <div className="flex flex-col items-center justify-center py-20 text-center">
-            <Package className="w-10 h-10 text-gray-200 mb-3" />
-            <p className="text-sm text-gray-400">
-              {search
-                ? "No products match your search."
-                : "No products yet. Add your first product!"}
+      {/* Products Table Card */}
+      <div className="bg-white rounded-2xl border border-[#EAEAEA] shadow-sm overflow-hidden">
+        {loading ? (
+          <div className="flex items-center justify-center py-24">
+            <Loader2 className="w-7 h-7 animate-spin text-[#111111]" />
+          </div>
+        ) : products.length === 0 ? (
+          <div className="flex flex-col items-center justify-center py-24 text-center px-4">
+            <div className="w-12 h-12 rounded-2xl bg-[#F5F5F5] flex items-center justify-center mb-3">
+              <Package className="w-6 h-6 text-[#9E9EA0]" />
+            </div>
+            <p className="text-sm font-semibold text-[#111111]">
+              {search ? "No matching products found" : "No products in catalog yet"}
             </p>
+            <p className="text-xs text-[#707072] mt-1 max-w-sm">
+              {search
+                ? "Try searching for a different keyword or reset your filter."
+                : "Add your first spice product to start selling across India."}
+            </p>
+            {search ? (
+              <button
+                onClick={() => setSearch("")}
+                className="mt-4 px-4 py-2 border border-[#E5E5E5] text-[#111111] text-xs font-semibold rounded-xl hover:bg-[#F5F5F5] transition"
+              >
+                Clear Search Filter
+              </button>
+            ) : (
+              <Link
+                href="/products/new"
+                className="mt-4 px-4 py-2 bg-[#111111] text-white text-xs font-semibold rounded-xl hover:bg-[#222222] transition"
+              >
+                + Add First Product
+              </Link>
+            )}
           </div>
         ) : (
-          <div className="overflow-auto max-h-[calc(100vh-250px)]">
-            <table className="w-full text-sm relative">
+          <div className="overflow-x-auto">
+            <table className="w-full text-left text-sm">
               <thead>
-                <tr className="border-b border-gray-100 bg-gray-50/95 backdrop-blur-sm sticky top-0 z-10 shadow-sm">
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Product
-                  </th>
-                  <th className="text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Category
-                  </th>
-                  <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Variants
-                  </th>
-                  <th className="hidden sm:table-cell text-left px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Created
-                  </th>
-                  <th className="text-right px-4 sm:px-6 py-3 text-xs font-semibold text-gray-500 uppercase tracking-wider">
-                    Actions
-                  </th>
+                <tr className="border-b border-[#EAEAEA] bg-[#FAFAFA] text-[11px] font-bold text-[#707072] uppercase tracking-wider">
+                  <th className="px-5 py-3.5">Product</th>
+                  <th className="px-5 py-3.5">Category</th>
+                  <th className="hidden sm:table-cell px-5 py-3.5">Variants</th>
+                  <th className="hidden md:table-cell px-5 py-3.5">Date Added</th>
+                  <th className="text-right px-5 py-3.5">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-gray-50">
-                {loading
-                  ? // Show 8 skeleton rows while fetching
-                    Array.from({ length: 8 }).map((_, i) => (
-                      <SkeletonRow key={i} />
-                    ))
-                  : products.map((p) => (
-                      <tr
-                        key={p.id}
-                        className="hover:bg-orange-50/30 transition-colors cursor-pointer"
-                        onClick={() => router.push(`/products/${p.id}/edit`)}
-                      >
-                        <td className="px-4 sm:px-6 py-4">
-                          <div className="flex items-center gap-3">
-                            <div className="relative w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden flex-shrink-0">
-                              <LazyProductImage
-                                src={p.images?.[0]}
-                                alt={p.name}
-                              />
-                            </div>
-                            <div className="min-w-0">
-                              <p className="font-medium text-gray-900 truncate max-w-[120px] sm:max-w-none">
-                                {p.name}
-                              </p>
-                              <p className="text-xs text-gray-400 font-mono truncate max-w-[120px] sm:max-w-none">
-                                {p.slug}
-                              </p>
-                            </div>
-                          </div>
-                        </td>
-                        <td className="px-4 sm:px-6 py-4">
-                          <span className="inline-flex px-2.5 py-1 bg-orange-50 text-orange-600 text-xs font-medium rounded-full whitespace-nowrap">
-                            {p.categories?.name ?? "Uncategorized"}
-                          </span>
-                        </td>
-                        <td className="hidden sm:table-cell px-4 sm:px-6 py-4">
-                          <span className="text-gray-600 font-medium">
-                            {p.product_variants?.[0]?.count ?? 0} sizes
-                          </span>
-                        </td>
-                        <td className="hidden sm:table-cell px-4 sm:px-6 py-4 text-gray-400">
-                          {formatDate(p.created_at)}
-                        </td>
-                        <td className="px-4 sm:px-6 py-4">
-                          <div className="flex items-center justify-end gap-2">
-                            <Link
-                              href={`/products/${p.id}/edit`}
-                              className="p-2 rounded-lg text-gray-400 hover:text-orange-500 hover:bg-orange-50 transition"
-                              onClick={(e) => e.stopPropagation()}
-                            >
-                              <Pencil className="w-4 h-4" />
-                            </Link>
-                            <button
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                openDeleteModal(p.id);
-                              }}
-                              disabled={deleteId === p.id}
-                              className="p-2 rounded-lg text-gray-400 hover:text-red-500 hover:bg-red-50 transition disabled:opacity-50"
-                            >
-                              {deleteId === p.id ? (
-                                <Loader2 className="w-4 h-4 animate-spin" />
-                              ) : (
-                                <Trash2 className="w-4 h-4" />
-                              )}
-                            </button>
-                          </div>
-                        </td>
-                      </tr>
-                    ))}
+              <tbody className="divide-y divide-[#F0F0F0]">
+                {products.map((p) => (
+                  <tr
+                    key={p.id}
+                    className="hover:bg-[#FAFAFA] transition-colors cursor-pointer group"
+                    onClick={() => router.push(`/products/${p.id}/edit`)}
+                  >
+                    <td className="px-5 py-4">
+                      <div className="flex items-center gap-3.5">
+                        <div className="relative w-11 h-11 sm:w-12 sm:h-12 rounded-xl bg-[#F5F5F5] border border-[#EAEAEA] overflow-hidden flex-shrink-0 group-hover:border-[#111111] transition-all">
+                          <LazyProductImage
+                            src={p.images?.[0]}
+                            alt={p.name}
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <p className="font-semibold text-[#111111] group-hover:text-[#D30005] transition-colors truncate max-w-[160px] sm:max-w-none">
+                            {p.name}
+                          </p>
+                          <p className="text-[11px] text-[#9E9EA0] font-mono truncate max-w-[160px] sm:max-w-none mt-0.5">
+                            /{p.slug}
+                          </p>
+                        </div>
+                      </div>
+                    </td>
+                    <td className="px-5 py-4">
+                      <span className="inline-flex items-center px-2.5 py-1 bg-[#F5F5F5] text-[#111111] text-xs font-medium rounded-full border border-[#EAEAEA] whitespace-nowrap">
+                        {p.categories?.name ?? "Uncategorized"}
+                      </span>
+                    </td>
+                    <td className="hidden sm:table-cell px-5 py-4">
+                      <span className="text-xs font-semibold text-[#4B4B4D]">
+                        {p.product_variants?.[0]?.count ?? 0} variants
+                      </span>
+                    </td>
+                    <td className="hidden md:table-cell px-5 py-4 text-xs text-[#707072]">
+                      {formatDate(p.created_at)}
+                    </td>
+                    <td className="px-5 py-4">
+                      <div className="flex items-center justify-end gap-1.5">
+                        <Link
+                          href={`/products/${p.id}/edit`}
+                          className="p-2 rounded-lg text-[#707072] hover:text-[#111111] hover:bg-[#F5F5F5] transition"
+                          onClick={(e) => e.stopPropagation()}
+                          title="Edit Product"
+                        >
+                          <Pencil className="w-4 h-4" />
+                        </Link>
+                        <button
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            openDeleteModal(p.id);
+                          }}
+                          disabled={deleteId === p.id}
+                          className="p-2 rounded-lg text-[#707072] hover:text-[#D30005] hover:bg-red-50 transition disabled:opacity-50"
+                          title="Delete Product"
+                        >
+                          {deleteId === p.id ? (
+                            <Loader2 className="w-4 h-4 animate-spin text-[#D30005]" />
+                          ) : (
+                            <Trash2 className="w-4 h-4" />
+                          )}
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
@@ -342,7 +344,7 @@ export default function ProductsPage() {
         onConfirm={handleDeleteConfirm}
         onCancel={handleDeleteCancel}
         title="Delete Product"
-        description="Are you sure you want to delete this product? All associated variants and data will be permanently removed. This action cannot be undone."
+        description="Are you sure you want to delete this product? All variants and photos will be permanently removed from the store."
         isDeleting={isDeleting}
       />
     </div>
