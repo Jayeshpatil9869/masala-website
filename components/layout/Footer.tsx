@@ -1,171 +1,170 @@
-'use client'
+'use client';
 
-import Image from "next/image"
-import Link from "next/link"
-import { MapPin, Phone, Mail } from "lucide-react"
+import Image from 'next/image';
+import Link from 'next/link';
+import { MapPin, Phone, Mail, MessageSquare } from 'lucide-react';
 
 export default function Footer() {
+  const waLink = `https://wa.me/919271580900?text=${encodeURIComponent(
+    'Hi! I visited your website and would like to inquire about Gravitate spices.'
+  )}`;
+
   return (
-    <footer className="bg-[#2b0e02] text-white">
-      <div className="max-w-7xl mx-auto px-6 lg:px-8 py-16">
+    <footer className="bg-white text-[#111111] border-t border-[#cacacb] mt-12">
+      <div className="max-w-[1440px] mx-auto px-6 sm:px-8 lg:px-12 pt-16 pb-12">
+        {/* 4-COLUMN CATALOG GRID */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-10 lg:gap-12 pb-14 border-b border-[#e5e5e5] text-center sm:text-left">
+          {/* COL 1 — Masala Ranges */}
+          <div className="space-y-4 flex flex-col items-center sm:items-start">
+            <h4 className="text-sm font-semibold tracking-tight uppercase text-[#111111]">
+              Masala Ranges
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#707072] flex flex-col items-center sm:items-start">
+              <li>
+                <Link href="/products" className="hover:text-[#111111] transition-colors">
+                  All Spices & Powders
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=pooja-special" className="hover:text-[#111111] transition-colors">
+                  Pooja Special Masala
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=powder-special" className="hover:text-[#111111] transition-colors">
+                  Pure Spice Powders
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=blends" className="hover:text-[#111111] transition-colors">
+                  Authentic Garam & Curry Blends
+                </Link>
+              </li>
+              <li>
+                <Link href="/products?category=upwas-special" className="hover:text-[#111111] transition-colors">
+                  Upwas & Fasting Special
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-        {/* GRID */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-12">
+          {/* COL 2 — Orders & Help */}
+          <div className="space-y-4 flex flex-col items-center sm:items-start">
+            <h4 className="text-sm font-semibold tracking-tight uppercase text-[#111111]">
+              Orders & Support
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#707072] flex flex-col items-center sm:items-start">
+              <li>
+                <a href={waLink} target="_blank" rel="noreferrer" className="hover:text-[#111111] transition-colors flex items-center justify-center sm:justify-start gap-1.5 font-medium text-[#111111]">
+                  <MessageSquare className="w-3.5 h-3.5" />
+                  <span>Order on WhatsApp</span>
+                </a>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#111111] transition-colors">
+                  Wholesale & Catering Inquiries
+                </Link>
+              </li>
+              <li>
+                <Link href="/shipping-info" className="hover:text-[#111111] transition-colors">
+                  Shipping & Delivery Info
+                </Link>
+              </li>
+              <li>
+                <Link href="/return-policy" className="hover:text-[#111111] transition-colors">
+                  Returns & Replacements
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#111111] transition-colors">
+                  Customer Care & Feedback
+                </Link>
+              </li>
+            </ul>
+          </div>
 
-          {/* COMPANY INFO */}
-          <div className="flex flex-col items-center text-center md:items-start md:text-left space-y-5">
+          {/* COL 3 — Company & Heritage */}
+          <div className="space-y-4 flex flex-col items-center sm:items-start">
+            <h4 className="text-sm font-semibold tracking-tight uppercase text-[#111111]">
+              About Gravitate
+            </h4>
+            <ul className="space-y-2.5 text-xs text-[#707072] flex flex-col items-center sm:items-start">
+              <li>
+                <Link href="/about" className="hover:text-[#111111] transition-colors">
+                  Our 45-Year Legacy
+                </Link>
+              </li>
+              <li>
+                <Link href="/about" className="hover:text-[#111111] transition-colors">
+                  Traditional Cold-Stone Process
+                </Link>
+              </li>
+              <li>
+                <Link href="/fssai-compliance" className="hover:text-[#111111] transition-colors">
+                  FSSAI Quality Certification
+                </Link>
+              </li>
+              <li>
+                <Link href="/contact" className="hover:text-[#111111] transition-colors">
+                  Malegaon & Nashik Units
+                </Link>
+              </li>
+            </ul>
+          </div>
 
+          {/* COL 4 — Contact & Manufacturer */}
+          <div className="space-y-4 flex flex-col items-center sm:items-start">
             <Image
               src="/Gravitate_logo.png"
               alt="Gravitate Masala"
-              width={160}
-              height={60}
-              className="rounded-lg"
+              width={110}
+              height={36}
+              className="h-7 w-auto object-contain mb-2 mx-auto sm:mx-0"
             />
-
-            <p className="text-sm text-white/70">
-              Manufacture Repeated & Marketed By: GURUKRUPA GRUH UDYOG
+            <p className="text-xs text-[#707072] font-medium leading-relaxed">
+              GURUKRUPA GRUH UDYOG
             </p>
-
-            {/* ADDRESS */}
-            <div className="flex items-start gap-3 text-sm text-white/70 max-w-sm">
-              <MapPin
-                size={20}
-                className="text-brand-orange mt-1 flex-shrink-0"
-              />
-              <p>
-                S.No. 182/2, Plot No. 111, Nr. Jajuvadi, Sant Nirankari Kendra,
-                Bhaygaon Shiwar, Malegaon Dist. Nashik - 423203 (M.S)
-              </p>
+            <div className="space-y-2 text-xs text-[#707072] flex flex-col items-center sm:items-start">
+              <div className="flex items-center sm:items-start justify-center sm:justify-start gap-2">
+                <MapPin className="w-4 h-4 text-[#111111] flex-shrink-0 mt-0.5" />
+                <span className="max-w-xs sm:max-w-none">S.No. 182/2, Plot 111, Bhaygaon Shiwar, Malegaon, Nashik - 423203</span>
+              </div>
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <Phone className="w-4 h-4 text-[#111111] flex-shrink-0" />
+                <span>+91 92715 80900 / 96575 86213</span>
+              </div>
+              <div className="flex items-center justify-center sm:justify-start gap-2">
+                <Mail className="w-4 h-4 text-[#111111] flex-shrink-0" />
+                <span>gravitatespices01@gmail.com</span>
+              </div>
             </div>
-
-            {/* PHONE */}
-            <div className="flex items-center gap-3 text-sm text-white/70">
-              <Phone
-                size={20}
-                className="text-brand-orange flex-shrink-0"
-              />
-              <p>+91 92715 80900 / 9657586213</p>
-            </div>
-
-            {/* EMAIL */}
-            <div className="flex items-center gap-3 text-sm text-white/70">
-              <Mail
-                size={20}
-                className="text-brand-orange flex-shrink-0"
-              />
-              <p>gravitatespices01@gmail.com</p>
-            </div>
-
           </div>
-
-          {/* QUICK LINKS */}
-          <div className="flex flex-col items-center text-center">
-
-            <h4 className="text-brand-orange text-xs font-bold uppercase tracking-widest mb-5">
-              QUICK LINKS
-            </h4>
-
-            <ul className="space-y-3 text-sm text-white/70">
-
-              <li>
-                <Link href="/" className="hover:text-white transition-colors">
-                  Home
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/products" className="hover:text-white transition-colors">
-                  Products
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/about" className="hover:text-white transition-colors">
-                  About Us
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/contact" className="hover:text-white transition-colors">
-                  Contact Us
-                </Link>
-              </li>
-
-            </ul>
-
-          </div>
-
-          {/* LEGAL */}
-          <div className="flex flex-col items-center text-center">
-
-            <h4 className="text-brand-orange text-xs font-bold uppercase tracking-widest mb-5">
-              LEGAL
-            </h4>
-
-            <ul className="space-y-3 text-sm text-white/70">
-
-              <li>
-                <Link href="/privacy-policy" className="hover:text-white transition-colors">
-                  Privacy Policy
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/terms-of-service" className="hover:text-white transition-colors">
-                  Terms of Service
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/return-policy" className="hover:text-white transition-colors">
-                  Return Policy
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/shipping-info" className="hover:text-white transition-colors">
-                  Shipping Info
-                </Link>
-              </li>
-
-              <li>
-                <Link href="/fssai" className="hover:text-white transition-colors">
-                  FSSAI Compliance
-                </Link>
-              </li>
-
-            </ul>
-
-          </div>
-
         </div>
 
-        {/* BOTTOM BAR */}
-        <div className="border-t border-white/10 mt-14 pt-6 flex flex-col md:flex-row justify-between items-center text-sm text-white/60 gap-3 text-center md:text-left">
+        {/* BOTTOM UTILITY & LEGAL ROW (Nike typography.utility-xs) */}
+        <div className="pt-8 flex flex-col sm:flex-row justify-between items-center sm:items-center gap-4 text-[10px] text-[#707072] text-center sm:text-left">
+          <div className="flex items-center justify-center sm:justify-start gap-4 flex-wrap">
+            <span className="font-semibold text-[#111111]">India (English)</span>
+            <span>© 2026 Gravitate / Gurukrupa Gruh Udyog. All Rights Reserved.</span>
+            <span>FSSAI Lic. No. 11521023000342</span>
+          </div>
 
-          <p>© 2026 Gravitate. All rights reserved.</p>
-
-          <p>
-            FSSAI Lic. No. 11521023000342 | Made with ❤️ in India
-          </p>
-
+          <div className="flex items-center justify-center sm:justify-start gap-4 flex-wrap text-[10px]">
+            <Link href="/privacy-policy" className="hover:text-[#111111] transition-colors">
+              Privacy Policy
+            </Link>
+            <Link href="/terms-of-service" className="hover:text-[#111111] transition-colors">
+              Terms of Sale
+            </Link>
+            <Link href="/shipping-info" className="hover:text-[#111111] transition-colors">
+              Delivery Terms
+            </Link>
+            <Link href="/fssai-compliance" className="hover:text-[#111111] transition-colors">
+              FSSAI Compliance
+            </Link>
+          </div>
         </div>
-
-        {/* CREDIT */}
-        <div className="mt-4 text-center text-xs text-white/50">
-          Created & Maintained by{" "}
-          <a
-            href="https://mahendranagpure.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-brand-orange hover:underline"
-          >
-            Mahendra Nagpure
-          </a>
-        </div>
-
       </div>
     </footer>
-  )
+  );
 }

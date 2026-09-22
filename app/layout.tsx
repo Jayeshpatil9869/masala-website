@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Poppins, Playfair_Display } from "next/font/google";
+import { Inter, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import Navbar from "../components/layout/Navbar";
 import Footer from "../components/layout/Footer";
@@ -7,25 +7,21 @@ import WhatsAppFloat from "../components/shared/WhatsAppFloat";
 
 const inter = Inter({
   subsets: ["latin"],
-  variable: "--font-body",
-});
-
-const poppins = Poppins({
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-sans",
+  display: "swap",
 });
 
-const playfair = Playfair_Display({
+const bebasNeue = Bebas_Neue({
+  weight: "400",
   subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
   variable: "--font-display",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://gravitatee.com'),
-  title: "Gravitate — Premium Masala & Spices | Order on WhatsApp",
-  description: "Buy pure, fresh masala and spices online. Crafted from handpicked ingredients. Best masala brand in Nashik. Order directly on WhatsApp — fast delivery across India.",
+  title: "Gravitate — Pure Spices & Authentic Masala | Handpicked",
+  description: "Buy pure, fresh ground masala and spices online. 45-year legacy of uncompromised spice purity. Order directly on WhatsApp — fast delivery across India.",
   keywords: [
     "masala manufacturer in malegaon", "masala supplier in malegaon", "spice powder supplier malegaon",
     "buy masala online malegaon", "gurukrupa masala malegaon", "masala home delivery malegaon",
@@ -59,7 +55,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning className="scroll-smooth">
       <head>
         {/* Google tag (gtag.js) */}
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-2ZWTLN58G2"></script>
@@ -152,7 +148,7 @@ export default function RootLayout({
       </head>
       <body
         suppressHydrationWarning
-        className={`${inter.variable} ${poppins.variable} ${playfair.variable} antialiased min-h-screen flex flex-col`}
+        className={`${inter.variable} ${bebasNeue.variable} font-sans bg-white text-[#111111] antialiased min-h-screen flex flex-col selection:bg-[#111111] selection:text-white`}
       >
         <Navbar />
         <main className="flex-1">

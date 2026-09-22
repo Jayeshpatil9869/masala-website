@@ -17,28 +17,28 @@ const steps = [
     icon: WashingMachine, 
     title: '2. Cleaning', 
     shortDesc: 'Multi-stage purification',
-    desc: 'Each batch undergoes a rigorous multi-stage sorting and cleaning process. We use advanced techniques to remove all impurities, dust, and stones, ensuring 100% safe consumption.' 
+    desc: 'Each batch undergoes a rigorous multi-stage sorting and cleaning process. We use advanced mechanical air separation to remove all dust and stones, guaranteeing 100% pure raw ingredients.' 
   },
   { 
     id: 'grinding',
     icon: ArchiveRestore, 
     title: '3. Stone Grinding', 
     shortDesc: 'Cold-temperature milling',
-    desc: 'We strictly avoid high-speed machine grinding. Our low-temperature stone grinding method prevents heat build-up, preserving the volatile oils and original aroma of the spices.' 
+    desc: 'We strictly avoid high-speed commercial steel pulverizers. Our low-temperature stone grinding method prevents heat build-up, preserving the volatile oils and original aroma of the spices.' 
   },
   { 
     id: 'quality',
     icon: ShieldCheck, 
     title: '4. Quality Check', 
     shortDesc: 'Rigorous lab testing',
-    desc: 'Every batch is tested in FSSAI certified laboratories. We check for flavor profiles, color authenticity, and strictly ensure zero pesticide residue or artificial adulterations.' 
+    desc: 'Every batch is tested in FSSAI certified laboratories. We verify curcumin content, moisture levels, and strictly ensure zero pesticide residue or artificial adulterants.' 
   },
   { 
     id: 'packaging',
     icon: Package, 
     title: '5. Packaging', 
     shortDesc: 'Aroma-lock sealing',
-    desc: 'Our spices are packed in aroma-lock, moisture-proof foil packaging within hours of grinding. This seals in the freshness, ensuring the spices stay vibrant until they reach your kitchen.' 
+    desc: 'Our spices are hermetically sealed in multi-layer barrier foil pouches within hours of milling, locking in pungent volatile notes until opened in your kitchen.' 
   }
 ];
 
@@ -46,100 +46,94 @@ export default function QualityProcess() {
   const [activeStep, setActiveStep] = useState(0);
 
   return (
-    <div className="py-20 bg-[#1A110B] rounded-[2.5rem] text-white overflow-hidden relative shadow-[0_20px_60px_-15px_rgba(0,0,0,0.5)] mx-auto">
-      {/* Decorative background elements */}
-      <div className="absolute top-0 right-0 w-96 h-96 bg-[#d38b55]/5 rounded-full blur-[100px] pointer-events-none"></div>
-      <div className="absolute bottom-[-100px] left-[-100px] w-80 h-80 bg-orange-600/5 rounded-full blur-[80px] pointer-events-none"></div>
-
-      <div className="container px-6 lg:px-12 relative z-10">
+    <div className="bg-[#111111] text-white p-6 sm:p-10 lg:p-16 border border-[#39393b] rounded-none select-none">
+      <div className="max-w-[1440px] mx-auto">
         
         {/* Header */}
-        <div className="text-center md:text-left mb-16 md:mb-20">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-          >
-            <h2 className="font-display text-4xl leading-tight md:text-[3rem] font-bold mb-4 text-brand-cream">
-              The <span className="text-[#d38b55] italic pr-2">Gravitate</span> Standard
-            </h2>
-            <p className="text-white/60 font-body max-w-xl text-[15px] md:text-[17px] leading-relaxed">
-              Discover the meticulous 5-step journey our spices take from lush farms straight to your kitchen shelf.
-            </p>
-          </motion.div>
+        <div className="mb-8 sm:mb-12 pb-4 sm:pb-6 border-b border-[#39393b]">
+          <span className="text-xs uppercase tracking-widest text-[#9e9ea0] font-medium block mb-2">
+            Manufacturing Standard
+          </span>
+          <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl uppercase tracking-tight text-white leading-none">
+            The 5-Step Purity Method
+          </h2>
         </div>
 
-        {/* Interactive Layout */}
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 max-w-6xl mx-auto">
+        {/* 2-Column Process Grid */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-12 items-start">
           
-          {/* Left Side: Interactive Step List */}
-          <div className="w-full lg:w-5/12 flex flex-col gap-3">
+          {/* Step Selectors (Horizontal scroll on mobile, stacked on lg) */}
+          <div className="lg:col-span-5 flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 no-scrollbar snap-x">
             {steps.map((step, idx) => {
               const isActive = activeStep === idx;
               return (
                 <button
                   key={step.id}
                   onClick={() => setActiveStep(idx)}
-                  className={`group flex items-center gap-5 p-4 md:p-5 rounded-2xl text-left transition-all duration-300 ${
+                  className={`flex items-center justify-between p-3.5 sm:p-4 text-left transition-all rounded-none flex-shrink-0 min-w-[170px] lg:min-w-0 snap-start active:scale-95 ${
                     isActive 
-                      ? 'bg-white/10 border border-white/10 shadow-lg translate-x-2' 
-                      : 'bg-transparent border border-transparent hover:bg-white/5'
+                      ? 'bg-white text-[#111111] font-semibold shadow-sm' 
+                      : 'bg-[#191919] lg:bg-transparent text-[#9e9ea0] hover:text-white hover:bg-white/5 border border-[#39393b] lg:border-transparent'
                   }`}
                 >
-                  <div className={`w-12 h-12 flex-shrink-0 rounded-xl flex items-center justify-center transition-colors duration-300 ${
-                    isActive ? 'bg-[#d38b55] text-white shadow-[0_0_20px_rgba(211,139,85,0.4)]' : 'bg-[#2A1A0F] text-white/50 border border-white/5 group-hover:text-white/80'
-                  }`}>
-                    <step.icon className="w-5 h-5 stroke-[2]" />
+                  <div className="flex items-center gap-2.5 sm:gap-3">
+                    <step.icon className={`w-4 h-4 ${isActive ? 'text-[#111111]' : 'text-[#9e9ea0]'}`} />
+                    <span className="text-xs sm:text-sm tracking-tight">{step.title}</span>
                   </div>
-                  <div className="flex-1">
-                    <h4 className={`font-sans font-bold text-[16px] mb-1 transition-colors ${isActive ? 'text-white' : 'text-white/70 group-hover:text-white/90'}`}>{step.title}</h4>
-                    <p className={`font-body text-[13px] transition-colors ${isActive ? 'text-[#d38b55]' : 'text-white/40'}`}>{step.shortDesc}</p>
-                  </div>
-                  <div className={`transition-all duration-300 ${isActive ? 'opacity-100 translate-x-0 text-[#d38b55]' : 'opacity-0 -translate-x-4'}`}>
-                    <ArrowRight className="w-5 h-5" />
-                  </div>
+                  <ArrowRight className={`hidden lg:block w-4 h-4 ${isActive ? 'opacity-100 text-[#111111]' : 'opacity-0'}`} />
                 </button>
               );
             })}
           </div>
 
-          {/* Right Side: Active Step Details */}
-          <div className="w-full lg:w-7/12 relative min-h-[350px] lg:min-h-full">
+          {/* Right Active Step Detail Card */}
+          <div className="lg:col-span-7 bg-[#191919] p-6 sm:p-8 lg:p-10 border border-[#39393b] min-h-[260px] sm:min-h-[300px] flex flex-col justify-between">
             <AnimatePresence mode="wait">
               <motion.div
                 key={activeStep}
-                initial={{ opacity: 0, y: 30, filter: 'blur(10px)' }}
-                animate={{ opacity: 1, y: 0, filter: 'blur(0px)' }}
-                exit={{ opacity: 0, y: -30, filter: 'blur(10px)' }}
-                transition={{ duration: 0.4, ease: "easeOut" }}
-                className="absolute inset-0 bg-white/5 border border-white/10 rounded-[2rem] p-8 md:p-12 flex flex-col justify-center backdrop-blur-md"
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -15 }}
+                transition={{ duration: 0.25 }}
+                className="space-y-4"
               >
-                <div className="w-20 h-20 rounded-2xl bg-[#d38b55]/10 border border-[#d38b55]/20 flex items-center justify-center text-[#d38b55] mb-8">
-                  {(() => {
-                    const ActiveIcon = steps[activeStep].icon;
-                    return <ActiveIcon className="w-10 h-10 stroke-[1.5]" />;
-                  })()}
+                <div className="flex items-center justify-between">
+                  <span className="text-xs uppercase tracking-widest text-[#9e9ea0]">
+                    {steps[activeStep].shortDesc}
+                  </span>
+                  <div className="w-10 h-10 rounded-full bg-white/10 flex items-center justify-center text-white">
+                    {(() => {
+                      const Icon = steps[activeStep].icon;
+                      return <Icon className="w-5 h-5" />;
+                    })()}
+                  </div>
                 </div>
-                
-                <h3 className="font-display text-[2rem] md:text-[2.5rem] font-bold text-white mb-6 leading-tight">
+
+                <h3 className="font-display text-2xl sm:text-3xl uppercase tracking-tight text-white leading-none">
                   {steps[activeStep].title.split('. ')[1]}
                 </h3>
-                
-                <p className="font-body text-[16px] md:text-[18px] text-white/70 leading-[1.8]">
+
+                <p className="text-xs sm:text-sm text-[#cacacb] leading-relaxed">
                   {steps[activeStep].desc}
                 </p>
-                
-                {/* Progress indicator */}
-                <div className="mt-12 flex gap-2">
-                   {steps.map((_, i) => (
-                     <div key={i} className={`h-1.5 rounded-full transition-all duration-500 ${i === activeStep ? 'w-12 bg-[#d38b55]' : 'w-4 bg-white/10'}`} />
-                   ))}
-                </div>
               </motion.div>
             </AnimatePresence>
+
+            {/* Step Progress Ticks */}
+            <div className="pt-6 sm:pt-8 mt-6 border-t border-[#39393b] flex gap-2">
+              {steps.map((_, i) => (
+                <div 
+                  key={i} 
+                  className={`h-1 flex-1 transition-all ${
+                    i === activeStep ? 'bg-white' : 'bg-white/20'
+                  }`} 
+                />
+              ))}
+            </div>
           </div>
 
         </div>
+
       </div>
     </div>
   );

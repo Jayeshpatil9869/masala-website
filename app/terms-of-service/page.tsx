@@ -1,46 +1,63 @@
+import Link from 'next/link';
+
 export const metadata = {
   title: 'Terms of Service | Gravitate',
-  description: 'Terms of Service for Gravitate.',
+  description: 'Terms of Service and commercial conditions for Gravitate.',
 };
 
 export default function TermsOfServicePage() {
   return (
-    <div className="min-h-screen bg-brand-cream/40 pt-32 pb-24">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-6">Terms of Service</h1>
-          <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
-          <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
-            <p>
-              Welcome to <strong>Gravitate</strong>. These terms and conditions outline the rules and regulations for the use of our website and services.
-            </p>
-            
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Acceptance of Terms</h2>
-            <p>
-              By accessing this website and placing orders through our integrated WhatsApp channel, we assume you accept these terms and conditions in full. Do not continue to use our services if you do not accept all of the terms and conditions stated on this page.
-            </p>
+    <div className="min-h-screen bg-white pb-24 select-none">
+      <div className="bg-[#f5f5f5] border-b border-[#e5e5e5] py-12 sm:py-16 mb-12">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
+          <nav className="text-xs text-[#707072] mb-3 flex items-center gap-1.5">
+            <Link href="/" className="hover:text-[#111111] transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-[#111111] font-medium">Terms of Service</span>
+          </nav>
+          <span className="text-xs uppercase font-semibold tracking-widest text-[#707072] block mb-2">
+            Legal & Compliance
+          </span>
+          <h1 className="font-display text-4xl sm:text-6xl uppercase tracking-tight text-[#111111] leading-none">
+            Terms of Service
+          </h1>
+        </div>
+      </div>
 
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">2. Product Information and Pricing</h2>
-            <p>
-              We strive to ensure that all details, descriptions, and prices of products appearing on the website are accurate. However, errors may occur. In the event of an error in the pricing or description of a product, we will inform you via WhatsApp before confirming your order.
-            </p>
+      <div className="max-w-4xl mx-auto px-4 sm:px-8">
+        <div className="bg-white border border-[#cacacb] p-8 sm:p-12 text-xs sm:text-sm text-[#39393b] leading-relaxed space-y-6">
+          <p>
+            Welcome to <strong className="text-[#111111]">Gravitate</strong>. By browsing our product range or initiating orders via our WhatsApp channel, you agree to these operational terms.
+          </p>
 
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">3. Ordering via WhatsApp</h2>
-            <p>
-              Our primary method of ordering is securely routed through WhatsApp. Final order confirmation, shipping quotes, and payment details will be finalized through direct communication with our sales representative on WhatsApp.
-            </p>
+          <div className="h-[1px] bg-[#e5e5e5]" />
 
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">4. Intellectual Property</h2>
-            <p>
-              Unless otherwise stated, Gravitate and/or its licensors own the intellectual property rights for all material on the website. All intellectual property rights are reserved. You may view and/or print pages for your own personal use subject to restrictions set in these terms and conditions.
-            </p>
-            
-            <hr className="my-8 border-gray-100" />
-            
-            <p className="text-sm">
-              For any legal or service inquiries, please contact <strong>gravitatespices01@gmail.com</strong>.
-            </p>
-          </div>
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            1. Ordering & Dispatch Confirmation
+          </h2>
+          <p>
+            Catalog product displays represent available inventory and formulations. Final order pricing, applicable taxes, shipping quotes, and batch dispatch dates are confirmed directly via our sales desk on WhatsApp.
+          </p>
+
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            2. Product Quality & Variations
+          </h2>
+          <p>
+            Because our spices are 100% natural and stone-ground without synthetic dye agents, natural slight variations in color tone and aroma intensity may occur between agricultural harvests.
+          </p>
+
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            3. Wholesale Commercial Terms
+          </h2>
+          <p>
+            Bulk commercial orders (50kg+) are fulfilled under Ex-Works (EXW) or mutually agreed freight delivery terms from our Malegaon facility.
+          </p>
+
+          <div className="h-[1px] bg-[#e5e5e5]" />
+
+          <p className="text-xs text-[#707072]">
+            For legal and contract inquiries: <strong>gravitatespices01@gmail.com</strong>.
+          </p>
         </div>
       </div>
     </div>

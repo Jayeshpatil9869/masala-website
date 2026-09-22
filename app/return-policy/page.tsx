@@ -1,46 +1,63 @@
+import Link from 'next/link';
+
 export const metadata = {
-  title: 'Return Policy | Gravitate',
-  description: 'Return Policy for Gravitate.',
+  title: 'Return & Replacement Policy | Gravitate',
+  description: 'Return and replacement policy for Gravitate consumable food products.',
 };
 
 export default function ReturnPolicyPage() {
   return (
-    <div className="min-h-screen bg-brand-cream/40 pt-32 pb-24">
-      <div className="container mx-auto px-4 max-w-4xl">
-        <div className="bg-white rounded-3xl shadow-sm border border-gray-100 p-8 md:p-12">
-          <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-6">Return Policy</h1>
-          <div className="w-16 h-1 bg-brand-orange rounded-full mb-8"></div>
-          <div className="prose prose-lg text-gray-600 font-body max-w-none space-y-6">
-            <p>
-              At <strong>Gravitate</strong>, we take immense pride in the quality and purity of our spices. Because our products are consumable food items, our return policy is strictly defined to ensure health and safety standards.
-            </p>
-            
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">1. Eligibility for Returns</h2>
-            <p>
-              We only accept returns or exchanges under the following limited circumstances:
-            </p>
-            <ul className="list-disc pl-6 space-y-2">
-              <li>The product delivered is completely different from what was ordered.</li>
-              <li>The packaging is severely damaged or tampered with upon arrival.</li>
-              <li>The product has expired prior to the delivery date.</li>
-            </ul>
+    <div className="min-h-screen bg-white pb-24 select-none">
+      <div className="bg-[#f5f5f5] border-b border-[#e5e5e5] py-12 sm:py-16 mb-12">
+        <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12">
+          <nav className="text-xs text-[#707072] mb-3 flex items-center gap-1.5">
+            <Link href="/" className="hover:text-[#111111] transition-colors">Home</Link>
+            <span>/</span>
+            <span className="text-[#111111] font-medium">Return Policy</span>
+          </nav>
+          <span className="text-xs uppercase font-semibold tracking-widest text-[#707072] block mb-2">
+            Quality Assurance
+          </span>
+          <h1 className="font-display text-4xl sm:text-6xl uppercase tracking-tight text-[#111111] leading-none">
+            Returns & Replacements
+          </h1>
+        </div>
+      </div>
 
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">2. Non-Returnable Items</h2>
-            <p>
-              Once a sealed masala packet has been opened, we cannot accept a return or issue a refund under any circumstances due to hygiene and food safety regulations.
-            </p>
+      <div className="max-w-4xl mx-auto px-4 sm:px-8">
+        <div className="bg-white border border-[#cacacb] p-8 sm:p-12 text-xs sm:text-sm text-[#39393b] leading-relaxed space-y-6">
+          <p>
+            Because spices are consumable, aroma-sealed food items, returns are regulated to ensure absolute safety and food hygiene standards.
+          </p>
 
-            <h2 className="text-2xl font-bold text-brand-dark mt-8 mb-4">3. Reporting an Issue</h2>
-            <p>
-              If your order qualifies for a return, you must report the issue within <strong>48 hours</strong> of receiving your delivery. Please contact us via WhatsApp or email with your order details and photographic evidence of the issue. Our team will review the request and guide you through the replacement or refund process.
-            </p>
+          <div className="h-[1px] bg-[#e5e5e5]" />
 
-            <hr className="my-8 border-gray-100" />
-            
-            <p className="text-sm">
-              To initiate a return request, please message us on WhatsApp at <strong>+91 9271580900</strong> or email <strong>gravitatespices01@gmail.com</strong>.
-            </p>
-          </div>
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            1. Defective or Damaged In-Transit Items
+          </h2>
+          <p>
+            If your parcel arrives with physical seal damage, torn outer foil, or incorrect product variants, please report the issue within <strong>48 hours</strong> of delivery.
+          </p>
+
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            2. Immediate Free Replacement
+          </h2>
+          <p>
+            Upon verifying a photo of the damaged seal on WhatsApp, our team will dispatch an immediate free replacement batch with zero return freight hassle.
+          </p>
+
+          <h2 className="text-base font-semibold uppercase tracking-tight text-[#111111]">
+            3. Opened Consumables
+          </h2>
+          <p>
+            Unsealed packages cannot be returned once opened due to FSSAI food safety regulations.
+          </p>
+
+          <div className="h-[1px] bg-[#e5e5e5]" />
+
+          <p className="text-xs text-[#707072]">
+            To request replacement assistance: WhatsApp <strong>+91 9271580900</strong> with your invoice photo.
+          </p>
         </div>
       </div>
     </div>

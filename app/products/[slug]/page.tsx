@@ -8,7 +8,6 @@ import ProductInfo from '@/components/product-detail/ProductInfo';
 import ProductSpecs from '@/components/product-detail/ProductSpecs';
 import RelatedProducts from '@/components/product-detail/RelatedProducts';
 import OtherCategoryProducts from '@/components/product-detail/OtherCategoryProducts';
-import CategoryGrid from '@/components/home/CategoryGrid';
 
 // Helper function to fetch product
 async function getProduct(slug: string) {
@@ -83,37 +82,37 @@ export default async function ProductDetailPage({ params }: { params: Promise<{ 
   };
 
   return (
-    <div className="min-h-screen bg-brand-white pt-20">
+    <div className="min-h-screen bg-white select-none">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
       />
       {/* Top Split Section - Hero */}
-      <section className="container mx-auto px-4 lg:px-8 max-w-7xl pb-16">
+      <section className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
         
         {/* Breadcrumbs */}
-        <nav className="text-xs font-mono uppercase tracking-widest text-gray-400 mb-8 pt-4">
-          <Link href="/products" className="hover:text-brand-orange transition-colors">Shop</Link>
-          <span className="mx-2">/</span>
-          {/* <span className="text-brand-dark">Pantry</span>
-          <span className="mx-2">/</span> */}
-          <span className="text-brand-dark font-bold">{product.name}</span>
+        <nav className="text-xs text-[#707072] mb-6 flex items-center gap-1.5">
+          <Link href="/" className="hover:text-[#111111] transition-colors">Home</Link>
+          <span>/</span>
+          <Link href="/products" className="hover:text-[#111111] transition-colors">Products</Link>
+          <span>/</span>
+          <span className="text-[#111111] font-medium">{product.name}</span>
         </nav>
 
-        <div className="flex flex-col lg:flex-row gap-12 lg:gap-20 relative">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
           {/* Left Column - Gallery */}
-          <div className="w-full lg:w-1/2">
+          <div className="lg:col-span-6">
             <ProductGallery images={images} />
           </div>
 
           {/* Right Column - Info */}
-          <div className="w-full lg:w-1/2 flex flex-col justify-center">
+          <div className="lg:col-span-6">
             <ProductInfo product={product} />
           </div>
         </div>
       </section>
 
-      {/* Middle Split Section - Detailed Info */}
+      {/* Middle Split Section - Detailed Info / Disclosure Rows */}
       <ProductSpecs product={product} />
       
       {/* Bottom Section - Same Category Selling */}

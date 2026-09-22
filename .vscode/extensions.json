@@ -1,0 +1,18 @@
+﻿{
+    "recommendations":  [
+                            "bradlc.vscode-tailwindcss",
+                            "esbenp.prettier-vscode",
+                            "eamodio.gitlens",
+                            "dsznajder.es7-react-js-snippets",
+                            "burkeholland.simple-react-snippets",
+                            "formulahendry.auto-rename-tag",
+                            "pranaygp.vscode-css-peek",
+                            "vscode-icons-team.vscode-icons",
+                            "waderyan.gitblame",
+                            "kisstkondoros.vscode-gutter-preview",
+                            "ritwickdey.liveserver",
+                            "ms-vscode.live-server",
+                            "google.geminicodeassist",
+                            "adpyke.codesnap"
+                        ]
+}

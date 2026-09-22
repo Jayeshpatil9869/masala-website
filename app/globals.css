@@ -8,14 +8,40 @@ html {
 @custom-variant dark (&:is(.dark *));
 
 @theme {
-  --color-brand-red: #C0392B;
-  --color-brand-orange: #E67E22;
-  --color-brand-gold: #F39C12;
-  --color-brand-brown: #7D4B12;
-  --color-brand-cream: #FDF3E7;
-  --color-brand-dark: #1A0A00;
-  --color-brand-green: #1B5E20;
-  --color-brand-white: #FAFAF7;
+  /* Nike Commerce System Core Colors */
+  --color-ink: #111111;
+  --color-canvas: #ffffff;
+  --color-soft-cloud: #f5f5f5;
+  --color-hairline: #cacacb;
+  --color-hairline-soft: #e5e5e5;
+  --color-charcoal: #39393b;
+  --color-ash: #4b4b4d;
+  --color-mute: #707072;
+  --color-stone: #9e9ea0;
+  --color-sale: #d30005;
+  --color-sale-deep: #780700;
+  --color-success: #007d48;
+  --color-success-bright: #1eaa52;
+  --color-info: #1151ff;
+  --color-info-deep: #0034e3;
+
+  /* Accent Tones */
+  --color-accent-pink: #ed1aa0;
+  --color-accent-pink-soft: #ffb0dd;
+  --color-accent-purple-soft: #beaffd;
+  --color-accent-purple-pale: #d6d1ff;
+  --color-accent-teal: #0a7281;
+  --color-accent-pink-deep: #4c012d;
+
+  /* Legacy Brand aliases mapped to Nike System */
+  --color-brand-red: #111111;
+  --color-brand-orange: #111111;
+  --color-brand-gold: #707072;
+  --color-brand-brown: #39393b;
+  --color-brand-cream: #f5f5f5;
+  --color-brand-dark: #111111;
+  --color-brand-green: #111111;
+  --color-brand-white: #ffffff;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -40,87 +66,138 @@ html {
   --color-card-foreground: var(--card-foreground);
   --color-popover: var(--popover);
   --color-popover-foreground: var(--popover-foreground);
-  --radius-sm: calc(var(--radius) - 4px);
-  --radius-md: calc(var(--radius) - 2px);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) + 4px);
+  
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
+  --radius-xl: 0px;
+  --radius-pill: 9999px;
 }
 
 @layer base {
   :root {
-    --background: #FAFAF7;
-    --foreground: #1A0A00;
+    --background: #ffffff;
+    --foreground: #111111;
     
-    --card: #FFFFFF;
-    --card-foreground: #1A0A00;
+    --card: #ffffff;
+    --card-foreground: #111111;
 
-    --popover: #FFFFFF;
-    --popover-foreground: #1A0A00;
+    --popover: #ffffff;
+    --popover-foreground: #111111;
 
-    --primary: #C0392B;
-    --primary-foreground: #FFFFFF;
+    --primary: #111111;
+    --primary-foreground: #ffffff;
 
-    --secondary: #E67E22;
-    --secondary-foreground: #FFFFFF;
+    --secondary: #f5f5f5;
+    --secondary-foreground: #111111;
 
-    --muted: #FDF3E7;
-    --muted-foreground: #7D4B12;
+    --muted: #f5f5f5;
+    --muted-foreground: #707072;
 
-    --accent: #FDF3E7;
-    --accent-foreground: #1A0A00;
+    --accent: #f5f5f5;
+    --accent-foreground: #111111;
 
-    --destructive: #C0392B;
-    --destructive-foreground: #FAFAF7;
+    --destructive: #d30005;
+    --destructive-foreground: #ffffff;
 
-    --border: #E5E7EB;
-    --input: #E5E7EB;
-    --ring: #F39C12;
+    --border: #cacacb;
+    --input: #e5e5e5;
+    --ring: #111111;
 
-    --radius: 0.5rem;
+    --radius: 0px;
   }
 
   .dark {
-    --background: #1A0A00;
-    --foreground: #FAFAF7;
+    --background: #111111;
+    --foreground: #ffffff;
     
-    --card: #20130A;
-    --card-foreground: #FAFAF7;
+    --card: #191919;
+    --card-foreground: #ffffff;
 
-    --popover: #20130A;
-    --popover-foreground: #FAFAF7;
+    --popover: #191919;
+    --popover-foreground: #ffffff;
 
-    --primary: #C0392B;
-    --primary-foreground: #FFFFFF;
+    --primary: #ffffff;
+    --primary-foreground: #111111;
 
-    --secondary: #E67E22;
-    --secondary-foreground: #FFFFFF;
+    --secondary: #222222;
+    --secondary-foreground: #ffffff;
 
-    --muted: #2A1A0F;
-    --muted-foreground: #E0C9B3;
+    --muted: #222222;
+    --muted-foreground: #9e9ea0;
 
-    --accent: #2A1A0F;
-    --accent-foreground: #FAFAF7;
+    --accent: #222222;
+    --accent-foreground: #ffffff;
 
-    --destructive: #C0392B;
-    --destructive-foreground: #FAFAF7;
+    --destructive: #d30005;
+    --destructive-foreground: #ffffff;
 
-    --border: #3D2615;
-    --input: #3D2615;
-    --ring: #F39C12;
+    --border: #39393b;
+    --input: #39393b;
+    --ring: #ffffff;
   }
 }
 
 @layer base {
   * {
-    @apply border-border outline-ring/50;
+    @apply border-border;
   }
   body {
-    @apply bg-background text-foreground font-body antialiased;
+    @apply bg-background text-foreground font-sans antialiased;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
   }
   h1, h2, h3, h4, h5, h6 {
-    @apply font-sans;
+    @apply font-sans tracking-tight;
   }
-  .display-heading {
-    @apply font-display;
-  }
+}
+
+/* Nike Editorial Display & Typography Tiers */
+.display-campaign {
+  font-family: var(--font-display), "Bebas Neue", sans-serif;
+  font-size: clamp(2.75rem, 7vw, 6rem);
+  line-height: 0.9;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+}
+
+.heading-xl {
+  font-size: 2rem;
+  font-weight: 500;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+}
+
+.heading-lg {
+  font-size: 1.5rem;
+  font-weight: 500;
+  line-height: 1.25;
+  letter-spacing: -0.01em;
+}
+
+.heading-md {
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.75;
+}
+
+/* Tap Feedback signature animation */
+.btn-press-active:active {
+  transform: scale(0.96);
+  opacity: 0.85;
+}
+
+/* Smooth Touch Momentum & Scrollbar Utils */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Prevent horizontal page blowout */
+html, body {
+  max-width: 100vw;
+  overflow-x: hidden;
 }

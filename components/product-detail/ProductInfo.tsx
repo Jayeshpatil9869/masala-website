@@ -1,118 +1,158 @@
 "use client"
 
 import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Minus, Plus, MessageCircle, Truck, Award } from 'lucide-react';
+import { Minus, Plus, MessageSquare, ShoppingCart, Check } from 'lucide-react';
+import { useCartStore } from '@/lib/store/cartStore';
+import { buildProductOrderMessage, buildWhatsAppLink } from '@/lib/whatsapp';
 
 export default function ProductInfo({ product }: { product: any }) {
-  const [selectedVariant, setSelectedVariant] = useState(product.variants?.[0]);
+  const hasVariants = product.variants && product.variants.length > 0;
+  const [selectedVariant, setSelectedVariant] = useState(hasVariants ? product.variants[0] : null);
   const [quantity, setQuantity] = useState(1);
+  const [addedToCart, setAddedToCart] = useState(false);
+  const addItem = useCartStore((state) => state.addItem);
+
   const currentPrice = selectedVariant?.price || product.price || 0;
-  
+  const originalPrice = selectedVariant?.originalPrice || product.originalPrice || Math.round(currentPrice * 1.15);
+  const currentSize = selectedVariant?.size || (hasVariants ? product.variants[0].size : 'Standard');
   const totalPrice = currentPrice * quantity;
 
-  const waMessage = encodeURIComponent(
-    `Hi, I would like to order the following:\n\n` +
-    `*Product:* ${product.name}\n` +
-    `*Size:* ${selectedVariant?.size || 'Default'}\n` +
-    `*Quantity:* ${quantity}\n` +
-    `*Total Price:* ₹${totalPrice}\n\n` +
-    `Is this product available?`
-  );
-  const waLink = `https://wa.me/919271580900?text=${waMessage}`;
+  const waMessage = buildProductOrderMessage(`${product.name} (Qty: ${quantity})`, currentSize);
+  const waLink = buildWhatsAppLink('919271580900', waMessage);
+
+  const handleAddToCart = () => {
+    addItem({
+      productId: product.id,
+      slug: product.slug,
+      name: product.name,
+      weight: currentSize,
+      price: currentPrice,
+      image: product.image_url || (product.images && product.images[0]) || '',
+    });
+    setAddedToCart(true);
+    setTimeout(() => setAddedToCart(false), 1500);
+  };
+
+  const formatCategory = (cat?: string) => {
+    if (!cat) return 'Pure Ground Masala';
+    return cat.replace(/[-_]/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase());
+  };
 
   return (
-    <div className="flex flex-col h-full pt-4 md:pt-0">
+    <div className="flex flex-col h-full select-none">
+      {/* Category / Collection Tag (Nike typography.caption-md #707072) */}
+      <span className="text-xs uppercase font-semibold tracking-wider text-[#707072] mb-1">
+        {formatCategory(product.category)}
+      </span>
 
-      <h1 className="font-display text-4xl md:text-5xl font-bold text-brand-dark mb-4 leading-tight">
+      {/* Product Title (Nike typography.heading-xl) */}
+      <h1 className="font-display text-2xl sm:text-4xl lg:text-5xl uppercase tracking-tight text-[#111111] leading-[0.95] mb-3">
         {product.name}
       </h1>
-      
-      <p className="font-body text-gray-600 text-lg leading-relaxed mb-8">
-        {product.longDescription || product.description}
+
+      {/* Price Row (Sale color #d30005) */}
+      <div className="flex items-baseline gap-3 mb-6">
+        <span className="text-2xl sm:text-3xl font-medium text-[#111111]">
+          ₹{totalPrice}
+        </span>
+        {originalPrice > currentPrice && (
+          <span className="text-sm text-[#707072] line-through">
+            ₹{originalPrice * quantity}
+          </span>
+        )}
+        <span className="text-[11px] sm:text-xs text-[#007d48] font-semibold bg-[#007d48]/10 px-2.5 py-0.5 rounded-full">
+          In Stock · Fresh Batch
+        </span>
+      </div>
+
+      <div className="h-[1px] bg-[#e5e5e5] mb-6" />
+
+      {/* Description */}
+      <p className="text-xs sm:text-sm text-[#39393b] leading-relaxed mb-6 font-normal">
+        {product.longDescription || product.description || 'Authentic formulation ground using low-heat stone mills to preserve volatile aroma and flavor.'}
       </p>
 
-      {/* Select Weight */}
-      {product.variants && product.variants.length > 0 && (
-        <div className="mb-8">
-          <div className="text-xs uppercase tracking-widest text-gray-400 mb-3 font-medium">
-            Select Weight
+      {/* Size / Weight Selector (Nike pill chips) */}
+      {hasVariants && (
+        <div className="mb-6">
+          <div className="text-xs font-semibold uppercase tracking-wider text-[#111111] mb-3">
+            Select Size / Weight
           </div>
-          <div className="flex flex-wrap gap-3">
-            {product.variants.map((v: any) => (
-              <button
-                key={v.size}
-                onClick={() => setSelectedVariant(v)}
-                className={`h-10 px-5 rounded-full border text-sm font-medium transition-all ${
-                  selectedVariant?.size === v.size 
-                    ? 'bg-brand-dark border-brand-dark text-white shadow-md' 
-                    : 'bg-transparent border-gray-300 text-brand-dark hover:border-brand-orange hover:text-brand-orange'
-                }`}
-              >
-                {v.size}
-              </button>
-            ))}
+          <div className="flex flex-wrap gap-2 sm:gap-2.5">
+            {product.variants.map((v: any) => {
+              const isSelected = selectedVariant?.size === v.size;
+              return (
+                <button
+                  key={v.size}
+                  onClick={() => setSelectedVariant(v)}
+                  className={`h-10 sm:h-11 px-4 sm:px-6 rounded-full text-xs font-medium transition-all active:scale-95 ${
+                    isSelected
+                      ? 'bg-[#111111] text-white shadow-none'
+                      : 'bg-[#f5f5f5] text-[#111111] hover:bg-[#e5e5e5] border border-transparent'
+                  }`}
+                >
+                  {v.size} — ₹{v.price}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}
 
-      <hr className="border-gray-100 mb-6" />
-
-      {/* Price */}
-      <div className="font-sans font-bold text-4xl text-brand-dark mb-6">
-        ₹{totalPrice > currentPrice ? totalPrice : currentPrice}
-        {quantity > 1 && (
-          <span className="text-sm font-normal text-gray-400 ml-2">(₹{currentPrice} × {quantity})</span>
-        )}
-      </div>
-
-      {/* Quantity Selector */}
-      <div className="mb-6">
-        <div className="text-xs uppercase tracking-widest text-gray-400 mb-3 font-medium">Quantity</div>
-        <div className="flex items-center gap-0 border border-gray-200 rounded-full w-fit overflow-hidden">
+      {/* Quantity Pill Selector */}
+      <div className="mb-8">
+        <div className="text-xs font-semibold uppercase tracking-wider text-[#111111] mb-3">
+          Quantity
+        </div>
+        <div className="flex items-center bg-[#f5f5f5] rounded-full w-fit px-2 py-1">
           <button
-            onClick={() => setQuantity(q => Math.max(1, q - 1))}
-            className="w-10 h-10 flex items-center justify-center text-brand-dark hover:bg-brand-cream transition-colors"
+            onClick={() => setQuantity((q) => Math.max(1, q - 1))}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#111111] hover:bg-white active:scale-90 transition-all"
+            aria-label="Decrease quantity"
           >
-            <Minus className="w-4 h-4" />
+            <Minus className="w-3.5 h-3.5" />
           </button>
-          <span className="w-12 text-center font-semibold text-brand-dark text-sm select-none">
+          <span className="w-10 text-center font-medium text-sm text-[#111111]">
             {quantity}
           </span>
           <button
-            onClick={() => setQuantity(q => q + 1)}
-            className="w-10 h-10 flex items-center justify-center text-brand-dark hover:bg-brand-cream transition-colors"
+            onClick={() => setQuantity((q) => q + 1)}
+            className="w-8 h-8 rounded-full flex items-center justify-center text-[#111111] hover:bg-white active:scale-90 transition-all"
+            aria-label="Increase quantity"
           >
-            <Plus className="w-4 h-4" />
+            <Plus className="w-3.5 h-3.5" />
           </button>
         </div>
       </div>
 
-      {/* Buy Button */}
-      <Button 
-        asChild
-        className="w-full sm:w-auto bg-brand-green hover:bg-green-700 text-white rounded-full h-14 text-sm font-bold tracking-wide flex items-center justify-center gap-3 px-8 shadow-lg shadow-green-500/25 transition-all mb-8"
-      >
-        <a href={waLink} target="_blank" rel="noreferrer">
-          <MessageCircle className="w-5 h-5" />
-          <span>Buy with WhatsApp</span>
+      {/* Action Buttons (Nike button-primary and button-secondary) */}
+      <div className="flex flex-col sm:flex-row gap-3 w-full">
+        <a
+          href={waLink}
+          target="_blank"
+          rel="noreferrer"
+          className="flex-1 w-full inline-flex items-center justify-center gap-2.5 bg-[#111111] hover:bg-black active:scale-95 text-white font-medium text-sm h-12 px-6 sm:px-8 rounded-full transition-all duration-150 shadow-sm"
+        >
+          <MessageSquare className="w-4 h-4" />
+          <span>Order via WhatsApp</span>
         </a>
-      </Button>
 
-      {/* Guarantees */}
-      <div className="flex flex-col sm:flex-row gap-6 text-xs text-gray-500 tracking-wide">
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center">
-            <Truck className="w-4 h-4 text-brand-orange" />
-          </div>
-          <span>Free shipping over ₹999</span>
-        </div>
-        <div className="flex items-center gap-2">
-          <div className="w-8 h-8 rounded-full bg-brand-cream flex items-center justify-center">
-            <Award className="w-4 h-4 text-brand-red" />
-          </div>
-          <span>Single-origin guarantee</span>
-        </div>
+        <button
+          onClick={handleAddToCart}
+          className="w-full sm:w-auto inline-flex items-center justify-center gap-2 bg-[#f5f5f5] hover:bg-[#e5e5e5] active:scale-95 text-[#111111] font-medium text-sm h-12 px-6 sm:px-8 rounded-full transition-all duration-150"
+        >
+          {addedToCart ? (
+            <>
+              <Check className="w-4 h-4 text-[#007d48]" />
+              <span>Added to Cart</span>
+            </>
+          ) : (
+            <>
+              <ShoppingCart className="w-4 h-4" />
+              <span>Add to Cart</span>
+            </>
+          )}
+        </button>
       </div>
     </div>
   );

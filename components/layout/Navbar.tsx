@@ -1,172 +1,187 @@
-﻿'use client';
+'use client';
+
 import React from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
-import { usePathname } from 'next/navigation';
+import { usePathname, useRouter } from 'next/navigation';
 import { cn } from '@/lib/utils';
-import { buttonVariants } from '@/components/ui/button';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import CartDrawer from '@/components/cart/CartDrawer';
-import { Phone } from 'lucide-react';
+import { Search, MessageSquare, ArrowRight } from 'lucide-react';
 
 const navLinks = [
   { label: 'Home', href: '/' },
-  { label: 'Products', href: '/products' },
-  { label: 'About', href: '/about' },
-  { label: 'Contact Us', href: '/contact' },
+  { label: 'All Masalas & Spices', href: '/products' },
+  { label: 'Our Story', href: '/about' },
+  { label: 'Contact & Orders', href: '/contact' },
 ];
 
 export default function Navbar() {
   const [open, setOpen] = React.useState(false);
-  const scrolled = useScroll(10);
+  const [searchQuery, setSearchQuery] = React.useState('');
+  const scrolled = useScroll(15);
   const pathname = usePathname();
+  const router = useRouter();
 
-  // Only the home page hero has a dark background — all others need solid white navbar
-  const isHeroPage = pathname === '/';
-  const solidBg = scrolled || open || !isHeroPage;
-
-  const waLink = `https://wa.me/919271580900?text=${encodeURIComponent('Hi! I visited your website and would like to know more about your masala products.')}`;
+  const waLink = `https://wa.me/919271580900?text=${encodeURIComponent(
+    'Hi! I visited your website and would like to order pure masalas.'
+  )}`;
 
   React.useEffect(() => {
     document.body.style.overflow = open ? 'hidden' : '';
-    return () => { document.body.style.overflow = ''; };
+    return () => {
+      document.body.style.overflow = '';
+    };
   }, [open]);
 
-  React.useEffect(() => { setOpen(false); }, [pathname]);
+  React.useEffect(() => {
+    setOpen(false);
+  }, [pathname]);
+
+  const handleSearchSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchQuery.trim()) {
+      router.push(`/products?search=${encodeURIComponent(searchQuery.trim())}`);
+    }
+  };
 
   return (
     <>
-      <header
-        className={cn(
-          'fixed top-0 z-50 w-full transition-all duration-300 ease-out',
-          // When scrolled on desktop: becomes a floating pill centered in viewport
-          scrolled && !open
-            ? 'md:top-3'
-            : 'top-0',
-        )}
-      >
+      <header className="fixed top-0 left-0 right-0 z-50 w-full bg-white transition-all duration-200 select-none">
+        {/* PRIMARY NAVIGATION BAR */}
         <div
           className={cn(
-            'mx-auto transition-all duration-300 ease-out',
-            scrolled && !open
-              ? 'max-w-5xl md:rounded-2xl md:border md:border-gray-200/80 md:shadow-lg md:shadow-black/5'
-              : 'max-w-full',
-            solidBg
-              ? 'bg-white/95 supports-[backdrop-filter]:bg-white/85 backdrop-blur-lg'
-              : 'bg-transparent'
+            'bg-white border-b border-[#e5e5e5] transition-all duration-200',
+            scrolled ? 'shadow-[0_1px_0_0_#e5e5e5]' : ''
           )}
         >
-          <nav
-            className={cn(
-              'flex items-center justify-between px-6 sm:px-10 md:px-12 lg:px-14 transition-all duration-300',
-              scrolled ? 'h-13 py-1.5' : (solidBg ? 'h-16' : 'h-20')
-            )}
-          >
-            {/* LEFT — Logo */}
-            <Link href="/" className="flex flex-shrink-0 items-center z-10">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-18 flex items-center justify-between gap-4">
+            {/* LEFT — Brand Logo */}
+            <Link href="/" className="flex flex-shrink-0 items-center">
               <Image
                 src="/Gravitate_logo.png"
                 alt="Gravitate Masala"
-                width={130}
-                height={50}
-                className={cn(
-                  'w-auto object-contain rounded-lg transition-all duration-300',
-                  scrolled ? 'h-9' : 'h-11'
-                )}
+                width={120}
+                height={42}
+                className="h-8 sm:h-9 w-auto object-contain"
                 priority
               />
             </Link>
 
-            {/* CENTER — Desktop Nav Links (absolutely centered) */}
-            <div className="hidden md:flex items-center gap-0.5 absolute left-1/2 -translate-x-1/2">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  className={cn(
-                    buttonVariants({ variant: 'ghost' }),
-                    'rounded-full px-4 text-[14px] font-medium h-9 transition-colors',
-                    pathname === link.href
-                      ? 'bg-brand-orange/10 text-brand-orange font-semibold'
-                      : solidBg
-                        ? 'text-gray-700 hover:text-brand-orange hover:bg-orange-50'
-                        : 'text-white hover:text-brand-orange hover:bg-white/10',
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </div>
+            {/* CENTER — Navigation Links (Desktop with 2px bottom underline indicator) */}
+            <nav className="hidden lg:flex items-center gap-8 h-full">
+              {navLinks.map((link) => {
+                const isActive =
+                  link.href === '/'
+                    ? pathname === '/'
+                    : pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    className={cn(
+                      'relative h-full flex items-center text-xs font-semibold uppercase tracking-wider transition-colors',
+                      isActive
+                        ? 'text-[#111111]'
+                        : 'text-[#707072] hover:text-[#111111]'
+                    )}
+                  >
+                    <span>{link.label}</span>
+                    {isActive && (
+                      <span className="absolute bottom-0 left-0 right-0 h-[2px] bg-[#111111]" />
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
 
-            {/* RIGHT — Cart + WhatsApp */}
-            <div className="flex items-center gap-2 flex-shrink-0 z-10">
-              <CartDrawer transparent={!solidBg} />
+            {/* RIGHT — Cart, Order Action, Hamburger */}
+            <div className="flex items-center gap-3 sm:gap-4">
+              {/* Cart Drawer Icon Button */}
+              <CartDrawer />
 
-              {/* WhatsApp button — desktop only */}
+              {/* Primary Pill Button — WhatsApp Order */}
               <a
                 href={waLink}
                 target="_blank"
                 rel="noreferrer"
-                className="hidden md:flex items-center gap-2 rounded-full bg-[#25D366] hover:bg-green-600 text-white font-semibold text-sm px-5 h-10 shadow-sm shadow-green-500/20 transition-colors whitespace-nowrap"
+                className="hidden sm:inline-flex items-center justify-center gap-2 bg-[#111111] hover:bg-black text-white text-xs font-medium px-5 h-10 rounded-full transition-all active:scale-95"
               >
-                <Phone className="w-3.5 h-3.5" />
-                Order on WhatsApp
+                <MessageSquare className="w-3.5 h-3.5" />
+                <span>WhatsApp Order</span>
               </a>
 
-              {/* Hamburger — mobile only */}
+              {/* Hamburger Button (Mobile) */}
               <button
                 onClick={() => setOpen(!open)}
-                className={cn(
-                  'md:hidden flex items-center justify-center rounded-full w-9 h-9 transition-colors',
-                  'text-gray-700 hover:bg-gray-100'
-                )}
+                className="lg:hidden flex items-center justify-center rounded-full w-10 h-10 text-[#111111] hover:bg-[#f5f5f5] transition-colors"
                 aria-label="Toggle menu"
               >
-                <MenuToggleIcon open={open} className="size-5" duration={300} />
+                <MenuToggleIcon open={open} className="size-5" duration={250} />
               </button>
             </div>
-          </nav>
+          </div>
         </div>
       </header>
 
-      {/* Mobile Menu — rendered outside the floating header */}
-      {open && (
-        <div
-          className="fixed inset-0 top-16 z-[49] bg-white md:hidden flex flex-col"
-          style={{ overflowY: 'auto' }}
-        >
-          <div className="flex flex-col h-full justify-between px-5 py-6">
-            <nav className="grid gap-1.5">
-              {navLinks.map((link) => (
-                <Link
-                  key={link.label}
-                  href={link.href}
-                  onClick={() => setOpen(false)}
-                  className={cn(
-                    'flex items-center text-xl font-medium py-3.5 px-4 rounded-2xl transition-colors',
-                    pathname === link.href
-                      ? 'bg-orange-50 text-brand-orange font-semibold'
-                      : 'text-gray-800 hover:bg-orange-50 hover:text-brand-orange'
-                  )}
-                >
-                  {link.label}
-                </Link>
-              ))}
-            </nav>
+      {/* Spacer for fixed navbar height */}
+      <div className="h-16 sm:h-18" />
 
-            <div className="pb-8 pt-4">
-              <a
-                href={waLink}
-                target="_blank"
-                rel="noreferrer"
-                onClick={() => setOpen(false)}
-                className="flex items-center justify-center gap-2 w-full bg-[#25D366] hover:bg-green-600 text-white font-bold py-4 rounded-2xl text-lg transition-colors shadow-xl shadow-green-500/20"
-              >
-                <Phone className="w-5 h-5" />
-                Order on WhatsApp
-              </a>
-            </div>
+      {/* MOBILE DRAWER NAVIGATION */}
+      {open && (
+        <div className="fixed inset-0 top-16 sm:top-18 z-40 bg-white lg:hidden flex flex-col justify-between overflow-y-auto border-t border-[#e5e5e5]">
+          <div className="p-6 space-y-6">
+            {/* Mobile Search Pill */}
+            <form onSubmit={handleSearchSubmit} className="relative w-full">
+              <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4 text-[#707072]" />
+              <input
+                type="text"
+                placeholder="Search masalas and spices..."
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                className="w-full h-12 pl-11 pr-4 bg-[#f5f5f5] text-base sm:text-sm text-[#111111] rounded-full outline-none border border-transparent focus:border-[#111111] transition-all"
+              />
+            </form>
+
+            <nav className="flex flex-col divide-y divide-[#e5e5e5]">
+              {navLinks.map((link) => {
+                const isActive =
+                  link.href === '/'
+                    ? pathname === '/'
+                    : pathname.startsWith(link.href);
+                return (
+                  <Link
+                    key={link.label}
+                    href={link.href}
+                    onClick={() => setOpen(false)}
+                    className={cn(
+                      'py-4 flex items-center justify-between text-lg font-medium text-[#111111]',
+                      isActive ? 'font-semibold' : 'text-[#39393b]'
+                    )}
+                  >
+                    <span>{link.label}</span>
+                    <ArrowRight className="w-4 h-4 text-[#707072]" />
+                  </Link>
+                );
+              })}
+            </nav>
+          </div>
+
+          <div className="p-6 border-t border-[#e5e5e5] bg-[#f5f5f5] space-y-3">
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              onClick={() => setOpen(false)}
+              className="flex items-center justify-center gap-2.5 w-full bg-[#111111] text-white font-medium py-3.5 rounded-full text-sm active:scale-95 transition-all"
+            >
+              <MessageSquare className="w-4 h-4" />
+              <span>Order via WhatsApp (+91 9271580900)</span>
+            </a>
+            <p className="text-center text-[11px] text-[#707072]">
+              GURUKRUPA GRUH UDYOG · FSSAI Certified Spice Mill
+            </p>
           </div>
         </div>
       )}

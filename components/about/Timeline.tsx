@@ -3,35 +3,44 @@
 import { motion } from 'framer-motion';
 
 const milestones = [
-  { year: '2004', title: 'The Bicycle Journey', desc: 'Started selling pure masalas door-to-door on a bicycle in the local neighborhood.' },
-  { year: '2009', title: 'Wholesale & Retail Expansion', desc: 'Expanded operations, shifting from a bicycle to a dedicated manufacturing setup for wholesale.' },
-  { year: '2017', title: 'Building the Empire', desc: 'Scaled our manufacturing facility to supply retailers and bulk buyers directly across the market.' },
-  { year: '2025', title: 'The Signature Categories', desc: 'Cemented our legacy with dedicated Pooja, Powder, Box, Pouch, Upwas, and Winter Specials.' },
+  { year: '1979', title: 'The Bicycle Roots', desc: 'Our founder initiated direct door-to-door distribution of hand-ground spices across Malegaon neighborhoods on a bicycle.' },
+  { year: '2004', title: 'Commercial Mill Establishment', desc: 'Formal incorporation of Gurukrupa Gruh Udyog and transition to dedicated low-heat stone milling facilities.' },
+  { year: '2017', title: 'Wholesale & Retail Network', desc: 'Expanded production to cater to retail chains, caterers, and wholesale distributors across Maharashtra.' },
+  { year: '2026', title: 'Signature Product Lines', desc: 'Modernized nationwide delivery with dedicated Pooja Special, Powder Special, and fast WhatsApp commerce.' },
 ];
 
 export default function Timeline() {
   return (
-    <div className="relative mt-8">
-      {/* Central Thin Line */}
-      <div className="absolute left-[11.5px] top-3 bottom-0 w-[1px] bg-[#cebfae]"></div>
+    <div className="relative mt-6 select-none">
+      <div className="absolute left-[7px] top-2 bottom-2 w-[1px] bg-[#cacacb]" />
       
-      {milestones.map((m, idx) => (
-        <motion.div 
-          key={idx} 
-          className="mb-10 relative group pl-10"
-          initial={{ opacity: 0, x: -20 }}
-          whileInView={{ opacity: 1, x: 0 }}
-          viewport={{ once: true }}
-          transition={{ delay: idx * 0.2 }}
-        >
-          {/* Timeline Thick Circle Dot */}
-          <div className="absolute left-0 top-[2px] w-[24px] h-[24px] rounded-full bg-[#FCF8F3] border-[3.5px] border-[#E06738] z-10 transition-colors duration-300"></div>
-          
-          <h4 className="font-display font-bold text-[17px] text-[#E06738] mb-1.5 leading-none">{m.year}</h4>
-          <h5 className="font-sans font-bold text-[16px] text-brand-dark mb-2 tracking-tight">{m.title}</h5>
-          <p className="text-[#5e6977] font-body text-[14.5px] leading-[1.65] max-w-[360px]">{m.desc}</p>
-        </motion.div>
-      ))}
+      <div className="space-y-8">
+        {milestones.map((m, idx) => (
+          <motion.div 
+            key={idx} 
+            className="relative pl-8"
+            initial={{ opacity: 0, x: -10 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ delay: idx * 0.1, duration: 0.4 }}
+          >
+            {/* Timeline Dot (Concentric ring) */}
+            <div className="absolute left-0 top-[3px] w-4 h-4 rounded-full bg-white border-2 border-[#111111] flex items-center justify-center">
+              <div className="w-1.5 h-1.5 rounded-full bg-[#111111]" />
+            </div>
+            
+            <span className="font-display text-2xl text-[#111111] leading-none block mb-1">
+              {m.year}
+            </span>
+            <h4 className="font-sans font-medium text-sm text-[#111111] mb-1">
+              {m.title}
+            </h4>
+            <p className="text-xs text-[#707072] leading-relaxed max-w-md">
+              {m.desc}
+            </p>
+          </motion.div>
+        ))}
+      </div>
     </div>
   );
 }

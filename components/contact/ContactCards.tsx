@@ -1,83 +1,76 @@
 "use client"
 
 import { motion } from 'framer-motion';
-import { MessageCircle, Phone, Mail, ArrowRight } from 'lucide-react';
+import { MessageSquare, Phone, Mail, ArrowRight } from 'lucide-react';
 import { buildWhatsAppLink } from '@/lib/whatsapp';
 
 export default function ContactCards() {
   const phone1 = '9271580900';
-  const waLink = buildWhatsAppLink(phone1, "Hi! I have a query about Gravitate.");
+  const waLink = buildWhatsAppLink(phone1, "Hi Gravitate! I have a question regarding an order / wholesale.");
 
   const cards = [
     {
-      icon: MessageCircle,
-      title: 'WhatsApp Us',
-      desc: "Fastest response — typically under 15 minutes.",
+      icon: MessageSquare,
+      title: 'WhatsApp Support',
+      desc: "Fastest response — average response within 15 minutes.",
       action: 'Chat on WhatsApp',
       href: waLink,
-      bg: 'bg-[#25D366]',
-      lightBg: 'bg-[#25D366]/10',
-      textColor: 'text-[#25D366]',
-      badge: 'Recommended',
+      badge: 'Immediate',
     },
     {
       icon: Phone,
-      title: 'Call Us',
-      desc: "9271580900 / 9657586213",
+      title: 'Direct Call Support',
+      desc: "+91 92715 80900 / 96575 86213",
       action: 'Call Now',
       href: `tel:+91${phone1}`,
-      bg: 'bg-brand-orange',
-      lightBg: 'bg-brand-orange/10',
-      textColor: 'text-brand-orange',
       badge: null,
     },
     {
       icon: Mail,
-      title: 'Email Us',
-      desc: "For bulk orders and wholesale inquiries.",
+      title: 'Email & Wholesale',
+      desc: "For bulk commercial supplies, exports, and partnerships.",
       action: 'Send an Email',
       href: 'mailto:gravitatespices01@gmail.com',
-      bg: 'bg-brand-dark',
-      lightBg: 'bg-brand-dark/5',
-      textColor: 'text-brand-dark',
       badge: null,
     }
   ];
 
   return (
-    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 relative z-20 -mt-24 sm:-mt-28 mb-16 px-4">
+    <div className="grid grid-cols-1 md:grid-cols-3 gap-6 select-none">
       {cards.map((card, idx) => (
         <motion.a 
           key={idx}
           href={card.href}
-          target={card.icon === MessageCircle ? "_blank" : "_self"}
+          target={card.icon === MessageSquare ? "_blank" : "_self"}
           rel="noreferrer"
-          className="group relative bg-white/70 backdrop-blur-xl rounded-[2rem] p-8 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-[0_20px_40px_rgb(0,0,0,0.08)] hover:-translate-y-2 transition-all duration-500 border border-white flex flex-col overflow-hidden"
-          initial={{ opacity: 0, y: 30 }}
+          className="group p-6 sm:p-8 bg-[#f5f5f5] border border-[#e5e5e5] rounded-none flex flex-col justify-between hover:border-[#111111] transition-all"
+          initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ delay: idx * 0.15, duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ delay: idx * 0.1, duration: 0.4 }}
         >
-          {/* Subtle gradient glow behind the card on hover */}
-          <div className={`absolute top-0 right-0 w-32 h-32 ${card.bg} opacity-0 group-hover:opacity-5 blur-3xl rounded-full transition-opacity duration-500`} />
-
-          <div className="flex items-start justify-between mb-8 relative z-10">
-            <div className={`w-14 h-14 rounded-2xl ${card.lightBg} flex items-center justify-center transition-transform duration-500 group-hover:scale-110 group-hover:rotate-3`}>
-              <card.icon className={`w-6 h-6 ${card.textColor}`} />
+          <div>
+            <div className="flex items-center justify-between mb-6">
+              <div className="w-10 h-10 rounded-full bg-white border border-[#cacacb] flex items-center justify-center text-[#111111]">
+                <card.icon className="w-4 h-4" />
+              </div>
+              {card.badge && (
+                <span className="text-[10px] font-semibold text-[#007d48] bg-[#007d48]/10 px-2.5 py-0.5 rounded-full uppercase tracking-wider">
+                  {card.badge}
+                </span>
+              )}
             </div>
-            {card.badge && (
-              <span className="text-[10px] font-bold text-green-700 bg-green-100/80 px-3 py-1.5 rounded-full uppercase tracking-widest backdrop-blur-sm border border-green-200">
-                {card.badge}
-              </span>
-            )}
+
+            <h3 className="font-sans font-medium text-base text-[#111111] mb-1">
+              {card.title}
+            </h3>
+            <p className="text-xs text-[#707072] leading-relaxed mb-6">
+              {card.desc}
+            </p>
           </div>
-          <h3 className="font-display font-bold text-2xl text-gray-900 mb-3 relative z-10">{card.title}</h3>
-          <p className="font-sans text-gray-500 text-sm mb-8 flex-1 leading-relaxed relative z-10">{card.desc}</p>
-          
-          <div className="mt-auto relative z-10">
-            <span className={`inline-flex items-center gap-2 font-semibold text-sm ${card.textColor} group-hover:gap-3 transition-all duration-300`}>
-              {card.action} 
-              <ArrowRight className="w-4 h-4" />
-            </span>
+
+          <div className="pt-4 border-t border-[#cacacb] flex items-center justify-between text-xs font-semibold text-[#111111]">
+            <span>{card.action}</span>
+            <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
           </div>
         </motion.a>
       ))}

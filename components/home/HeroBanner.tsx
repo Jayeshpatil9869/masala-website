@@ -1,111 +1,90 @@
 "use client"
 
-import { useState, useEffect } from "react"
 import { motion } from "framer-motion"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+import { ArrowRight, MessageSquare } from "lucide-react"
 import Image from "next/image"
-
-const BACKGROUND_IMAGES = [
-  "/img (1).jpg",
-  "/img (2).jpg",
-  "/img (3).jpg",
-  "/img (4).jpg",
-]
+import Link from "next/link"
 
 export default function HeroBanner() {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  const [prevImageIndex, setPrevImageIndex] = useState(0)
-  const [direction, setDirection] = useState(1)
-
-  const paginate = (newDirection: number) => {
-    setDirection(newDirection)
-    setPrevImageIndex(currentImageIndex)
-    setCurrentImageIndex((prev) => {
-      let nextIndex = prev + newDirection;
-      if (nextIndex < 0) nextIndex = BACKGROUND_IMAGES.length - 1;
-      if (nextIndex >= BACKGROUND_IMAGES.length) nextIndex = 0;
-      return nextIndex;
-    })
-  }
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      paginate(1)
-    }, 5000)
-
-    return () => clearInterval(interval)
-  }, [currentImageIndex]) // Restart timer on manual click
+  const waLink = `https://wa.me/919271580900?text=${encodeURIComponent(
+    "Hi Gravitate Spices! I would like to explore your masala collection and place an order."
+  )}`
 
   return (
-    <section className="relative w-full bg-brand-cream overflow-hidden aspect-[4/3] md:aspect-[1920/1081] flex items-center justify-center mt-[72px] md:mt-0">
+    <section className="relative w-full min-h-[580px] sm:min-h-[660px] lg:min-h-[760px] bg-[#111111] overflow-hidden flex items-center">
+      {/* BACKGROUND CAMPAIGN PHOTOGRAPHY */}
+      <div className="absolute inset-0 w-full h-full pointer-events-none">
+        <Image
+          src="/hero-spice-bg.jpg"
+          alt="Gravitate Pure Spices and Masalas"
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-[75%_center] sm:object-center select-none brightness-95"
+        />
+        
+        {/* MULTI-LAYER DIRECTIONAL SCRIM OVERLAY FOR PERFECT LEGIBILITY */}
+        {/* Horizontal dark scrim for left-side text column */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/2 via-45% to-black/10 sm:to-transparent" />
+        
+        {/* Subtle vertical gradient for bottom grounding */}
+        <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-black/10" />
+      </div>
 
-      {/* SLIDER IMAGES (All Rendered Simultaneously) */}
-      {BACKGROUND_IMAGES.map((src, idx) => {
-        const isActive = idx === currentImageIndex;
-        const isPrev = idx === prevImageIndex;
-        const isInitialRender = currentImageIndex === prevImageIndex;
-
-        let x = "0%";
-        let zIndex = 0;
-        let opacity = 0;
-        let transitionDuration = 0.8;
-
-        if (isActive) {
-          x = "0%";
-          zIndex = 20;
-          opacity = 1;
-        } else if (isPrev && !isInitialRender) {
-          x = direction > 0 ? "-100%" : "100%";
-          zIndex = 10;
-          opacity = 1;
-        } else {
-          // Idle state - instantly position off-screen ready to slide in next
-          x = direction > 0 ? "100%" : "-100%";
-          zIndex = 0;
-          opacity = 0;
-          transitionDuration = 0; // Instant jump
-        }
-
-        return (
+      {/* EDITORIAL CONTENT LOCKUP */}
+      <div className="container relative z-10 mx-auto px-6 sm:px-10 lg:px-14 max-w-[1440px] py-16 sm:py-20 lg:py-24">
+        <div className="max-w-2xl space-y-6 sm:space-y-7">
+          
+          {/* Main Editorial Headline */}
           <motion.div
-            key={src}
-            initial={false}
-            animate={{
-              opacity,
-              zIndex,
-              x,
-            }}
-            transition={{ duration: transitionDuration, ease: "easeInOut" }}
-            className={`absolute inset-0 w-full h-full ${isActive ? 'pointer-events-auto' : 'pointer-events-none'}`}
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
           >
-            <Image
-              src={src}
-              alt={`Hero image ${idx + 1}`}
-              fill
-              priority={idx === 0}
-              sizes="100vw"
-              className="object-cover object-center md:pb-18"
-            />
+            <h1 className="font-display text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl text-white uppercase tracking-normal leading-[0.95] drop-shadow-md">
+              Pure Ground Spices.<br />
+              <span className="text-white/90">Uncompromised Aroma.</span>
+            </h1>
           </motion.div>
-        )
-      })}
 
-      {/* LEFT ARROW */}
-      <button
-        onClick={() => paginate(-1)}
-        className="absolute left-4 md:left-6 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md hover:bg-white/40 text-white rounded-full p-2 md:p-3 transition"
-      >
-        <ChevronLeft className="w-5 h-5 md:w-7 md:h-7" />
-      </button>
+          {/* Subtitle / Description */}
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
+            className="text-white/90 text-sm sm:text-base md:text-lg max-w-lg font-normal leading-relaxed text-balance"
+          >
+            Single-origin handpicked spices, stone-ground with traditional patience in Malegaon & Nashik. No preservatives, zero artificial colors, 100% authentic flavor.
+          </motion.p>
 
-      {/* RIGHT ARROW */}
-      <button
-        onClick={() => paginate(1)}
-        className="absolute right-4 md:right-6 top-1/2 -translate-y-1/2 z-20 bg-white/20 backdrop-blur-md hover:bg-white/40 text-white rounded-full p-2 md:p-3 transition"
-      >
-        <ChevronRight className="w-5 h-5 md:w-7 md:h-7" />
-      </button>
+          {/* CTA Buttons Cluster */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.25 }}
+            className="flex flex-wrap items-center gap-3.5 pt-1"
+          >
+            <Link
+              href="/products"
+              className="group inline-flex items-center justify-center gap-2 bg-white text-[#111111] hover:bg-[#f5f5f5] active:scale-95 font-semibold text-xs sm:text-sm px-7 py-3.5 rounded-full transition-all duration-150 shadow-md hover:shadow-lg"
+            >
+              <span>Shop All Masalas</span>
+              <ArrowRight className="w-3.5 h-3.5 transition-transform group-hover:translate-x-1" />
+            </Link>
 
+            <a
+              href={waLink}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex items-center justify-center gap-2 bg-white/15 hover:bg-white/25 active:scale-95 text-white backdrop-blur-md border border-white/25 font-medium text-xs sm:text-sm px-6 py-3.5 rounded-full transition-all duration-150"
+            >
+              <MessageSquare className="w-3.5 h-3.5 text-emerald-400" />
+              <span>Order on WhatsApp</span>
+            </a>
+          </motion.div>
+
+        </div>
+      </div>
     </section>
   )
 }
