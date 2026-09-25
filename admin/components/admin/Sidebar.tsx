@@ -10,6 +10,7 @@ import {
   LogOut,
   Flame,
   ShieldCheck,
+  ScrollText,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { createClient } from "@/lib/supabase/client";
@@ -20,6 +21,7 @@ const navItems = [
   { label: "Categories", href: "/categories", icon: Tags },
   { label: "Products", href: "/products", icon: Package },
   { label: "Queries", href: "/queries", icon: MessageSquare },
+  { label: "Login Logs", href: "/login-logs", icon: ScrollText },
 ];
 
 export function Sidebar() {

@@ -8,6 +8,7 @@ import { cn } from '@/lib/utils';
 import { MenuToggleIcon } from '@/components/ui/menu-toggle-icon';
 import { useScroll } from '@/components/ui/use-scroll';
 import CartDrawer from '@/components/cart/CartDrawer';
+import AuthNavControls from '@/components/auth/AuthNavControls';
 import { Search, MessageSquare, ArrowRight } from 'lucide-react';
 
 const navLinks = [
@@ -96,8 +97,10 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* RIGHT — Cart, Order Action, Hamburger */}
+            {/* RIGHT — Auth, Cart, Order Action, Hamburger */}
             <div className="flex items-center gap-3 sm:gap-4">
+              <AuthNavControls />
+
               {/* Cart Drawer Icon Button */}
               <CartDrawer />
 
@@ -169,6 +172,22 @@ export default function Navbar() {
           </div>
 
           <div className="p-6 border-t border-[#e5e5e5] bg-[#f5f5f5] space-y-3">
+            <div className="grid grid-cols-2 gap-2">
+              <Link
+                href="/login"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center w-full bg-white border border-[#e5e5e5] text-[#111111] font-medium py-3 rounded-full text-sm"
+              >
+                Sign In
+              </Link>
+              <Link
+                href="/signup"
+                onClick={() => setOpen(false)}
+                className="flex items-center justify-center w-full bg-[#111111] text-white font-medium py-3 rounded-full text-sm"
+              >
+                Sign Up
+              </Link>
+            </div>
             <a
               href={waLink}
               target="_blank"
