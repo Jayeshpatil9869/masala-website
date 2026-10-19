@@ -18,9 +18,9 @@ export default function BrandStory() {
       <div className="container mx-auto px-4 sm:px-8 lg:px-12 max-w-[1440px]">
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 items-center">
           
-          {/* Image Side — Flat 0px Radius Editorial Photo */}
+          {/* Image Side — Professional Editorial Photo */}
           <motion.div
-            className="lg:col-span-6 relative aspect-[4/3] sm:aspect-[16/11] bg-white overflow-hidden rounded-none border border-[#e5e5e5]"
+            className="lg:col-span-6 relative aspect-[4/3] sm:aspect-[16/11] bg-white overflow-hidden rounded-2xl border border-[#e5e5e5] shadow-sm group"
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
@@ -28,13 +28,13 @@ export default function BrandStory() {
           >
             <Image
               src="/image.png"
-              alt="Traditional Spice Milling Heritage"
+              alt="Gurukrupa Gruh Udyog - Gravitate Brand Heritage"
               fill
               sizes="(max-width: 1024px) 100vw, 50vw"
-              className="object-cover object-center"
+              className="object-cover object-center group-hover:scale-105 transition-transform duration-700"
             />
             {/* Subtle Editorial Tag */}
-            <div className="absolute bottom-4 left-4 bg-white/90 backdrop-blur-md px-4 py-2 border border-[#cacacb] text-xs font-semibold text-[#111111] uppercase tracking-wider">
+            <div className="absolute bottom-4 left-4 bg-white/95 backdrop-blur-md px-4 py-2 border border-[#cacacb] text-xs font-semibold text-[#111111] uppercase tracking-wider rounded-lg shadow-sm">
               Est. 1979 · Malegaon & Nashik
             </div>
           </motion.div>
