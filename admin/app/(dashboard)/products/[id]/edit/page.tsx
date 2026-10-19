@@ -162,23 +162,45 @@ export default function EditProductPage() {
 
   return (
     <div className="space-y-6 max-w-4xl">
-      {/* Header with back button */}
-      <div className="flex items-center gap-3">
-        <button
-          onClick={() => router.back()}
-          className="p-2 rounded-xl bg-white border border-[#E5E5E5] hover:bg-[#F5F5F5] transition text-[#4B4B4D] btn-press-active shadow-sm"
-        >
-          <ArrowLeft className="w-5 h-5" />
-        </button>
-        <div>
-          <h1 className="font-display text-3xl sm:text-4xl text-[#111111] uppercase tracking-wide">
-            Edit Product
-          </h1>
-          <p className="text-sm text-[#707072] font-medium">{form.name || "Update Catalog Entry"}</p>
+      {/* Header with back button & quick actions */}
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div className="flex items-center gap-3">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="p-2 rounded-xl bg-white border border-[#E5E5E5] hover:bg-[#F5F5F5] transition text-[#4B4B4D] btn-press-active shadow-sm"
+          >
+            <ArrowLeft className="w-5 h-5" />
+          </button>
+          <div>
+            <h1 className="font-display text-3xl sm:text-4xl text-[#111111] uppercase tracking-wide">
+              Edit Product
+            </h1>
+            <p className="text-sm text-[#707072] font-medium">{form.name || "Update Catalog Entry"}</p>
+          </div>
+        </div>
+
+        <div className="flex items-center gap-2.5 self-end sm:self-auto">
+          <button
+            type="button"
+            onClick={() => router.back()}
+            className="px-4 py-2 border border-[#E5E5E5] text-[#4B4B4D] hover:bg-[#F5F5F5] text-xs font-semibold rounded-xl transition"
+          >
+            Cancel
+          </button>
+          <button
+            type="submit"
+            form="edit-product-form"
+            disabled={saving}
+            className="inline-flex items-center justify-center gap-2 px-5 py-2 bg-[#111111] hover:bg-[#222222] text-white text-xs font-semibold rounded-xl transition shadow-sm btn-press-active disabled:opacity-70"
+          >
+            {saving && <Loader2 className="w-3.5 h-3.5 animate-spin text-white" />}
+            {saving ? "Saving Changes..." : "Save Changes"}
+          </button>
         </div>
       </div>
 
-      <form onSubmit={handleSubmit} className="space-y-6">
+      <form id="edit-product-form" onSubmit={handleSubmit} className="space-y-6">
         {/* Section 1: Basic Information */}
         <div className="bg-white rounded-2xl border border-[#EAEAEA] shadow-sm p-6 sm:p-7">
           <div className="flex items-center gap-2 mb-5 pb-3 border-b border-[#EAEAEA]">
@@ -408,18 +430,18 @@ export default function EditProductPage() {
         </div>
 
         {/* Action Controls */}
-        <div className="flex items-center justify-end gap-3 pt-2">
+        <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center justify-end gap-3 pt-3 pb-6">
           <button
             type="button"
             onClick={() => router.back()}
-            className="px-5 py-2.5 border border-[#E5E5E5] text-[#4B4B4D] hover:bg-[#F5F5F5] text-xs font-semibold rounded-xl transition"
+            className="w-full sm:w-auto px-5 py-2.5 border border-[#E5E5E5] text-[#4B4B4D] hover:bg-[#F5F5F5] text-xs font-semibold rounded-xl transition text-center"
           >
             Cancel
           </button>
           <button
             type="submit"
             disabled={saving}
-            className="inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#111111] hover:bg-[#222222] text-white text-xs font-semibold rounded-xl transition shadow-sm btn-press-active disabled:opacity-70"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-2.5 bg-[#111111] hover:bg-[#222222] text-white text-xs font-semibold rounded-xl transition shadow-sm btn-press-active disabled:opacity-70"
           >
             {saving && <Loader2 className="w-4 h-4 animate-spin text-white" />}
             {saving ? "Saving Changes..." : "Save Changes"}

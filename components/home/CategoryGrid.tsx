@@ -8,59 +8,59 @@ import Image from "next/image";
 const defaultCategoryList = [
   {
     id: "1",
-    name: "Pooja Special",
-    slug: "pooja-special",
+    name: "Special Box Product",
+    slug: "special-box-product",
     image_url:
-      "https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/categories/special-box-product-1773036284987.jpg",
   },
   {
     id: "2",
-    name: "Powder Range",
+    name: "Powder Special",
     slug: "powder-special",
     image_url:
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/categories/powder-special-1773036337281.jpg",
   },
   {
     id: "3",
-    name: "Authentic Blends",
-    slug: "blends",
+    name: "Special Gravitate Masala",
+    slug: "special-gravitatee-masala",
     image_url:
-      "https://images.unsplash.com/photo-1509358271058-acd22cc93898?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/categories/special-gravitatee-masala-1773035732452.jpeg",
   },
   {
     id: "4",
-    name: "Box Masalas",
-    slug: "box-products",
+    name: "Winter Special",
+    slug: "winter-special",
     image_url:
-      "https://images.unsplash.com/photo-1532336414038-cf19250c5757?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/categories/winter-special-1773036361561.jpg",
   },
   {
     id: "5",
-    name: "Whole Spices",
-    slug: "whole-spices",
+    name: "Pooja Special",
+    slug: "pooja-special",
     image_url:
-      "https://images.unsplash.com/photo-1599940824399-b87987ceb72a?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/categories/pooja-special-1773036380656.jpg",
   },
   {
     id: "6",
-    name: "Tea Masala",
-    slug: "tea-masala",
+    name: "Upwas Special",
+    slug: "upwas-special",
     image_url:
-      "https://images.unsplash.com/photo-1576092768241-dec231879fc3?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/products/shri-vrat-atta/1792421392466-vahuzab2owa.jpg",
   },
   {
     id: "7",
-    name: "Pure Turmeric",
-    slug: "turmeric",
+    name: "Special Pouch",
+    slug: "special-pouch",
     image_url:
-      "https://images.unsplash.com/photo-1615485290382-441e4d049cb5?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/products/shahi-doodh-masala/1773065223441-9wqv68ahzrc.png",
   },
   {
     id: "8",
-    name: "Chili Powder",
-    slug: "chili-powder",
+    name: "Ayurvedic Special",
+    slug: "gravitate-ayurvedic-products",
     image_url:
-      "https://images.unsplash.com/photo-1588252303782-cb80119abd6d?auto=format&fit=crop&q=80&w=500",
+      "https://oknqceysltwcahhmaygx.supabase.co/storage/v1/object/public/product-images/products/gaikahtbol/1773066605678-n6hhx3wwux9.png",
   },
 ];
 
@@ -83,9 +83,9 @@ export default function CategoryGrid({ categories }: { categories: any[] }) {
         </div>
 
         {/* ── DESKTOP VIEW (>= lg): Clean static single-row layout ── */}
-        <div className="hidden lg:flex items-start justify-between gap-6 pb-3 pt-1">
+        <div className="hidden lg:flex items-start justify-between gap-4 xl:gap-6 pb-3 pt-1">
           {displayCats.map((cat, idx) => (
-            <div key={cat.id || idx} className="flex-1 text-center">
+            <div key={cat.id || idx} className="flex-1 text-center min-w-0">
               <Link
                 href={`/products?category=${cat.slug || "all"}`}
                 className="group flex flex-col items-center gap-2.5 text-center cursor-pointer mx-auto active:scale-95 transition-transform"
@@ -102,7 +102,7 @@ export default function CategoryGrid({ categories }: { categories: any[] }) {
                     className="object-cover object-center group-hover:scale-110 transition-transform duration-500"
                   />
                 </div>
-                <span className="text-xs md:text-sm font-medium text-[#111111] group-hover:text-black transition-colors max-w-[115px] line-clamp-2 leading-tight">
+                <span className="text-xs md:text-sm font-medium text-[#111111] group-hover:text-black transition-colors w-full max-w-[130px] line-clamp-2 leading-snug">
                   {cat.name}
                 </span>
               </Link>

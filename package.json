@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
+    "dev:admin": "npm --prefix admin run dev",
+    "dev:all": "concurrently -n \"web,admin\" -c \"blue,magenta\" \"next dev\" \"npm --prefix admin run dev\"",
     "build": "next build",
     "start": "next start",
     "lint": "eslint"
@@ -36,6 +38,7 @@
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
+    "concurrently": "^9.1.2",
     "eslint": "^9",
     "eslint-config-next": "16.1.6",
     "shadcn": "^3.8.5",
