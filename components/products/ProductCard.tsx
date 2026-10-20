@@ -14,7 +14,7 @@ type ProductProps = {
     slug: string;
     description: string;
     category?: string;
-    variants?: { size: string; price: number; originalPrice?: number }[];
+    variants?: { id?: string; size: string; price: number; originalPrice?: number }[];
     price?: number;
     originalPrice?: number;
     image_url?: string;
@@ -92,11 +92,11 @@ export default function ProductCard({ product, priority = false }: ProductProps)
         {/* Swatch Pill / Weight Selector */}
         {hasVariants && (
           <div className="flex flex-wrap items-center gap-1 sm:gap-1.5 mb-1.5 sm:mb-2">
-            {product.variants!.map((v) => {
+            {product.variants!.map((v, idx) => {
               const isSelected = selectedVariant?.size === v.size;
               return (
                 <button
-                  key={v.size}
+                  key={v.id || `${v.size}-${idx}`}
                   onClick={(e) => {
                     e.preventDefault();
                     setSelectedVariant(v);

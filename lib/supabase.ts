@@ -32,9 +32,10 @@ export type FormattedProduct = {
   originalPrice?: number;
   category: string;
   category_id?: string;
+  category_slug?: string;
   image_url: string;
   images: string[];
-  variants: { size: string; price: number; stock?: number }[];
+  variants: { id?: string; size: string; price: number; stock?: number }[];
 };
 
 export async function fetchAllCategories() {
@@ -89,9 +90,11 @@ export async function fetchAllProducts(): Promise<FormattedProduct[]> {
       originalPrice: lowestPrice > 0 ? Math.round(lowestPrice * 1.15) : undefined,
       category: p.categories?.name || p.categories?.slug || 'Pure Spices',
       category_id: p.category_id,
+      category_slug: p.categories?.slug || '',
       image_url: defaultImg,
       images: p.images && p.images.length > 0 ? p.images : [defaultImg],
       variants: rawVariants.map((v: any) => ({
+        id: v.id,
         size: v.weight_label || 'Default',
         price: Number(v.price) || 0,
         stock: v.stock_quantity || 0,
@@ -136,9 +139,11 @@ export async function fetchProductBySlug(slug: string): Promise<FormattedProduct
     originalPrice: lowestPrice > 0 ? Math.round(lowestPrice * 1.15) : undefined,
     category: p.categories?.name || p.categories?.slug || 'Pure Spices',
     category_id: p.category_id,
+    category_slug: p.categories?.slug || '',
     image_url: defaultImg,
     images: p.images && p.images.length > 0 ? p.images : [defaultImg],
     variants: rawVariants.map((v: any) => ({
+      id: v.id,
       size: v.weight_label || 'Default',
       price: Number(v.price) || 0,
       stock: v.stock_quantity || 0,

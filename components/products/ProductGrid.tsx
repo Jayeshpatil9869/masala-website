@@ -13,6 +13,7 @@ const fallbackProducts = [
     slug: 'pure-turmeric-powder',
     description: 'High curcumin single-origin Salem turmeric powder, cold-stone milled.',
     category: 'Powder Special · Salem Origin',
+    category_slug: 'powder-special',
     price: 180,
     originalPrice: 210,
     is_bestseller: true,
@@ -26,6 +27,7 @@ const fallbackProducts = [
     slug: 'pooja-special-masala',
     description: 'Authentic 45-year heirloom formulation for festive and religious rituals.',
     category: 'Pooja Special · Traditional',
+    category_slug: 'pooja-special',
     price: 240,
     originalPrice: 280,
     is_bestseller: true,
@@ -38,7 +40,8 @@ const fallbackProducts = [
     name: 'Royal Garam Masala',
     slug: 'royal-garam-masala',
     description: 'Slow-roasted whole spices hand-ground for rich curry aromatics.',
-    category: 'Blends · Slow Roasted',
+    category: 'Special Gravitate Masala',
+    category_slug: 'special-gravitatee-masala',
     price: 220,
     originalPrice: 250,
     is_bestseller: true,
@@ -52,6 +55,7 @@ const fallbackProducts = [
     slug: 'kashmiri-chilli-powder',
     description: 'Vibrant natural ruby color with mild, aromatic warmth.',
     category: 'Powder Special · Natural Color',
+    category_slug: 'powder-special',
     price: 210,
     originalPrice: 240,
     is_bestseller: true,
@@ -65,6 +69,7 @@ const fallbackProducts = [
     slug: 'coriander-powder',
     description: 'Crisp green-seed coriander ground at low milling temperatures.',
     category: 'Powder Special · 100% Pure',
+    category_slug: 'powder-special',
     price: 160,
     originalPrice: 190,
     is_bestseller: false,
@@ -78,6 +83,7 @@ const fallbackProducts = [
     slug: 'upwas-special',
     description: 'Crafted with sendha namak and fasting-permitted spices for sacred fasts.',
     category: 'Upwas Special · Fasting Safe',
+    category_slug: 'upwas-special',
     price: 190,
     originalPrice: 220,
     is_bestseller: false,
@@ -86,6 +92,45 @@ const fallbackProducts = [
     variants: [{ size: '200g', price: 190 }, { size: '500g', price: 440 }]
   }
 ];
+
+const normalizeCategory = (str?: string) => (str || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+
+const isCategoryMatch = (p: any, selectedCategory: string) => {
+  if (!selectedCategory || selectedCategory === 'all') return true;
+
+  const targetLower = selectedCategory.trim().toLowerCase();
+  const targetNorm = normalizeCategory(selectedCategory);
+
+  // 1. Direct match on category_slug
+  if (p.category_slug && p.category_slug.toLowerCase() === targetLower) return true;
+
+  // 2. Direct match on category_id
+  if (p.category_id && p.category_id === selectedCategory) return true;
+
+  // 3. Direct match on category name
+  if (p.category && p.category.toLowerCase() === targetLower) return true;
+
+  // 4. Normalized exact match (ignores hyphens, underscores, spaces, dots)
+  const productCatNorm = normalizeCategory(p.category);
+  const productSlugNorm = normalizeCategory(p.category_slug);
+
+  if (productSlugNorm && productSlugNorm === targetNorm) return true;
+  if (productCatNorm && productCatNorm === targetNorm) return true;
+
+  // 5. Normalized containment (e.g. "powder-special" in "Powder Special · Salem Origin")
+  if (productCatNorm && targetNorm && (productCatNorm.includes(targetNorm) || targetNorm.includes(productCatNorm))) {
+    return true;
+  }
+  if (productSlugNorm && targetNorm && (productSlugNorm.includes(targetNorm) || targetNorm.includes(productSlugNorm))) {
+    return true;
+  }
+
+  // 6. Case-insensitive substring match
+  if (p.category && p.category.toLowerCase().includes(targetLower)) return true;
+  if (p.category_slug && p.category_slug.toLowerCase().includes(targetLower)) return true;
+
+  return false;
+};
 
 export default function ProductGrid() {
   const router = useRouter();
@@ -100,6 +145,20 @@ export default function ProductGrid() {
   const [products, setProducts] = useState<any[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [showFilters, setShowFilters] = useState(true);
+
+  // Sync category state whenever the URL search param changes
+  useEffect(() => {
+    const cat = searchParams.get('category') || 'all';
+    setActiveCategory(cat);
+  }, [searchParams]);
+
+  // Sync search state if URL search param is present
+  useEffect(() => {
+    const q = searchParams.get('search');
+    if (q !== null) {
+      setSearchTerm(q);
+    }
+  }, [searchParams]);
 
   useEffect(() => {
     async function fetchProducts() {
@@ -126,15 +185,22 @@ export default function ProductGrid() {
     if (category === 'all') {
       router.push('/products', { scroll: false });
     } else {
-      router.push(`/products?category=${category}`, { scroll: false });
+      router.push(`/products?category=${encodeURIComponent(category)}`, { scroll: false });
     }
+  };
+
+  const handleResetFilters = () => {
+    setSearchTerm('');
+    setActiveCategory('all');
+    setMaxPrice(2000);
+    router.push('/products', { scroll: false });
   };
 
   const filteredProducts = useMemo(() => {
     let list = [...products];
 
     if (activeCategory && activeCategory !== 'all') {
-      list = list.filter((p) => p.category?.toLowerCase().includes(activeCategory.toLowerCase()) || p.slug?.includes(activeCategory));
+      list = list.filter((p) => isCategoryMatch(p, activeCategory));
     }
 
     if (searchTerm.trim()) {
@@ -158,7 +224,7 @@ export default function ProductGrid() {
   return (
     <div className="bg-white min-h-screen">
       {/* SUB-NAV STRIP (Nike PLP Sub-Nav) */}
-      <div className="border-b border-[#e5e5e5] bg-white sticky top-16 sm:top-18 z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
+      <div className="border-b border-[#e5e5e5] bg-white sticky top-16 sm:top-[72px] z-30 shadow-[0_1px_2px_rgba(0,0,0,0.03)]">
         <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-3 sm:py-0 sm:h-14 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
           <div className="flex items-center gap-3">
             <h1 className="text-sm sm:text-base md:text-lg font-medium text-[#111111] uppercase tracking-tight">
@@ -196,20 +262,18 @@ export default function ProductGrid() {
 
       {/* PLP LAYOUT CONTAINER */}
       <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 py-6 sm:py-8">
-        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12">
+        <div className="flex flex-col lg:flex-row gap-6 lg:gap-12 items-start">
           
-          {/* Left Rail Filter Sidebar */}
+          {/* Left Rail Filter Sidebar with Sticky on Scroll */}
           {showFilters && (
-            <aside className="w-full lg:w-64 flex-shrink-0 bg-[#fbfbfb] lg:bg-transparent p-4 sm:p-5 lg:p-0 border lg:border-0 border-[#e5e5e5]">
-              <div className="lg:sticky lg:top-36">
-                <ProductFilter
-                  activeCategory={activeCategory}
-                  onCategoryChange={handleCategoryChange}
-                  onSearchChange={setSearchTerm}
-                  maxPrice={maxPrice}
-                  onMaxPriceChange={setMaxPrice}
-                />
-              </div>
+            <aside className="w-full lg:w-64 flex-shrink-0 bg-[#fbfbfb] lg:bg-transparent p-4 sm:p-5 lg:p-0 border lg:border-0 border-[#e5e5e5] sticky-filter-sidebar lg:self-start lg:sticky lg:top-[144px] lg:max-h-[calc(100vh-160px)] lg:overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden transition-all duration-200">
+              <ProductFilter
+                activeCategory={activeCategory}
+                onCategoryChange={handleCategoryChange}
+                onSearchChange={setSearchTerm}
+                maxPrice={maxPrice}
+                onMaxPriceChange={setMaxPrice}
+              />
             </aside>
           )}
 
@@ -229,11 +293,7 @@ export default function ProductGrid() {
                   We couldn't find any masalas matching your selected criteria.
                 </p>
                 <button
-                  onClick={() => {
-                    setSearchTerm('');
-                    setActiveCategory('all');
-                    setMaxPrice(2000);
-                  }}
+                  onClick={handleResetFilters}
                   className="bg-[#111111] text-white text-xs font-medium px-6 py-3 rounded-full hover:bg-black active:scale-95 transition-all"
                 >
                   Reset All Filters

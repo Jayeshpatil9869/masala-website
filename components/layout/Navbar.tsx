@@ -57,7 +57,7 @@ export default function Navbar() {
             scrolled ? 'shadow-[0_1px_0_0_#e5e5e5]' : ''
           )}
         >
-          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-18 flex items-center justify-between gap-4">
+          <div className="max-w-[1440px] mx-auto px-4 sm:px-8 lg:px-12 h-16 sm:h-[72px] flex items-center justify-between gap-4">
             {/* LEFT — Brand Logo */}
             <Link href="/" className="flex flex-shrink-0 items-center">
               <Image

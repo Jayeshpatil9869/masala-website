@@ -79,11 +79,11 @@ export default function ProductInfo({ product }: { product: any }) {
             Select Size / Weight
           </div>
           <div className="flex flex-wrap gap-2 sm:gap-2.5">
-            {product.variants.map((v: any) => {
+            {product.variants.map((v: any, idx: number) => {
               const isSelected = selectedVariant?.size === v.size;
               return (
                 <button
-                  key={v.size}
+                  key={v.id || `${v.size}-${idx}`}
                   onClick={() => setSelectedVariant(v)}
                   className={`h-10 sm:h-11 px-4 sm:px-6 rounded-full text-xs font-medium transition-all active:scale-95 ${
                     isSelected

@@ -36,8 +36,8 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
-                <Link href="/products?category=blends" className="hover:text-[#111111] transition-colors">
-                  Authentic Garam & Curry Blends
+                <Link href="/products?category=special-gravitatee-masala" className="hover:text-[#111111] transition-colors">
+                  Special Gravitate Masala
                 </Link>
               </li>
               <li>

@@ -12,12 +12,16 @@ type ProductFilterProps = {
 };
 
 const defaultCategories = [
-  { id: '1', name: 'All Masalas & Spices', slug: 'all' },
-  { id: '2', name: 'Pooja Special Masala', slug: 'pooja-special' },
-  { id: '3', name: 'Powder Special Range', slug: 'powder-special' },
-  { id: '4', name: 'Authentic Blends & Garam', slug: 'blends' },
-  { id: '5', name: 'Box Products & Bulk', slug: 'box-products' },
-  { id: '6', name: 'Upwas & Winter Special', slug: 'upwas-special' },
+  { id: 'all', name: 'All Masalas & Spices', slug: 'all' },
+  { id: 'b09a2553-dfbc-45eb-a98c-831239cf703b', name: 'Ayurvedic Special', slug: 'gravitate-ayurvedic-products' },
+  { id: 'd81485ad-94a5-4165-8682-be479a2c1960', name: 'Pooja Special', slug: 'pooja-special' },
+  { id: '7d91f1b5-a41f-4bf1-b5ed-5de440f7aa8c', name: 'Powder Special', slug: 'powder-special' },
+  { id: '9b76d435-77b8-44f0-af2e-74b5ad0b1f40', name: 'Special Box Product', slug: 'special-box-product' },
+  { id: 'b6a11d32-a1a0-4204-adb0-6d297a650a69', name: 'SPECIAL DRY FRUIT PRODUCTS', slug: 'special-dry-fruit-products' },
+  { id: '7c493e8c-e945-45ec-981a-60fbc510b9d4', name: 'Special Gravitate Masala', slug: 'special-gravitatee-masala' },
+  { id: '5d035fa3-1802-4d33-b9dc-1fcdc0762d0f', name: 'Special Pouch', slug: 'special-pouch' },
+  { id: '2276b313-bf26-4b04-acd8-34ad500922f3', name: 'Upwas Special', slug: 'upwas-special' },
+  { id: 'c23574ae-300c-41b4-a25b-cfb7d6330d68', name: 'Winter Special', slug: 'winter-special' },
 ];
 
 export default function ProductFilter({ 
@@ -33,7 +37,10 @@ export default function ProductFilter({
   useEffect(() => {
     async function fetchCategories() {
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL || 'https://api.gravitatee.com'}/api/v1/categories`);
+        let res = await fetch('/api/v1/categories');
+        if (!res.ok && process.env.NEXT_PUBLIC_BACKEND_URL) {
+          res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/categories`);
+        }
         if (res.ok) {
           const data = await res.json();
           if (data && data.length > 0) {
@@ -41,7 +48,7 @@ export default function ProductFilter({
           }
         }
       } catch (err) {
-        console.error(err);
+        console.error('Error fetching categories in ProductFilter:', err);
       }
     }
     fetchCategories();
@@ -82,7 +89,11 @@ export default function ProductFilter({
         </h4>
         <div className="flex flex-col space-y-1">
           {categories.map((cat) => {
-            const isSelected = activeCategory === cat.slug || (cat.slug === 'all' && (!activeCategory || activeCategory === 'all'));
+            const isSelected = 
+              activeCategory === cat.slug || 
+              activeCategory === cat.name || 
+              activeCategory === cat.id ||
+              (cat.slug === 'all' && (!activeCategory || activeCategory === 'all'));
             return (
               <button
                 key={cat.id || cat.slug}

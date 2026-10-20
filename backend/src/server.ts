@@ -98,7 +98,9 @@ app.get('/api/v1/products', async (req, res) => {
         isNew: false, // Could be calculated based on created_at
         isBestSeller: p.is_bestseller || false,
         price: lowestPrice,
-        category: p.categories?.slug || 'uncategorized',
+        category: p.categories?.name || p.categories?.slug || 'uncategorized',
+        category_slug: p.categories?.slug || 'uncategorized',
+        category_id: p.category_id,
         image_url: p.images?.[0] || 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
         images: p.images || []
       };
@@ -146,7 +148,9 @@ app.get('/api/v1/products/:slug', async (req, res) => {
       isNew: false,
       isBestSeller: product.is_bestseller || false,
       price: lowestPrice,
-      category: product.categories?.slug || 'uncategorized',
+      category: product.categories?.name || product.categories?.slug || 'uncategorized',
+      category_slug: product.categories?.slug || 'uncategorized',
+      category_id: product.category_id,
       image_url: product.images?.[0] || 'https://images.unsplash.com/photo-1596040033229-a9821ebd058d?auto=format&fit=crop&q=80&w=600',
       images: product.images || [],
       variants: product.product_variants.map((v: any) => ({
