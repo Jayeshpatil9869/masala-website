@@ -1,138 +1,83 @@
-# Gravitate — Pure Spices, Honest Craft
+# How this site was built
 
-**Gravitate** (Gurukrupa Gruh Udyog) is a family spice mill from Malegaon, Nashik — nearly forty-five years of grinding masala the way kitchens deserve: clean ingredients, careful process, no shortcuts.
-
-This repository is the online home for that story: a storefront where people can browse the range, learn what goes into each tin, and order over WhatsApp — plus a small admin panel so the team can keep the catalog honest and up to date.
-
-**Live site:** [gravitatee.com](https://gravitatee.com)
+This repo is a small monorepo: a public storefront, a staff admin app, and an optional Express API — all talking to the same Supabase project.
 
 ---
 
-## Why safety sits at the centre
+## Stack
 
-Spices end up in everyday meals. That is not a marketing line for us — it is why the product pages, About story, and compliance content keep returning to the same promises:
-
-- **FSSAI-licensed manufacturing** — Licence No. **11521023000342**, documented on the site’s [FSSAI Compliance](/fssai-compliance) page  
-- **No artificial colours, starch, bulkers, or preservatives** called out on product specs and brand USPs  
-- **Lab-minded quality process** — screening for adulterants and pesticide concerns as part of how the mill talks about purity  
-- **Clear policies** for privacy, shipping, and returns (including sealed-pack expectations aligned with food hygiene practice)
-
-If you are reading this as a developer: the “safety” of this project is not only code. It is also how the brand explains what customers are putting on their plates — and the site is built to keep that story visible, not buried.
-
-| Topic | Where to look |
+| Layer | Choice |
 | --- | --- |
-| FSSAI licence & purity safeguards | `app/fssai-compliance/page.tsx` |
-| Quality process | `components/about/QualityProcess.tsx` |
-| Natural / zero-filler USPs | `components/about/USPCards.tsx` |
-| Product purity copy | `components/product-detail/ProductSpecs.tsx` |
-| Privacy (WhatsApp orders; no card vault on site) | `app/privacy-policy/page.tsx` |
-| Returns & sealed packaging | `app/return-policy/page.tsx` |
+| Storefront & admin UI | **Next.js 16** (App Router), **React 19**, **TypeScript** |
+| Styling | **Tailwind CSS** (v4 on storefront, v3 on admin), **Shadcn / Radix** |
+| Database & auth | **Supabase** (Postgres, Auth, Storage) |
+| SSR auth cookies | **`@supabase/ssr`** + Next middleware |
+| Client cart | **Zustand** |
+| Forms / validation | **React Hook Form** + **Zod** |
+| Motion | **Framer Motion** |
+| Carousel | **Embla** |
+| Icons | **Lucide** / **react-icons** |
+| API (optional) | **Express** under `backend/` |
+| Dev | `concurrently` to run storefront + admin together |
 
 ---
 
-## What’s in this monorepo
+## How we structured it
 
-| App | Role | Default port |
-| --- | --- | --- |
-| **Storefront** (repo root) | Catalog, cart, WhatsApp order flow, customer login/signup | `3000` |
-| **Admin** (`admin/`) | Categories, products, contact queries, customer login logs | `3001` |
-| **Backend** (`backend/`) | Express API for categories/products/contact (Supabase-backed) | `3002` |
+```
+masala-website/          → Next.js storefront (port 3000)
+├── app/                 → routes, layouts, route handlers
+├── components/          → UI by feature
+├── lib/                 → Supabase clients, cart, helpers
+├── admin/               → separate Next.js app (port 3001)
+├── backend/             → Express API (port 3002)
+└── supabase/migrations/ → SQL for auth profiles & logs
+```
 
-### Storefront highlights
+**Storefront** reads catalog data from Supabase (and/or the Express API), keeps the cart in the browser, and opens a WhatsApp deep link for order confirmation.
 
-- Browse categories and products with variants and pricing from Supabase  
-- Cart in the browser (Zustand); checkout continues on **WhatsApp** — simple for customers, practical for a mill that confirms weight and delivery by chat  
-- Customer accounts: email/password and Google sign-in (`/login`, `/signup`)  
-- About, contact, and the legal/compliance pages listed above  
-- SEO basics: metadata, sitemap, robots, structured data
+**Admin** is its own Next app with service-role access for catalog CRUD, contact queries, and login-activity reads.
 
-### Admin highlights
-
-- Secure staff login (Supabase Auth)  
-- Manage categories and products (including images and variants)  
-- Review contact form queries  
-- View customer **login logs** (signup / login / logout activity)
+**Auth** uses Supabase email/password + Google OAuth; profiles and login events live in Postgres with RLS (see `docs/CUSTOMER_AUTH_SETUP.md`).
 
 ---
 
-## Tech stack
+## How we built it (flow)
 
-- **Next.js 16** (App Router) + **React 19** + **TypeScript**  
-- **Tailwind CSS** + Shadcn/Radix UI  
-- **Supabase** — Postgres, Auth, Storage  
-- **Zustand** for cart; **Framer Motion** for light motion  
-- **Express** service under `backend/` for API access alongside Next route handlers
+1. **Scaffold** Next App Router apps for web + admin; share the same Supabase project keys.  
+2. **Schema** — categories, products, variants, contact queries; later customer `profiles` + `login_logs` via SQL migrations.  
+3. **Storefront UI** — pages under `app/`, feature folders under `components/`, tokens in `globals.css`.  
+4. **Cart** — Zustand store → WhatsApp message builder (no in-site payment gateway).  
+5. **Auth** — browser + server Supabase clients (`lib/supabase/`), middleware session refresh, `/login` `/signup` `/auth/callback`.  
+6. **Admin** — staff session, product/category managers, login-logs view over service role.  
+7. **Optional API** — Express in `backend/` for the same Supabase data if you prefer a separate HTTP layer.
 
 ---
 
-## Getting started
-
-### Prerequisites
-
-- Node.js 20+  
-- Supabase project (URL + anon key; service role for admin only)  
-- WhatsApp business number for order links  
-
-### Install & run
+## Run locally
 
 ```bash
-# Storefront
 npm install
-npm run dev
+npm run dev          # storefront → http://localhost:3000
+npm run dev:admin    # admin → http://localhost:3001
+npm run dev:all      # both
 
-# Admin (separate terminal)
-npm run dev:admin
-
-# Or both together
-npm run dev:all
-
-# Optional Express API
-cd backend && npm install && npm run dev
+cd backend && npm install && npm run dev   # API → :3002
 ```
 
-### Environment variables (names only)
-
-**Storefront:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_BACKEND_URL`, `NEXT_PUBLIC_SITE_URL`  
-
-**Admin:** `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `SUPABASE_SERVICE_ROLE_KEY`  
-
-**Backend:** `SUPABASE_URL`, `SUPABASE_ANON_KEY`, `PORT`, `FRONTEND_URL`, `ADMIN_URL`
-
-Customer auth migration and Google OAuth setup: see [`docs/CUSTOMER_AUTH_SETUP.md`](docs/CUSTOMER_AUTH_SETUP.md).  
-Admin-specific notes: see [`admin/README.md`](admin/README.md).
+**Env (names only):**  
+`NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_ANON_KEY`, `NEXT_PUBLIC_WHATSAPP_NUMBER`, `NEXT_PUBLIC_BACKEND_URL`, `NEXT_PUBLIC_SITE_URL`  
+Admin also needs `SUPABASE_SERVICE_ROLE_KEY`. Backend uses `SUPABASE_URL` / `SUPABASE_ANON_KEY` (+ CORS origins).
 
 ---
 
-## Project layout
+## Scripts
 
-```
-masala-website/
-├── app/                 # Storefront pages + API routes
-├── components/          # UI by feature (home, products, cart, about, auth…)
-├── lib/                 # Supabase clients, WhatsApp helpers, cart store
-├── admin/               # Admin Next.js app
-├── backend/             # Express API
-├── supabase/migrations/ # SQL (e.g. customer profiles & login logs)
-├── docs/                # Setup guides
-└── public/              # Static assets & brand logo
-```
+| Command | What it does |
+| --- | --- |
+| `npm run dev` | Storefront only |
+| `npm run dev:admin` | Admin only |
+| `npm run dev:all` | Storefront + admin |
+| `npm run build` / `start` | Production storefront |
 
----
-
-## A note on trust
-
-We do not claim “guaranteed rankings,” miracle health outcomes, or payment processing we do not operate. Orders are confirmed on WhatsApp; the website’s job is to show the spices clearly, keep catalogue and compliance pages accurate, and give the team tools that respect customer data.
-
-If you improve this codebase, keep that same bar: **useful to the kitchen, careful with claims, clear about how an order actually happens.**
-
----
-
-## Contact
-
-- **WhatsApp / phone:** +91 92715 80900 · +91 96575 86213  
-- **Email:** gravitatespices01@gmail.com  
-- **Mill:** Bhaygaon Shiwar, Malegaon, Dist. Nashik — 423203 (Maharashtra)
-
----
-
-*Gurukrupa Gruh Udyog · FSSAI Lic. No. 11521023000342 · Made with care in India*
+Built as a practical TypeScript commerce shell: Next for UI, Supabase for data/auth, Zustand for cart, WhatsApp for checkout handoff.
